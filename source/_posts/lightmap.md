@@ -1,0 +1,12 @@
+---
+title: Unity5.x场景优化之动态设置光照贴图lightmap
+date: 2017-10-03 16:28:04
+tags:
+---
+在很多情况下，我们为了提高渲染效率，一般都会让美术同学在制作场景时，设置场景相关节点的lightmap static属性，提前给整个场景烘培出静态的光照贴图lightmap，烘培的数据保存在场景目录下的LightmapSnapshot文件中，主要包括的数据有：
+lightmaps：烘培出的光照贴图数组；
+gameobject uid：被烘焙的gameobject的唯一标识；
+renderer的lightmapIndex：被烘培的gameobject的renderer组件所指向的光照贴图用于采样的区域坐标和宽高。
+这个文件目前没有相关api读写，如果你想烘培完场景之后，把场景里面的gameobject抽出来做prefab，等切换玩场景之后再用于动态加载是不可行的，因为抽出来的prefab咋Instantiate之后将会是一个新的gameobject，uid自然和LightmapSnapshot文件里面记录的不一样，导致找不到对应的光照数据而造成模式没光照变暗或渲染错乱。
+还有一种比较常见的需求是，在游戏运行时，通过更换光照贴图数据，营造场景在不同时间或季节的光照氛围，例如白天和黑夜。
+
