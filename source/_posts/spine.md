@@ -697,3 +697,6 @@ public static void DrawBoundingBoxes (Transform transform, Skeleton skeleton) {
     }
 }
 ```
+
+# 为什么写这个东西
+为了支持SkeletonAnimation在编辑状态下预览，最后查到的问题是，渲染没有刷新，然后在每帧做强制刷新EditorUtility.SetDirty(action.gameObject);
