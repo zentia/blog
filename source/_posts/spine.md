@@ -6,6 +6,33 @@ tags:
     - Spine
 categories: Spine
 ---
+# 概念
+先来介绍下 spine 中的一些术语和概念
+## Bone 骨骼
+spine 是骨骼编辑器,所以骨骼是基础。每个骨骼都会有旋转，缩放，位移的属性。然后骨骼可以有子节点，最终形成了一个树型结构。可以对应2dx 里面的 node
+## Slot 插槽
+骨骼上的一个挂载点。不是所有的骨骼上都能放置东西的，因为很多骨骼其实只参与计算，真正重要的骨骼，也就是需要挂载其他东西的骨骼上必须放置插槽。slot 只是用来标记特殊的骨骼位置，本身只有一个颜色属性，也可以说，重要的骨骼节点可以称为 slot。
+## Attachment 附件
+挂在插槽上的内容，可以是图片，也可以是判定区域，只要是你能想到的东西，都可以当成附件。
+## Draw order 描画顺序
+骨架上插槽的一个顺序列表。用来控制描画的先后顺序。
+## Animation 动画
+基于时间轴的一个骨骼状态列表。
+## Skin 皮肤
+一套附件的集合，类似于换装。
+## Bounding Box 边界框
+用来指定骨骼上的边界的多边形的区域。
+## atlas 图集
+贴图集合，小图片合并在一起，就成了图集。
+# 实现
+上面大致介绍了一些基本概念，然后我们从实现角度上来说下为啥这么设计。
+首先，假设我们需要一个骨骼系统。于是，我们就设计了一个树状的骨架，每个节点就是（Bone）。
+很简单啊，再想下，骨骼上要放图片啥的，于是我们就要能访问到特定的骨骼，遍历太傻了，好吧，我们给这些骨骼加个名字，这样就能访问到具体 骨骼了，那这些名字就叫 slot。
+好吧，可能有些人觉得，slot 和 bone 本质上一样，为啥需要分开呢，没必要的。我只能说事情其实并不简单，来想下，我们已经有了一个完美的骨架，图片也在应该在的骨骼上了。那我们该如何显示图片么？遍历么，从根结点开始，一直到最下层的节点，不管你用啥排序，这个顺序是固定的，但是现实总是很残酷，很多时候，我们需要不停调整图片描画的顺序，也就是调整树的节点排序，啊，好麻烦。那怎么办，我们指定下骨骼描画的顺序吧（Draw order），这些特定的骨骼也就是 slot。
+你看，这下完美了，也就是 bone 用来计算位置，slot 用来控制描画。
+完美的骨骼系统，一定要有碰撞区域（bounding box），这和图片差不多,一个用于显示,一个用于边界判断,好吧,那就抽象成一个概念叫（p_w_upload），于是，slot 上就可以附加不同的 p_w_upload 了。
+终于可以换附件了，但是一个一个换好累。于是，我们把一组附件合在一起，组成了 skin。这下简单了，一换 skin，整个世界就变样了。
+啊，做着做着，就发现图片太多了，要优化啊。怎么办，简单，把小图片合在一起，每个图片对应了一个大图里面的一个区域，这就是 atlas。
 Spine-Unity使用Unity的MeshRenderer和MeshFiter组建，还有材质资源进行渲染。
 SkeletonRenderer类（SkeletonAnimation和SkeletonAnimator均继承与它），在它的LateUpdate中构建Mesh。生成顶点，颜色，三角形索引和UV然后把这些放入Mesh中。以下讲解主要说明如何构建Mesh。
 Spine一般使用alpha混合的方式来渲染模型，在一个网格中，它根据网格中三角形的顺序去渲染物体，然后绘制一个东西在另一个东西上面。该顺序是在Spine中控制槽的绘制顺序来决定的。
@@ -220,7 +247,7 @@ class MeshAttachment : VertexAttachment, IHasRendererObject {
     internal bool inheritDeform;
 }
 ```
-
+# BuildMeshWithArrays(构建顶点等数据，渲染帧中只负责渲染)
 ```CSharp
 // 当不涉及剪切时，使用这种更快的方法。
 public void BuildMeshWithArrays(SkeletonRendererInstruction instruction, bool updateTriangles)
@@ -657,3 +684,11 @@ public virtual void LateUpdate () {
     currentSmartMesh.instructionUsed.Set(currentInstructions);
 }
 ```
+{% gp 2-0 %}
+{% asset_img 2.jpg 初始状态 %} 
+{% asset_img 1.jpg 某一帧的状态 %}
+{% endgp %}
+左图是默认的mesh，右图是设置关键帧的状态，三角形数量和顶点数量没有改变，只是改变的顶点位置。类似蒙皮的原理
+
+# 疑惑点
+attachmentNames会有空数据
