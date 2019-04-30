@@ -73,13 +73,11 @@ AllowMultiple = true)]
 
 # 创建自定义特性（Attribute）
 .Net 框架允许创建自定义特性，用于存储声明性的信息，且可在运行时被检索。该信息根据设计标准和应用程序需要，可与任何目标元素相关。
-
 创建并使用自定义特性包含四个步骤：
 - 声明自定义特性
 - 构建自定义特性
 - 在目标程序元素上应用自定义特性
 - 通过反射访问特性
-
 
 最后一个步骤包含编写一个简单的程序来读取元数据以便查找各种符号。元数据是用于描述其他数据的数据和信息。该程序应使用反射来在运行时访问特性。
 ## 声明自定义特性
@@ -108,6 +106,8 @@ public class DeBugInfo : System.Attribute
 每个特性必须至少有一个构造函数。必需的定位（ positional）参数应通过构造函数传递。下面的代码演示了 DeBugInfo 类：
 
 ```CSharp
+using System;
+using System.Reflection;
 // 一个自定义特性 BugFix 被赋给类及其成员
 [AttributeUsage(AttributeTargets.Class |
 AttributeTargets.Constructor |
@@ -116,52 +116,52 @@ AttributeTargets.Method |
 AttributeTargets.Property,
 AllowMultiple = true)]
 
-public class DeBugInfo : System.Attribute
+public class DeBugInfo : Attribute
 {
-  private int bugNo;
-  private string developer;
-  private string lastReview;
-  public string message;
+    private int bugNo;
+    private string developer;
+    private string lastReview;
+    public string message;
 
-  public DeBugInfo(int bg, string dev, string d)
-  {
-      this.bugNo = bg;
-      this.developer = dev;
-      this.lastReview = d;
-  }
+    public DeBugInfo(int bg, string dev, string d)
+    {
+        bugNo = bg;
+        developer = dev;
+        lastReview = d;
+    }
 
-  public int BugNo
-  {
-      get
-      {
-          return bugNo;
-      }
-  }
-  public string Developer
-  {
-      get
-      {
-          return developer;
-      }
-  }
-  public string LastReview
-  {
-      get
-      {
-          return lastReview;
-      }
-  }
-  public string Message
-  {
-      get
-      {
-          return message;
-      }
-      set
-      {
-          message = value;
-      }
-  }
+    public int BugNo
+    {
+        get
+        {
+            return bugNo;
+        }
+    }
+    public string Developer
+    {
+        get
+        {
+            return developer;
+        }
+    }
+    public string LastReview
+    {
+        get
+        {
+            return lastReview;
+        }
+    }
+    public string Message
+    {
+        get
+        {
+            return message;
+        }
+        set
+        {
+            message = value;
+        }
+    }
 }
 ```
 ## 应用自定义特性
@@ -193,45 +193,47 @@ class Rectangle
       Console.WriteLine("Area: {0}", GetArea());
   }
 }
+```
+## 通过反射访问特性
+注意：只有在调用GetCustomAttributes才开始创建特性实例。
+```CSharp
 class ExecuteRectangle
 {
-  static void Main(string[] args)
-  {
-     Rectangle r = new Rectangle(4.5, 7.5);
-     r.Display();
-     Type type = typeof(Rectangle);
-     // 遍历 Rectangle 类的特性
-     foreach (Object attributes in type.GetCustomAttributes(false))
-     {
-        DeBugInfo dbi = (DeBugInfo)attributes;
-        if (null != dbi)
+    static void Main(string[] args)
+    {
+        Rectangle r = new Rectangle(4.5, 7.5);
+        r.Display();
+        Type type = typeof(Rectangle);
+        foreach (Object attributes in type.GetCustomAttributes(false))
         {
-           Console.WriteLine("Bug no: {0}", dbi.BugNo);
-           Console.WriteLine("Developer: {0}", dbi.Developer);
-           Console.WriteLine("Last Reviewed: {0}",
-                                    dbi.LastReview);
-           Console.WriteLine("Remarks: {0}", dbi.Message);
+            DeBugInfo dbi = (DeBugInfo)attributes;
+            if (null != dbi)
+            {
+                Console.WriteLine("Bug no: {0}", dbi.BugNo);
+                Console.WriteLine("Developer: {0}", dbi.Developer);
+                Console.WriteLine("Last Reviewed: {0}", dbi.LastReview);
+                Console.WriteLine("Remarks: {0}", dbi.Message);
+            }
         }
-     }
-     
-     // 遍历方法特性
-     foreach (MethodInfo m in type.GetMethods())
-     {
-        foreach (Attribute a in m.GetCustomAttributes(true))
+
+        foreach (MethodInfo m in type.GetMethods())
         {
-           DeBugInfo dbi = (DeBugInfo)a;
-           if (null != dbi)
-           {
-              Console.WriteLine("Bug no: {0}, for Method: {1}",
-                                            dbi.BugNo, m.Name);
-              Console.WriteLine("Developer: {0}", dbi.Developer);
-              Console.WriteLine("Last Reviewed: {0}",
-                                            dbi.LastReview);
-              Console.WriteLine("Remarks: {0}", dbi.Message);
-           }
+            foreach (Attribute a in m.GetCustomAttributes(true))
+            {
+                if (a is DeBugInfo)
+                {
+                    DeBugInfo dbi = (DeBugInfo)a;
+                    if (null != dbi)
+                    {
+                        Console.WriteLine("Bug no: {0}, for Method: {1}", dbi.BugNo, m.Name);
+                        Console.WriteLine("Developer: {0}", dbi.Developer);
+                        Console.WriteLine("Last Reviewed: {0}", dbi.LastReview);
+                        Console.WriteLine("Remarks: {0}", dbi.Message);
+                    }
+                }
+            }
         }
-     }
-     Console.ReadLine();
-  }
+        Console.ReadLine();
+    }
 }
 ```
