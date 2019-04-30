@@ -140,15 +140,15 @@ class PathConstraintData {
 ```
 # SkeletonData
 ```CSharp
-// 骨骼数据
+// 骨架数据
 class SkeletonData {
     internal string name;
     internal ExposedList<BoneData> bones = new ExposedList<BoneData>(); // Ordered parents first
-    internal ExposedList<SlotData> slots = new ExposedList<SlotData>(); // Setup pose draw order.
-    internal ExposedList<Skin> skins = new ExposedList<Skin>();
+    internal ExposedList<SlotData> slots = new ExposedList<SlotData>(); // S装配绘制顺序
+    internal ExposedList<Skin> skins = new ExposedList<Skin>(); // 附件集合
     internal Skin defaultSkin;
     internal ExposedList<EventData> events = new ExposedList<EventData>();
-    internal ExposedList<Animation> animations = new ExposedList<Animation>();
+    internal ExposedList<Animation> animations = new ExposedList<Animation>(); // 动画列表
     internal ExposedList<IkConstraintData> ikConstraints = new ExposedList<IkConstraintData>();
     internal ExposedList<TransformConstraintData> transformConstraints = new ExposedList<TransformConstraintData>();
     internal ExposedList<PathConstraintData> pathConstraints = new ExposedList<PathConstraintData>();
@@ -689,6 +689,11 @@ public virtual void LateUpdate () {
 {% asset_img 1.jpg 某一帧的状态 %}
 {% endgp %}
 左图是默认的mesh，右图是设置关键帧的状态，三角形数量和顶点数量没有改变，只是改变的顶点位置。类似蒙皮的原理
-
-# 疑惑点
-attachmentNames会有空数据
+```CSharp
+public static void DrawBoundingBoxes (Transform transform, Skeleton skeleton) {
+    foreach (var slot in skeleton.Slots) {
+        var bba = slot.Attachment as BoundingBoxAttachment;
+        if (bba != null) SpineHandles.DrawBoundingBox(slot, bba, transform);
+    }
+}
+```
