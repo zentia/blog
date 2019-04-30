@@ -3,8 +3,8 @@ title: NetworkStream
 mathjax: true
 date: 2019-03-30 16:55:27
 tags:
-	- C#
-categories: C#
+	- CSharp
+categories: CSharp
 ---
 作用：如果服务器和客户端之间基于TCP连接的，他们之间能够依靠一个稳定的字节流进行相互传输信息。
 
