@@ -3,8 +3,8 @@ title: C#中静态字段和类成员的执行顺序
 mathjax: true
 date: 2019-03-29 19:43:04
 tags:
-    - C#
-categories: C#
+    - CSharp
+categories: CSharp
 ---
 先进行细分：
 类的成员分为：字段、属性、方法、构造方法

@@ -246,17 +246,15 @@ string b = new string(new char[]{‘a’, ‘b’, ‘c’}}
 # 反射
 
 实现原理：在运行时根据程序集和其中的类型得到元数据
-实现步骤:
-1. 导入 using System.Reflection
-2. Assembly.Load("程序集")加载一个程序集，返回类型是一个Assembly
-3. 得到程序集中所有类的名称
 ```CSharp
+using System.Reflection;
+Assembly.Load("程序集");//加载一个程序集，返回类型是一个Assembly
 foreach(Type type in assembly.GetType())
 {
     stromh t = type.name;
 }
+Type type = assembly.GetType("程序集.类名"); //获取当前类的类型
+var activator = System.Activator.CreateInstance(type); // 创建此类型实例
+MethodInfo mInfo = type.GetMethod("方法名");//获取当前方法
+mInfo.Invok(null, 方法参数);
 ```
-4. Type type = assembly.GetType("程序集.类名"); //获取当前类的类型
-5. Activator.CreateInstance(type); // 创建此类型实例
-6. MethodInfo mInfo = type.GetMethod("方法名");//获取当前方法
-7. m.Info.Invok(null, 方法参数);

@@ -57,3 +57,34 @@ protected并不比public更有封装性（其实我不是很喜欢封装这个�
 |腾讯开发者平台|http://zentia.coding.me|git@git.dev.tencent.com:Zentia/Hexo.git   |
 |github        |http://zentia.github.io     |git@github.com:zentia/zentia.github.io.git|
 |码云          |http://zentia.gitee.io      |git@gitee.com:zentia/zentia.git           |
+
+# 修复图片展示
+新建博文，设置type: "picture"，使用{\% gp x-x \%} ... {\% endgp \%}标签引用要展示的图片地址，如下所示：
+```
+---
+title: Naruto-Pictures
+categories: [图片]
+tags: [picture,naruto]
+date: 2016-09-02 14:36:04
+keywords: picture,naruto
+type: "picture"
+top: 999
+---
+{% gp 5-3 %}
+![](https://cdn.ehlxr.top/post/18210.jpg)
+![](https://cdn.ehlxr.top/post/196232.jpg)
+![](https://cdn.ehlxr.top/post/224147.jpg)
+![](https://cdn.ehlxr.top/post/199301.jpg)
+![](https://cdn.ehlxr.top/post/213318.jpg)
+{% endgp %}
+```
+{\% gp 5-3 \%}：设置图片展示效果，参考 theme/next/scripts/tags/group-pictures.js 注释示意图。
+主题目前首页可以正常显示步骤 8.2 设置的图片效果，但是点击进入后显示效果丢失，所以需要修改一下文件 themes\next\source\css\_common\components\tags\group-pictures.styl 中的以下样式：
+```
+.page-post-detail .post-body .group-picture-column {
+  // float: none;
+  margin-top: 10px;
+  // width: auto !important;
+  img { margin: 0 auto; }
+}
+```
