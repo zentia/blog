@@ -4,7 +4,7 @@ mathjax: true
 date: 2019-03-09 12:03:24
 tags:
     - Hexo
-categories:
+categories: Hexo
 ---
 
 # 希腊字母

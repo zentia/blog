@@ -1,10 +1,10 @@
 ---
-title: diffuse
+title: 标准光照模型
 mathjax: true
 date: 2019-04-10 13:29:47
 tags:
     - Shader
-categories: Shader
+categories: "Unity Shader"
 ---
 基本光照模型中漫反射部分的计算公式：
 $c_{diffuse}=(c_{light} \cdot m_{diffuse})max(0, \vec{n} \cdot I)$
@@ -19,6 +19,7 @@ $c_{diffuse}=(c_{light} \cdot m_{diffuse})max(0, \vec{n} \cdot I)$
 Shader "Unity/Diffuse Vertex"{
     Properties {
         _Diffuse ("Diffuse", Color)=(1,1,1,1) // 材质的漫反射系数
+        _Specular("Specular", Color)=(1,1,1,1) // 高光系数
     }   
     SubShader{
         Pass{
@@ -62,3 +63,10 @@ Shader "Unity/Diffuse Vertex"{
 
 $c_{diffuse}=(c_{light}\cdot m_{diffuse})(\alpha (\vec {n}\cdot I)+\beta)$
 可以看出，与原兰伯特模型相比，半兰伯特光照模型没有使用max操作来防止$\vec {n}$
+
+# Blinn-Phong光照模型
+
+Blinn模型计算高光反射的公式如下：
+<font size="4">
+$c_{specular}=(c_{light} \cdot m_{specular})max(0,\vec{n} \cdot \vec{h})^{m_{glass}}$    
+</font>
