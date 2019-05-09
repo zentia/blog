@@ -95,3 +95,8 @@ algolia:
   apiKey: 'f4ca7ae2408d2e27ffc8269ad8d34273'
   indexName: 'hexo'
   chunkSize: 5000
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
