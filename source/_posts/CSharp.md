@@ -87,17 +87,10 @@ public static class PGExt
 
 	var mf = cacheComponents.PG_GetComponent<MeshFilter>();
 
-# GC
-
-1. GC不能自动释放非托管资源。
-2. GC并不是实时性的。
-
 # volatile
 
 volatile关键字指示一个字段可以由多个同时执行的线程修改。声明volatile的字段不受编译器优化的限制。这样可以确保该字段在任何时间呈现的都是最新的值。
-
 volatile修饰符通常用于由多个线程访问但不使用lock语句对访问进行序列化的字段。
-
 volatile关键字可应用于以下类型的字段：
 
 - 引用类型

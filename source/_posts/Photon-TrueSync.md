@@ -953,12 +953,12 @@ public class ThreadManager
 
     private void PumpTasks()
     {
-        int count = tasks.Count;
-        while (this.currentTaskIndex < count)
+        var count = tasks.Count;
+        while (currentTaskIndex < count)
         {
-            int currentTaskIndex = this.currentTaskIndex;
-            if (currentTaskIndex == Interlocked.CompareExchange(ref this.currentTaskIndex, currentTaskIndex + 1, currentTaskIndex) && currentTaskIndex < count)
-                tasks[currentTaskIndex](parameters[currentTaskIndex]);
+            var curTaskIndex = currentTaskIndex;
+            if (curTaskIndex == Interlocked.CompareExchange(ref currentTaskIndex, curTaskIndex + 1, curTaskIndex) && currentTaskIndex < count)
+                tasks[currentTaskIndex](paramters[currentTaskIndex]);
         }
     }
 }
