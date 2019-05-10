@@ -15,3 +15,36 @@ categories: CSharp
 回收器在一次释放动作结束会将堆上剩余的对象在堆顶移动，回收器会更新被移动对象的存储地址。这就又形成了整块的未分配的空间。
 虽然移动对象并更新地址会消耗一定的性能，但是由于分配速度和访问速度会快很多，足以弥补消耗。
 # 非托管堆
+回收器不知道如何释放非托管资源，如文件句柄，网络连接、数据库连接等。当非托管对象被托管对象引用时，托管对象被释放时应确保其相关的非托管对象被释放。
+以下两种方法可解决释放非托管资源的问题：
+1. 在定义类时，声明一个析构函数
+2. 在类中实现System.IDisposable接口
+```CSharp
+class MyClass:IDispose
+{
+    public void Dispose()
+    {
+        // 释放非托管资源
+    }
+}
+```
+两种调用方式
+- using关键字方式，对象声明周期结束时会自动调用Dispose函数。此using与命名空间无关
+```CSharp
+using (MyClass classA = new MyClass())
+{
+    // do something
+}// 对象的声明周期结束
+```
+- 主动调用
+```CSharp
+try
+{
+    MyClass classA = new MyClass();
+    // do something
+}
+finally
+{
+    classA.Dispose();//显示调用
+}
+```

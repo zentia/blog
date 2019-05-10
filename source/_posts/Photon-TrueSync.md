@@ -853,112 +853,116 @@ private void RaiseEvent(byte eventCode, object message, bool reliable, int[] toP
 ```
 ## ThreadManager
 ```CSharp
-// 类似Job System
-public class ThreadManager
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+namespace EventSource
 {
-    private static ThreadManager instance;
-    private volatile List<Action<object>> tasks = new List<Action<object>>();
-    private volatile List<object> parameters = new List<object>();
-    public const int ThreadsPerProcessor = 1;
-    private ManualResetEvent waitHandleA;
-    private ManualResetEvent waitHandleB;
-    private ManualResetEvent currentWaitHandle;
-    private Thread[] threads;
-    private int currentTaskIndex;
-    private int waitingThreadCount;
-    internal int threadCount;
-
-    public int ThreadCount
+    public class ThreadManager
     {
-        private set
-        {
-            threadCount = value;
-        }
-        get
-        {
-            return threadCount;
-        }
-    }
+        private static ThreadManager instance;
+        private volatile List<Action<object>> tasks = new List<Action<object>>();
+        private volatile List<object> parameters = new List<object>();
+        private ManualResetEvent waitHandleA;
+        private ManualResetEvent waitHandleB;
+        private ManualResetEvent currentWaitHandle;
+        private Thread[] threads;
+        private int currentTaskIndex;
+        private int waitingThreadCount;
+        internal int threadCount;
 
-    public static ThreadManager Instance
-    {
-        get
+        public int ThreadCount
         {
-            if (instance == null)
+            private set { threadCount = value; }
+            get { return threadCount; }
+        }
+
+        public static ThreadManager Instance
+        {
+            get
             {
-                instance = new ThreadManager();
-                instance.Initialize();
+                if (instance == null)
+                {
+                    instance = new ThreadManager();
+                    instance.Initialize();
+                }
+                return instance;
             }
-            return ThreadManager.instance;
         }
-    }
 
-    private ThreadManager()
-    {
-    }
-
-    private void Initialize()
-    {
-        threadCount = Environment.ProcessorCount;
-        this.threads = new Thread[this.threadCount];
-        this.waitHandleA = new ManualResetEvent(false);
-        this.waitHandleB = new ManualResetEvent(false);
-        this.currentWaitHandle = this.waitHandleA;
-        AutoResetEvent initWaitHandle = new AutoResetEvent(false);
-        for (int index = 1; index < this.threads.Length; ++index)
+        private ThreadManager()
         {
-            threads[index] = new Thread((() =>
+            
+        }
+        // 下面这种写法感觉没有切换时间的概念呀，该进程内部不会发送切换时间片呀
+        private void Initialize()
+        {
+            threadCount = Environment.ProcessorCount;
+            threads = new Thread[threadCount];
+            waitHandleA = new ManualResetEvent(false);
+            waitHandleB = new ManualResetEvent(false);
+            currentWaitHandle = waitHandleA;
+            var initWaitHandle = new AutoResetEvent(false);
+            for (var index = 1; index < threads.Length; index++)
             {
-                initWaitHandle.Set();
-                this.ThreadProc();
-            }));
-            this.threads[index].IsBackground = true;
-            this.threads[index].Start();
-            initWaitHandle.WaitOne();
+                threads[index] = new Thread(() =>
+                {
+                    initWaitHandle.Set();
+                    ThreadProc();
+                })
+                {
+                    IsBackground = true
+                };
+                threads[index].Start();
+                initWaitHandle.WaitOne();
+            }
         }
-    }
 
-    public void Execute()
-    {
-        this.currentTaskIndex = 0;
-        this.waitingThreadCount = 0;
-        this.currentWaitHandle.Set();
-        this.PumpTasks();
-        while (this.waitingThreadCount < this.threads.Length - 1)
-            Thread.Sleep(0);
-        currentWaitHandle.Reset();
-        this.currentWaitHandle = this.currentWaitHandle == this.waitHandleA ? this.waitHandleB : this.waitHandleA;
-        this.tasks.Clear();
-        this.parameters.Clear();
-    }
-
-    public void AddTask(Action<object> task, object param)
-    {
-        tasks.Add(task);
-        parameters.Add(param);
-    }
-
-    private void ThreadProc()
-    {
-        while (true)
+        public void Execute()
         {
-            Interlocked.Increment(ref this.waitingThreadCount);
-            waitHandleA.WaitOne();
-            this.PumpTasks();
-            Interlocked.Increment(ref waitingThreadCount);
-            this.waitHandleB.WaitOne();
+            currentTaskIndex = 0;
+            waitingThreadCount = 0;
+            currentWaitHandle.Set();
             PumpTasks();
+            while (waitingThreadCount < threads.Length - 1)
+            {
+                Thread.Sleep(0);
+            }
+            currentWaitHandle.Reset();
+            currentWaitHandle = currentWaitHandle == waitHandleA ? waitHandleB : waitHandleA;
+            tasks.Clear();
+            parameters.Clear();
         }
-    }
 
-    private void PumpTasks()
-    {
-        var count = tasks.Count;
-        while (currentTaskIndex < count)
+        public void AddTask(Action<object> task, object param)
         {
-            var curTaskIndex = currentTaskIndex;
-            if (curTaskIndex == Interlocked.CompareExchange(ref currentTaskIndex, curTaskIndex + 1, curTaskIndex) && currentTaskIndex < count)
-                tasks[currentTaskIndex](paramters[currentTaskIndex]);
+            tasks.Add(task);
+            parameters.Add(param);
+        }
+
+        private void ThreadProc()
+        {
+            while (true)
+            {
+                Interlocked.Increment(ref waitingThreadCount);
+                waitHandleA.WaitOne();
+                PumpTasks();
+                Interlocked.Increment(ref waitingThreadCount);
+                waitHandleB.WaitOne();
+                PumpTasks();
+            }
+        }
+
+        private void PumpTasks()
+        {
+            var count = tasks.Count;
+            while (currentTaskIndex < count)
+            {
+                var curTaskIndex = currentTaskIndex;
+                if (curTaskIndex == Interlocked.CompareExchange(ref currentTaskIndex, curTaskIndex + 1, curTaskIndex) && currentTaskIndex < count)
+                    tasks[currentTaskIndex](parameters[currentTaskIndex]);
+            }
         }
     }
 }

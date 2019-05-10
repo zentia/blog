@@ -11,13 +11,13 @@ categories:
 
 |显示|命令|显示|命令|
 |--|--|--|--|
-|$\alpha$|\alpha|$\beta$|\beta|
-|$\gamma$|\gamma|$\delta$|\delta|
-|$\epsilon$|\epsilon|$\zeta$|\zeta|
-|$\eta$|\eta|$\theta$|\theta|
-|$\upsilon$|\upsilon|$\phi$|\phi|
-|$\omega$|\omega|$\Omega$|\Omega|
-
+|$\alpha$   |\alpha     |$\beta$    |\beta  |
+|$\gamma$   |\gamma     |$\delta$   |\delta |
+|$\epsilon$ |\epsilon   |$\zeta$    |\zeta  |
+|$\eta$     |\eta       |$\theta$   |\theta |
+|$\upsilon$ |\upsilon   |$\phi$     |\phi   |
+|$\omega$   |\omega     |$\Omega$   |\Omega |
+|$\in$      |\in        |
 - 若需要大写希腊字母，将命令首字母大写即可。 \Omega 呈现为 $\Omega$
 - 需需要斜体希腊字母，将命令前面加上var。\varpi 呈现为 $\varPi$
 

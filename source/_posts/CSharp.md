@@ -66,7 +66,7 @@ SizeOf(Type)返回非托管类型的大小(以字节为单位)
 
 # this
 
-```C#
+```CSharp
 public static class PGExt
 {
 	public static T PG_GetComponent(this List<Component> components) where T : Component
@@ -133,7 +133,6 @@ class Program
 ```
 事件实际上是一个特殊的委托实例，不用事件也没有关系。实际上事件只是削弱了委托的功能，event在编辑器角度保护了程序的安全，因为你只能用+=、-=来注册事件了，而不能使用=为事件关联方法。（在委托中还可以使用=来绑定方法，不过=是一种破坏性代码，不管之前是否已经绑定方法，他都会将其清除）
 
-const:指定该成员的值只读，不允许修改。
 extern:指示方法在外部实现
 
 # 堆栈和堆 Heap & Stack
@@ -291,5 +290,6 @@ enum Color : byte
 };
 ```
 
-# readonly
-运行时常量，程序运行时进行赋值，赋值完之后无法更改，也被称为只读变量。
+# readonly与const
+readonly是运行时常量，程序运行时进行赋值，赋值完之后无法更改，也被称为只读变量。
+const表示编译时常量，程序编译时将对常量值进行解析，并将所有常量值引用替换为相应值。
