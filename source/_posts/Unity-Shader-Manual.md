@@ -103,3 +103,14 @@ a和b的位置无所谓前后，结果都是一样的
 |step(a,b)      |Returns (b>=a)?1:0 (一般用这个取代if else)|
 |tex2D(s, t)    |2D texture lookup.|
 |reflect(I,N)   |根据入射光方向向量I，和顶点法向量N，计算反射光方向向量。其中I和N必须被归一化，需要非常注意的是，这个I是指向顶点的；函数只对三元向量有效|
+|Tex2DProj(sampler2D tex, float3 sq)|二维投影纹理查询|
+|Tex2DProj(sampler2D tex, float4 szq)|二维投影纹理查询，并进行深度值比较|
+
+# \#pragma fragementoption ARB_precision_hint_fastest
+ARB_precision_hint_fastest 是用最快的方式，以最低的精度运行，提升片段着色器的运行速度，减少时间。（通常是指FP16,16bit，半精度）牺牲表现换取运行速度。
+
+# UnpackNormal
+
+    half3 normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));
+
+UnpackNormal是定义在UnityCG.cginc文件中的方法，UnpackNormal接受一个fixed4的输入，并将其转换为所对应的法线值(fixed3)。

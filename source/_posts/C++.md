@@ -379,3 +379,16 @@ private:
    - 深度赋值
    - 转移资源拥有权
 
+# 头文件搜索目录
+
+    #include "headfile.h"
+
+搜索顺序为：
+1. 当前目录
+2. -I指定目录
+3. gcc的环境变量CPLUS_INCLUDE_PATH（C程序使用的是C_INCLUDE_PATH）
+4. gcc内定目录
+/usr/include
+/usr/local/include
+/usr/lib/gcc/x86_64-redhat-linux/4.1.1/include
+
