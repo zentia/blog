@@ -88,3 +88,10 @@ top: 999
   img { margin: 0 auto; }
 }
 ```
+
+# algolia
+由于zentia.site这个域名没有备案，导致一直无法使用，然后只能使用zentia.github.io。然后一直没有更新algolia导致搜索还是访问之前的源，这个问题痛苦了好久。然后今天解决
+
+    hexo algolia
+
+可能会提示"ERROR [hexo-algolia] Please set an `HEXO_ALGOLIA_INDEXING_KEY` environment varia"这个问题，然后"export HEXO_ALGOLIA_INDEXING_KEY='f4ca7ae2408d2e27ffc8269ad8d34273'"这样就解决了。

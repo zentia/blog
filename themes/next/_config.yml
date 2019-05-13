@@ -411,7 +411,7 @@ font:
   # Global font settings used for all elements in <body>.
   global:
     external: true
-    family: Lato
+    family: Arial
     size: 13
 
   # Font settings for Headlines (H1, H2, H3, H4, H5, H6).
@@ -437,7 +437,7 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family: PT Mono
+    family: Verdana
     size: 10
 
 
