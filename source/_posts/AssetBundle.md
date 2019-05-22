@@ -137,7 +137,7 @@ IEnumerator LoadFromMemoryAsync(string path)
 
 	public AssetBundleRequest LoadAsync(string name, Type type)
 
-### 2.3 AssetBundle的压缩类型
+### AssetBundle的压缩类型
 
 Unity3D引擎为我们提供了三种压缩策略来处理AssetBundle的压缩，即：
 
@@ -145,13 +145,17 @@ Unity3D引擎为我们提供了三种压缩策略来处理AssetBundle的压缩�
 - LZ4格式
 - 不压缩
 
-#### LAMZ格式
+>LZ4是块压缩(chunk-based)，LZMA是流压缩(stream-based)。流压缩(LZMA)在处理整个数据块时使用同一个字典，它提供了最大可能的压缩率但只支持顺序读取。块压缩(LZ4)指的是原始数据被分成大小相同的子块并单端压缩。如果你想要实时解压/随机读取开销小，则应该使用这种。
 
-在默认情况下，打包生成的AssetBundle都会被压缩。在U3D中，AssetBundle的标准压缩格式便是LZMA（LZMA是一种序列化流文件），因此在默认情况下，打出的AssetBundle包处于LZMA格式的压缩状态，
+>LZMA压缩方式的优点在于使用同一个字典压缩率较高，但只能顺序读取意味着加载任意一个资源时，都需要将整个AssetBundle解压，造成卡顿和额外内存占用。LZ4基于快压缩率较低（测试LZMA换LZ4：86.9M->108M），但只需解压需要块即可，不会有大的卡顿和额外内存占用。
 
-#### LZ4格式
+#### LZMA(stream-based)
 
-Unity 5.3之后的版本增加了LZ4格式压缩，由于LZ4的压缩比一般，因此经过压缩之后的AssetBundle包体的体积较大（该算法基于chunk）。但是，使用LZ4格式的好处在于解压缩的时间相对要短。
+在默认情况下，打包生成的AssetBundle都会被压缩。在U3D中，AssetBundle的标准压缩格式便是LZMA（LZMA是一种序列化流文件），因此在默认情况下，打出的AssetBundle包处于LZMA格式的压缩状态。
+
+#### LZ4(chunk-based)
+
+Unity 5.3之后的版本增加了LZ4格式压缩，是一种块压缩方式，由于LZ4的压缩比一般，因此经过压缩之后的AssetBundle包体的体积较大（该算法基于chunk）。但是，使用LZ4格式的好处在于解压缩的时间相对要短。
 
 使用LZ4格式压缩，需要打包设置
 
@@ -184,14 +188,12 @@ Unity 5.3之后的版本增加了LZ4格式压缩，由于LZ4的压缩比一般�
 
 对于Web Stream数据，它所占用的内存会在其引用计数为0时，被系统自动回收。例如：当上图中的AssetBundle对象和WWW对象被释放后，Web Stream数据所占内存也会被系统自动回收。
 
-# 六 AssetBundle依赖加载
+# AssetBundle依赖加载
 
 如果一个或者多个UnityEngine.Objects引用了其他AssetBundle中的UnityEngine.Object，那么AssetBundle之间就产生了依赖关系了。如果UnityEngine.ObjectA所引用的UnityEngine.ObjectB不是其他的AssetBundle中的，那么依赖就不会产生。
 如果产生依赖，被依赖对象(UnityEngine.ObjectB)将被拷贝进你创建的AssetBundle(指包含UnityEngine.ObjectA的AssetBundle)
 
-更进一步，如果有多个对象(UnityEngine.ObjectA1、UnityEngine.ObjectA2、UnityEngine.ObjectA3...)引用了同一个被依赖对象(UnityEngine.ObjectB)，那么被依赖对象将被拷贝多份，打包进各个对象各自的AssetBundle。
+更近一步，如果有多个对象(UnityEngine.ObjectA1、UnityEngine.ObjectA2、UnityEngine.ObjectA3...)引用了同一个被依赖对象(UnityEngine.ObjectB)，那么被依赖对象将被拷贝多份，打包进各个对象各自的AssetBundle。
 
 如果一个AssetBundle存在依赖性，那么要注意的是，那些包含了被依赖对象的AssetBundles，需要在你想要实例化的对象的加载之前加载。Unity不会自动帮你加载这些依赖。
 
-想想看下面的例子，Bundle1中的一个材质(Material)引用了Bundle2中的一个纹理(Texture)
-在这个例子中，在从Bundle1中加载材质前，你需要先将Bundle2加载到内存中。你按照声明顺序加载Bundle1和Bundle2并不重要，重要的是，想从Bundle1中加载材质前，你需要先加载Bundle2。
