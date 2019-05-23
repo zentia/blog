@@ -12,3 +12,7 @@ CRLF -- Carriage-Return Line-Feed回车(ASCLL 13, \r)换行(LF, ASCLL 10, \n)。
 ```javascript
 git config --global core.autocrlf false
 ```
+
+# 切换http
+
+	git remote set-url origin https://github.com/zentia/zentia.github.io.git

@@ -22,17 +22,9 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 
 # AssetBundle加载基础
 通过AssetBundle加载资源，分为两步，第一步获取AssetBundle对象，第二步是通过该对象加载需要的资源。而第一步又分为两种方式，下文中将结合常用的API进行详细的描述。
-## 一 获取AssetBundle对象常用的API
+## 获取AssetBundle对象常用的API
 
-### （1）先获取WWW对象，在通过WWW.assetBundle获取AssetBundle对象：
-- public WWW(string url);
-加载Bundle文件并获取WWW对象，完成后会在内存中创建较大的WebStream(解压后的内容，通常为原Bundle文件的4~5倍大小，纹理资源比例可能更大),因此后续的AssetBundle.Load可以直接在内存中惊醒。
-- public static WWW LoadFromCacheOrDownload(string url, int version, uint crc = 0);
-加载Bundle文件获取WWW对象，同时将解压形式的Bundle内容存入磁盘中作为缓存(如果该Bundle已在缓存中，则省去这一步),完成后只会在内存中创建较小的SerializedFile,而后续的AssetBundle.Load需要通过IO从磁盘中的缓存获取。
-- public AssetBundle assetBundle;
-通过之前的两个接口获取WWW对象后，即可通过WWW.assetBundle获取AssetBundle对象。
-
-### （2）直接获取AssetBundle:
+### 直接获取AssetBundle:
 - public static AssetBundle CreateFromFile(string path);
 通过未压缩的Bundle文件，同步创建AssetBundle对象，这是最快的创建方式。创建完成后只会在内存中创建较小的SerializedFile，而后续的AssetBundle.Load需要通过IO从磁盘中过去。
 - public static AssetBundleCreateRequest CreateFromMemory(byte[] binary);
@@ -41,7 +33,7 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 该接口是CreateFromMemory的同步版本。
 - 注：5.3下分别改名为LoadFromFile,LoadFromMemory,LoadFromMemoryAsync并增加了LoadFromFileAsync，且机制也有一定的变化，可详见Unity官方文档。
 
-## 二·从AssetBundle加载资源的常用API
+## 从AssetBundle加载资源的常用API
 - public ObjectLoad(string name, Type type);
 通过给定的名字和资源类型，加载资源。加载时会自动在家其依赖的资源，即Load一个Prefab时，会自动Load其引用的Texture资源。
 - public Object[] LoadAll(Type type);
@@ -51,33 +43,11 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 - 注：5.x下分别改名为LoadAsset,LoadAllAssets,LoadAssetAsync，并增加了LoadAllAssetsAsync。
 
 # AssetBundle加载进阶
-## 一·接口对比：new WWW与WWW.LoadFromCacheOrDownload
-### (1)前者的优势
-- 后续的Load操作在内存中进行，相比后者的IO操作开销更小；
-- 不形成缓存文件，而后者则需要额外的磁盘空间存放缓存；
-- 能通过WWW.texture,WWWW.bytes,WWW.audioClip等接口直接加载外部资源，而后者只能用于加载AssetBundle
-
-### (2)前者的劣势
-- 每次加载涉及到解压操作，而后者在第二次加载时就省去了解压的开销；
-- 在内存中会有较大的WebStream,而后者在内存中只有通常较小的SerializedFile。（此项为一般情况，但并不绝对，对于序列化信息较多的Prefab,很可能出现SerializedFile比WebStream更大的情况）
-
-## 二·内存分析
-<img src="/2017/10/02/ABTheory/memoryprofile.png">
-
-在管理AssetBundle时，了解其加载过程中对内存的影响意义重大。在上图中，我们在中间列出了AssetBundle加载资源后，内存中各类物件的分布图，在左侧则列出了每一类内存的产生所涉及到的加载API:
-- WWW对象：在第一步的方式1中产生，内存开销小；
-- WebStream:在使用new WWW或CreateFromMemory时产生内存开销通常较大；
-- SerializedFile:在第一步中两种方式都会产生，内存开销通常较小；
-- AssetBundle对象：在第一步中两种方式都会产生，内存开销小；
-- 资源（包括Prefab）：在第二步中通过Instantiate产生，内存开销通常较小。
-- 场景物件（GameObject):在第二步中通过Instantiate产生，内存开销通常较小。
-在后续的章节中，我们还将针对该图中各类内存物件分析其卸载方式，从而避免内存残留甚至泄露。
-
-## 三·注意点
+## 注意点
 
 - CreateFromFile只能适用于未压缩的AssetBundle,而Android系统下StreamingAssets是在压缩目录(.jar)中，因此需要先将未压缩的AssetBundle放到SD卡中国才能对其使用CreateFromFile。
-- iOS系统有256个开启文件的上限，因此，内存中通过CreateFromFile或WWW.LoadFromCacheOrDownload加载的AssetBundle对象也会低于该值，在较新的版本中，如果LoadFromCacheOrDownload超过上限，则会自动改为new WWW的形式加载，而焦躁的版本中则会加载失败。
-- CreateFromFile和WWW.LoadFromCacheOrDownload的调用会增加ResistenManager.Remapper的大小，而PersistentManager负责维护资源的持久化存储，Remapper保存的是加载到内存的资源HeapID与源数据FileID的映射关系，它是一个MemoryPool,其行为类似Mono堆内存，只增不减，因此需要对两个接口的使用做合理的规划。
+- iOS系统有256个开启文件的上限，因此，内存中通过CreateFromFile加载的AssetBundle对象也会低于该值。
+- CreateFromFile的调用会增加ResistenManager.Remapper的大小，而PersistentManager负责维护资源的持久化存储，Remapper保存的是加载到内存的资源HeapID与源数据FileID的映射关系，它是一个MemoryPool,其行为类似Mono堆内存，只增不减，因此需要对两个接口的使用做合理的规划。
 - 对于存在依赖关系的Bundle包，在加载时主要注意顺序，举例来说，假设CanvasA在BundleA中，所依赖的AtlasB在BundleB中，为了确保资源正确引用，那么最晚创建BundleB的AssetBundle对象的时间点是在实例化CanvasA之前，即，创建BundleA的AssetBundle对象时，Load("CanvasA")时，BundleB的AssetBundle对象都可以不在内存中。
 <img src="/2017/10/02/ABTheory/dependbundle.png">
 - 根据经验，建议AssetBundle文件的大小不超过1MB，因为在普遍情况下Bundle的加载时间与其大小并非呈线性关系，过大的Bundle可能引起较大的加载开销。
@@ -107,11 +77,9 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 在通过AssetBundle.Unload(false)卸载AssetBundle对象后，如果重新创建该对象并加载之前加载过的资源的时候，会出现冗余，即两份相同的资源。
 
 被脚本静态变量引用的资源，在调用Resources.UnloadUnusedAssets时，并不会被卸载，在Profiler中能够看到其引用情况。
-# UWA推荐方案
+# 推荐方案
 通过以上的讲解，相信您对AssetBundle的加载和卸载有了明确的了解。下面，我们简单地做一下API选择上的推荐：
 
-
-- 对于需要常驻内存的Bundle文件来说，优先考虑减少内存占用，因此对于存放非Prefab资源（特别是纹理）的Bundle文件，可以考虑使用WWW.LoadFromCacheOrDownload或AssetBundle.CreateFromFile加载，从而避免WebStream常驻内存；而对于存放较多Prefab资源的Bundle，则考虑使用new WWW加载，因为这类Bundle用WWWW.LoadFromCacheOrDownload加载时产生的SerializedFile可能会比new WWW产生的WebStream更大。
 - 对于加载完后即卸载的Bundle文件，则分两种情况：优先考虑速度（加载场景时）和优先考虑流畅度（游戏进行时）。
 1）加载场景的情况下，需要注意的是避免WWW对象的逐个加载导致的CPU空间，可以考虑使用加载速度较快的WWW.LoadFromCacheOrDownload或AssetBundle.CreateFromFile，但需要避免后续大量地进行Load资源的操作，引起IO开销（可以尝试直接LoadAll）。
 2）游戏进行的情况下，则需要避免使用同步操作引起卡顿，因此可以考虑使用new WWW配合AssetBundle.LoadAsync来进行平滑的资源加载，但需要注意的是，对于Shader，较大的Texture等资源，其初始化操作通常很耗时，容易引起卡顿，因此建议将这类资源在加载场景时进行预加载。
@@ -119,7 +87,5 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 - 尽量避免在游戏进行中调用Resources.UnloadUnusedAssets(),因为该接口开销较大，容易引起卡顿，可尝试使用Resources.Unload(obj)来逐个进行卸载，以保证游戏的流畅度。
 
 **需要说明的是，以上内存管理交适合于Unity5.3之前的版本。Unity引擎在5.3中对AssetBundle的内存占用进行了一定的调整，目前我们也在进一步的学习和研究中。**
-
-以上即为我们这次为您带来的AssetBundle管理机制，希望对您的项目研发有所帮助。我们会在后续技术文章通过大量的案例来进一步解释AssetBundle的管理机制，敬请关注。
 
 原文链接：https://blog.uwa4d.com/archives/ABTheory.html

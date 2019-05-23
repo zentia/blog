@@ -293,3 +293,50 @@ enum Color : byte
 # readonly与const
 readonly是运行时常量，程序运行时进行赋值，赋值完之后无法更改，也被称为只读变量。
 const表示编译时常量，程序编译时将对常量值进行解析，并将所有常量值引用替换为相应值。
+
+# using 语句
+提供可确保正确使用IDisposable对象的方便语法。
+## 示例
+```CSharp
+using (Font font1 = new Font("Arial", 10.0f))
+{
+    byte charset = font1.GdiCharSet;
+}
+```
+# 备注
+File和Font是访问非托管资源（本例中为文件句柄和设备上下文）的托管类型的示例。有许多其他类别的非托管资源和封装这些资源的类库类型。所有此类型都必须实现IDisposable接口。
+IDisposable对象的生存期限于单个方法时，应在using语句中声明并实例化它。using语句按照正确的方式调用对象上的Dispose方法，并（在按照前面所示方式使用它时）会导致在调用Dispose时对象自身处于范围之外。在using块中，对象是只读的并且无法进行修改或重新分配。
+
+using语句可确保调用Dispose，即使using块中发生异常也是如此。通过将对象放入try块中，然后调用finally块中的Dispose，可以实现相同的结果；实际上，这就是编译器转换using语句的方式。前面的代码示例在编译时将扩展到以下代码（请注意，使用额外的大括号为对象创建有限范围）；
+```CSharp
+{
+    Font font1 = new Font("Arial", 10.0f);
+    try
+    {
+        byte charset = font1.GdiCharSet;
+    }
+    finally
+    {
+        if (font1 != null)
+            ((IDsiposable)font1).Dispose();
+    }
+}
+```
+可在using语句中声明一个类型的多个实例，如下面的示例中所示：
+```CSharp
+using (Font font3 = new Font("Arial", 10.0f), font4 = new Font("Arial", 10.0f))
+{
+    // Use font3 and font4.
+}
+```
+可以在实例化资源对象，然后将变量传递到using语句，但这不是最佳做法。在这种情况下，控件退出using块以后，对象保留在作用域中，但是可能没有访问其未托管资源的劝降。换句话说，它不再是完全初始化的。如果尝试在using块外部使用该对象，则可能导致引发异常。因此，通常最好在using语句中实例化该对象并将其范围限制在using块中。
+```CSharp
+Font font2 = new Font("Arial", 10.0f);
+using (font2) // not recommended
+{
+    // use font2
+}
+// font2 is still in scope
+// but the method call throws an exception
+float f = font2.GetHeight();
+```

@@ -4,6 +4,14 @@ date: 2017-10-12 16:58:15
 tags:
   - Hexo
 ---
+# 安装
+
+	npm install -g hexo-cli
+
+如果提示timeout的话，使用下面指令
+
+	npm config delete proxy
+
 # 关闭背景动画
 背景动画基于canvas，个人感觉比较耗，毕竟i3，所以关闭，在\themes\next\_config.yml中修改字段
 ```javascript
@@ -24,9 +32,11 @@ $content-desktop = 700px
 $content-desktop-large = 900px
 ```
 
-发布：
+# 发布
 
 	hexo d -g
+
+如果发布失败的话，将ssh换成https://github.com/zentia/zentia.github.io.git
 
 # Insert Image
 ```
