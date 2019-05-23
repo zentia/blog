@@ -79,7 +79,7 @@ theme: next
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:zentia/zentia.github.io.git # git@git.dev.tencent.com:Zentia/Hexo.git git@gitee.com:zentia/Hexo.git
+  repo: https://github.com/zentia/zentia.github.io.git # git@git.dev.tencent.com:Zentia/Hexo.git git@gitee.com:zentia/Hexo.git
   branch: master
 search:
   path: search.xml

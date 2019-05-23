@@ -1380,8 +1380,7 @@ lua_load 用到的读取器函数， 每次它需要一块新的 chunk 的时候
 
     void lua_setfield (lua_State *L, int index, const char *k);
 
-做一个等价于 t[k] = v 的操作， 这里 t 是给出的有效索引 index 处的值， 而 v 是栈顶的那个值。
-这个函数将把这个值弹出堆栈。 跟在 Lua 中一样，这个函数可能触发一个 "newindex" 事件的元方法 （参见 §2.8）。
+等价于 t[k] = v 的操作， 这里 t 是给出的有效索引 index 处的值， 而 v 是栈顶的那个值。这个函数将把这个值弹出堆栈。 跟在 Lua 中一样，这个函数可能触发一个 "newindex" 事件的元方法。
 
 ### lua_setglobal
 
