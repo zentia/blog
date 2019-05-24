@@ -15,4 +15,4 @@ git config --global core.autocrlf false
 
 # 切换http
 
-	git remote set-url origin https://github.com/zentia/zentia.github.io.git
+	git remote set-url origin https://github.com/zentia/blog.git

@@ -2143,7 +2143,8 @@ If name is a compound name (that is, one with components separated by dots), mod
 
 This function may receive optional options after the module name, where each option is a function to be applied over the module.
 
-require (modname)
+### require (modname)
+
 Loads the given module. The function starts by looking into the package.loaded table to determine whether modname is already loaded. If it is, then require returns the value stored at package.loaded[modname]. Otherwise, it tries to find a loader for the module.
 
 To find a loader, first require queries package.preload[modname]. If it has a value, this value (which should be a function) is the loader. Otherwise require searches for a Lua loader using the path stored in package.path. If that also fails, it searches for a C loader using the path stored in package.cpath. If that also fails, it tries an all-in-one loader (see below).

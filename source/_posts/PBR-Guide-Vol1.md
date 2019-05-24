@@ -230,3 +230,21 @@ $f(l,v)={D(h)F(v,h)G(l,v,h)\over 4(n\cdot l)(n \cdot v)}$
 关于Cook-Torrance BRDF，需要强调的两点注意事项：
 
 - 对于分母中的点击，仅仅避免负值时不够的，也必须避免零值。通常通过在常规的clamp或绝对值操作之后添加非常小的正值来完成。
+- **Microfacet Cook-Torrance BRDF是实践中使用最广泛的模型，实际上也是人们可以想到的最简单的微平面模型。它仅对几何光学系统中的单层为表面上的单个散射进行建模，没有考虑多次散射，分层材质，以及衍射。Microfacet模型，实际上还有很长的路要走。**
+
+下面对Microfacet Cook-Torrance BRDF中的D、F、G项分别进行简单说明。
+
+## 5.2 Specular D
+
+法线分布函数（Normal Distribution Function, NDF）D的常见模型可以总结如下：
+
+- Beckmann[1963]
+- Blinn-Phong[1977]
+- GGX[2007]/Trowbridge-Reitz[1975]
+- Generalized-Trowbridge-Reitz(GTR)[2012]
+- Anisotropic Beckmann[2012]
+- Anisotropic GGX[20115]
+
+其中，业界较为主流的法线分布函数是GGX（Trowbridge-Reitz），因为具有更好的高光长尾：
+
+$D_{GGX}$
