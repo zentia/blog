@@ -3,7 +3,9 @@ title: 【基于物理的渲染（PBR）白皮书】（一）开篇：PBR核心�
 date: 2018-05-14 19:46:49
 mathjax: true
 tags:
-    - PBR
+    - 计算机图形学
+    - 游戏引擎
+    - 游戏开发
 ---
 ### 光与物质
 光与物质：基于物理的渲染与着色理论
@@ -247,4 +249,140 @@ $f(l,v)={D(h)F(v,h)G(l,v,h)\over 4(n\cdot l)(n \cdot v)}$
 
 其中，业界较为主流的法线分布函数是GGX（Trowbridge-Reitz），因为具有更好的高光长尾：
 
-$D_{GGX}$
+<font size="5">$D_{GGX} = {\alpha \over (\pi(n \cdot m)^2(\alpha^2 - 1) + 1)^2}$</font>
+
+{%asset_img 24.jpg%}
+
+另外，需要强调一点。**Normal Distribution Function**正确的翻译是法线分布函数，而不是正太分布函数。google翻译等翻译软件会将Normal Distribution Function翻译成正态分布函数，而不少中文资料就跟着翻译成正态分布函数，这是错误的。
+
+其实，一些参考文献会使用术语“法线分布（distribution of normals）”来避免与高斯正太分布(Gaussian normal distribution)混淆。
+
+## 5.3 Specular F
+
+对于菲涅尔（Fresnel）项，业界方案一般都采用Schlick的Fresnel近似，因为计算成本低廉，而且精度足够：
+
+$F_{Schlick}(v,h)=F_0 + (1 - F_0)(1 - (v \cdot h))^5$
+
+菲涅尔项的常见模型可以总结如下：
+
+- Cook-Torrance[1982]
+- Schlick[1994]
+- Gotanta[2014]
+
+## 5.4 Specular G
+
+几何项G的常见模型可以总结如下：
+
+- Smith[1967]
+- Cook-Torrance[1982]
+- Neumann[1999]
+- Kelemen[2001]
+- Implicit[2013]
+
+另外，Eric Heitz在[Heitz14]中展示了Smith几何阴影函数是正确且更准确的G项，并将其扩展为Smith联合遮蔽函数(Smith Joint Masking-Shadowing Function)，该函数具有四种形式：
+
+- 分离遮蔽阴影型（Separable Masking and Shadowing）
+- 高度相关遮蔽阴影型（Height-Correlated Masking and Shadowing）
+- 方向相关遮蔽阴影型（Direction-Correlated Masking and Shadowing）
+- 高度-方向相关遮蔽阴影型（Height-Direction-Correlated Masking and Shadowing）
+
+目前较为常用的是最为简单的形式，分离遮蔽阴影（Separable Masking and Shadowing Function）。
+
+该形式将几何项G分为两个独立的部分：光线方向（light）和视线方向（view），并对两者用相同的分布函数描述。根据这种思想，结合法线分布函数（NDF）与Smith几何阴影函数，于是有了以下新的Smith几何项：
+
+- Smith-GGX
+- Smith-Beckmann
+- Smith-Schlick
+- Schlick-Beckmann
+- Schlick-GGx
+
+其中UE4的方案是上面列举中的"Schlick-GGX"，即基于Schlick近似，将K映射为$k = {\alpha \over 2}$，去匹配GGX Smith方程：
+
+
+$k = {\alpha \over 2}$
+$\alpha = roughness^2$
+$G_1(v)={(n\cdot v)\over {(n\cdot v)(1-k)+k}}$
+$G(l,v,h)=G_1(l)G_1(v)$
+
+# 六、基于物理的环境光照（Physically Based Environment Lighting）
+有了直接光部分，我们也需要环境光。所以PBR核心知识体系的第六部分是基于物理的环境光照，一般大家也直接默认环境光照的技术方案是基于图像的光照（Image Based Lighting, IBL)。这也是真正让基于物理的渲染画质提升的主要贡献者。
+{%asset_img 25.jpg%}
+漫反射环境光照部分一般采用传统IBL中辉度环境映射（Irradiance Environment Mapping）技术，并不是基于物理的特有方案，这里暂不讨论。
+
+而基于物理的镜面反射（Specular）环境光照，业界中一般会采用基于图像的光照（IBL）的方案。要将基于物理的BRDF模型与基于图像的光照（IBL）一起使用，需要求解光照亮度积分（Radiance Integral），而求解光亮度积分通常会使用重要性采样（Importance Sample）。
+
+重要性采样（Importance Sample）即通过现有的一些已知条件（分布函数），想办法集中于被积函数分布可能性较高的区域（重要的区域）进行采样，进而可高效和准确的计算。
+
+## 6.1 分解求和近似（Split Sum Approximation）
+
+基于重要性采样的思路，将蒙特卡洛积分公式代入渲染方程可得：
+{%asset_img 26.jpg%}
+$$
+### 6.3.1 流派1：2D LUT
+UE4在[Real Shading in Unreal Engine 4,2013]中提出，第二个求和项，使用Schlick近似后，$F_0$可以从积分中分出来：
+$\int_\Omega{L_i(l)f(l,v)cos\theta_l\cdot dl} = F_0\int_\Omega{f(l,v)\over F(v,h)}(1-(1-v\cdot h)^5)cos\theta_ldl+\int_\Omega{f(l,v)\over F(v,h)}(1-v\cdot h)^5cos\theta_ldl$
+上式留下了两个输入(Roughness和$cos\theta$v)和两个输出(缩放和向$F_0$的偏差(a scale and bias to $F_0$))，即把上述方程看成是$F_0 \cdot Scale + Offset$的形式。我们预先计算此函数的结果并将其存储在2D查找纹理(LUT,look-up texture)中。
+{%asset_img 26.jpg%}
+这张红绿色的贴图，输入roughtness、$cos\theta$，输出环境BRDF镜面反射的强度。是关于roughness、$cos\theta$与环境BRDF镜面反射强度的固有映射关系。可以离线预计算。
+具体的取出方式为：
+<font size="5">${1\over N}\sum_{k=1}^N {f(l_k,v)cos\theta_{l_k}\over p(l_k,v)}=LUT.r * F_0 + LUT.g$</font>
+即UE4是通过把Fresnel公式的F0提出来，组成F0*Scale+Offset的方式，再将Scale和Offset的索引存到一张2D LUT上。靠roughness和NdotV进行查找。
+
+### 6.3.2 流派2：解析拟合
+
+COD: Black Ops 2的做法，是通过数学工具Mathematica(http://www.wolfram.com/mathematica/)中的数值积分拟合出曲线，即将UE4离线计算的这张2D LUT用如下函数进行了拟合：
+```c
+float3 EnvironmentBRDF(float g, float NoV, float3 rf0)
+{
+   float4 t = float4(1/0.96, 0.475, (0.0275 - 0.25))
+}
+```
+
+
+# 七、离线渲染相关（Offline Rendering Related）
+虽然我们目前主要关注的是实时渲染（实时光栅图形学相关，暂时不关注实时光线追踪）领域，但很多时候，实时渲染也需要涉及到预计算，尤其是IBL相关的预计算，所以或多或少会用到离线渲染相关的知识。所以PBR核心知识体系的第七部分是离线渲染相关的主题。
+{%asset_img 27.jpg%}
+以下是与实时渲染结合相对紧密的离线渲染的核心主题以及概括总结（主要是统计学与概览相关）：
+- 重要性采样（Importance Sample）：蒙特卡洛积分的一种采样策略。思路是基于分布函数，尽量对被积函数分布可能性较高的区域进行采样。
+- 多重要性采样（Muti Importance Sampling，MIS）：估算某一积分时，基于多个分布函数获取采样，并期望至少某一分布与被积函数形状适配。即根据各种技术对采样进行加权计算，进而消除近似于它的概览。即偶然中包含着某种必然。
+- 蒙特卡洛方法（Monte Carlo Methods）：一种以概率统计理论为指导的数值计算方法。是指使用随机数（或更常见的伪随机数）来解决很多计算问题的方法。
+- 低偏差序列（Low-discrepancy sequence）：一种确定生成的超均匀分布列，也成为随机列、次随机列，常见低偏差序列有Hammersley，Halton等。
+- 拟蒙特卡罗方法（Quasi-Monte Carlo Method）：使用低差异来进行数值积分和研究其它一些数值问题的方法。
+
+# 八、进阶渲染主题（Advanced Rendering Topics）
+前面的核心PBR主题都讨论完以后，会有更多进阶的内容浮出水面，它们共同组成了PBR核心知识体系的第八部分。
+{%asset_img 28.jpg%}
+以下是一个列举：
+- 进阶着色模型
+   - 布料BRDF(Cloth BRDF)
+   - 清漆着色模型(Clear Coat Model)
+   - 次表面散射BRDF模型(Subsurface Scattering BRDF Model)
+- 进阶材质功能
+   - 全能材质(Uber Shader)
+   - 分层材质(Layered Materials)
+   - 分层全能材质(Layered Uber Shader)
+   - 混合材质(Blending Material)
+   - 过滤材质(Filtering Materials)
+- 进阶理论
+   - 物理光学(Physics of Light)
+   - 波动光学(Wave Optics)
+   - 基于物理的摄像机(Physical Based Camera)
+   - 基于物理的光源(Physical Based Light)
+   - 白炉测试(White Furnace Test)
+- 进阶BxDF
+   - BSDF
+   - BTDF
+   - BSSRDF
+- 进阶材质渲染
+   - 皮肤渲染(Skin Rendering)
+   - 布料渲染(Cloth Rendering)
+   - 半透明表面渲染(Translucent Surfaces Rendering)
+   - 头发渲染(Hair Rendering)
+   - 毛发渲染(Fur Rendering)
+   - 车漆渲染(Car Paint Rendering)
+   - 水体渲染(Water Rendering)
+   - 湿润表面渲染(Wet Surface Rendering)
+   - 天空与大气渲染(Sky and Atmosphere Rendering)
+   - 薄表面材质渲染(Thin Surface Rendering)
+   - 体积渲染(Volumetric Rendering)
+

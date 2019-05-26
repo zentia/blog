@@ -7,6 +7,8 @@ tags:
 categories: 剑网3口袋版
 ---
 Unity版本2018.3
+2D场景，3D模型，确实有点惊喜，场景里面的东西看到的基本都是用片做的。那么定位就应该偏向格斗了，可能是帧同步吧。
+
 以下基本是静态分析结果。
 # 启动流程
 start场景挂了两个节点一个是Start在上面下挂了一个GameStart脚本，作为启动脚本，另一个是Camera没什么必要。
@@ -84,10 +86,11 @@ public static AssetBundleCreateRequest LoadFromFileAsync(string path)
 }
 ```
 # UI
-
+开发模式属于MV模式。
 ## 目录结构
 NGUI + slua
 UI脚本目录 Assets/StreamingAssets/Lua
+数据控制逻辑在LogicData目录下
 ### Common
 #### Timer.lua
 

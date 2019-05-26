@@ -39,7 +39,9 @@ categories:
 
 有两种方法来显示分数，一种是 \frac a b 显示$\frac a b$，另一种是用\over，如{a+1 \over b+1}显示${a+1 \over b+1}$
 
-# 积分
+# 求和与积分
+
+\sum用来表示求和符号，其下标表示求和上线，商标表示上限。如\sum_1^n：$\sum_1^n$
 
 \int
     \int_0^\infty{fxdx} 呈现为$\int_0^\infty{fxdx}$
