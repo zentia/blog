@@ -2,6 +2,7 @@
 title: Real Time Rendering 3rd
 date: 2017-09-29 15:13:03
 tags:
+   - 计算机图形学
 ---
 # Overview
 <img src="/2017/09/29/Real-Time-Rendering-3rd/overview.png" alt="overview">
@@ -55,7 +56,9 @@ url: www.realtimerendering.com
 几何着色器可以改变信新传递进来的图元的拓扑结构，且几何着色器可以接受任何拓扑类型的图元，但是只能输出点、折线（line strip）和三角形条（triangle strips）。
 
 ### 裁剪
+
 裁剪（Clipping）属于可配置的功能阶段，在此阶段可选运行的裁剪方式，以及添加自定义的裁剪面。
+
 ### 屏幕映射
 屏幕映射（Screen Mapping）、三角形设置（Triangle Setup）和三角形遍历（Triangle Traversal）阶段是固定功能阶段。
 ### 像素着色器
