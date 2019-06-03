@@ -837,7 +837,7 @@ Lua 使用一个虚拟栈来和 C 传递值。 栈上的的每个元素都是一
 
 ### LUA_REGISTRYINDEX
 
-Lua 提供了一个注册表，这是一个预定义出来的表，可以用来保存任何 C 代码想保存的 Lua 值。 这个表可以用伪索引 LUA_REGISTRYINDEX 来定位。 任何 C 库都可以在这张表里保存数据，为了防止冲突，你需要特别小心的选择键名。 一般的用法是，你可以用一个包含你的库名的字符串做为键名，或者可以取你自己 C 代码 中的一个地址，以 light userdata 的形式做键。
+Lua提供了一个注册表，这是一个预定义出来的表，可以用来保存任何C代码想保存的Lua值。这个表可以用伪索引`LUA_REGISTRYINDEX`来定位。 任何C库都可以在这张表里保存数据，为了防止冲突，你需要特别小心的选择键名。 一般的用法是，你可以用一个包含你的库名的字符串做为键名，或者可以取你自己C代码中的一个地址，以 light userdata 的形式做键。
 注册表里的整数健被用于补充库中实现的引用系统的工作，一般说来不要把它们用于别的用途。
 
 ### C 中的错误处理
@@ -1031,7 +1031,7 @@ LUA_GCSETSTEPMUL: 把 arg/100 设置成 step multiplier （参见 §2.10）。 �
 
 	void lua_gettable (lua_State *L, int index);
 
-把 t[k] 值压入堆栈， 这里的 t 是指有效索引 index 指向的值， 而 k 则是栈顶放的值。
+把t[k] 值压入堆栈， 这里的t是指有效索引 index 指向的值， 而 k 则是栈顶放的值。
 这个函数会弹出堆栈上的 key （把结果放在栈上相同位置）。 在 Lua 中，这个函数可能触发对应 "index" 事件的元方法。
 
 ### lua_gettop
@@ -1143,8 +1143,13 @@ chunkname 这个参数可以赋予 chunk 一个名字， 这个名字被用于�
 ### lua_newtable
 
 	void lua_newtable (lua_State *L);
+创建一个空table，并将之压入堆栈。它等价于`lua_createtable(L, 0, 0)`。
 
-创建一个空 table ，并将之压入堆栈。 它等价于 lua_createtable(L, 0, 0) 。
+### lua_pushglobaltable
+[-0, +1, –]
+    
+    void lua_pushglobaltable (lua_State *L);
+Pushes the global environment onto the stack. 
 
 ### lua_newthread
 
@@ -1188,9 +1193,10 @@ userdata 代表 Lua 中的 C 值。 完整的 userdata 代表一块内存。 它
 Lua 中数字的类型。 确省是 double ，但是你可以在 luaconf.h 中修改它。
 通过修改配置文件你可以改变 Lua 让它操作其它数字类型（例如：float 或是 long ）。
 
-### lua_objlen
+### lua_objlen & luaS_rawlen
 
-    size_t lua_objlen (lua_State *L, int index);
+    size_t lua_objlen (lua_State *L, int index); -- 5.1
+    size_t lua_rawlen (lua_State *L, int index); -- 5.3
 
 返回指定的索引处的值的长度。 对于 string ，那就是字符串的长度； 对于 table ，是取长度操作符 ('#') 的结果； 对于 userdata ，就是为其分配的内存块的尺寸； 对于其它值，为 0 。
 
@@ -1311,7 +1317,7 @@ userdata 在 Lua 中表示一个 C 值。 light userdata 表示一个指针。 �
 
 	void lua_rawget (lua_State *L, int index);
 
-类似于 lua_gettable， 但是作一次直接访问（不触发元方法）。
+类似于 `lua_gettable`，但是作一次直接访问（不触发元方法）。
 
 ### lua_rawgeti
 

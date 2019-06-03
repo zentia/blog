@@ -55,9 +55,9 @@ lua_load 用到的读取器函数， 每次它需要一块新的 chunk 的时候
 
 ### lua_setfield
 
-    void lua_setfield (lua_State *L, int index, const char *k);
+    void lua_setfield(lua_State *L, int index, const char *k);
 
-等价于t[k] = v的操作，这里t是给出的有效索引index处的值，而v是栈顶的那个值。这个函数将把这个值弹出堆栈。 跟在Lua中一样，这个函数可能触发一个 "newindex" 事件的元方法。
+等价于`t[k] = v`的操作，这里t是给出的有效索引index处的值，而v是栈顶的那个值。这个函数将把这个值弹出堆栈。 跟在Lua中一样，这个函数可能触发一个`newindex`事件的元方法。
 
 ### lua_setglobal
 
@@ -85,7 +85,7 @@ lua_load 用到的读取器函数， 每次它需要一块新的 chunk 的时候
 
 参数允许传入任何可接受的索引以及0。它将把堆栈的栈顶设为这个索引。如果新的栈顶比原来的大，超出部分的新元素将被填为nil。如果index为0，把栈上所有元素移除。
 
-lua_State
+### lua_State
 typedef struct lua_State lua_State;
 一个不透明的结构，它保存了整个 Lua 解释器的状态。 Lua 库是完全可重入的： 它没有任何全局变量。 （译注：从 C 语法上来说，也不尽然。例如，在 table 的实现中 用了一个静态全局变量 dummynode_ ，但这在正确使用时并不影响可重入性。 只是万一你错误链接了 lua 库，不小心在同一进程空间中存在两份 lua 库实现的代码的话， 多份 dummynode_ 不同的地址会导致一些问题。） 所有的信息都保存在这个结构中。
 
@@ -102,7 +102,7 @@ typedef struct lua_State lua_State;
 
     int lua_toboolean (lua_State *L, int index);
 
-把指定的索引处的的Lua值转换为一个C中的boolean值（ 0 或是 1 ）。 和 Lua 中做的所有测试一样， lua_toboolean 会把任何 不同于 false 和 nil 的值当作 1 返回； 否则就返回 0 。 如果用一个无效索引去调用也会返回 0 。 （如果你想只接收真正的 boolean 值，就需要使用 lua_isboolean 来测试值的类型。）
+把指定的索引处的的Lua值转换为一个C中的boolean值（0或是1）。和Lua中做的所有测试一样，lua_toboolean会把任何不同于false和nil的值当作1返回； 否则就返回0。 如果用一个无效索引去调用也会返回0。 （如果你想只接收真正的boolean值，就需要使用`lua_isboolean`来测试值的类型。）
 
 ### lua_tocfunction
     

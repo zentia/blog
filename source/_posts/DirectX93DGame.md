@@ -3,7 +3,8 @@ title: DirectX 9 3D游戏设计入门
 date: 2019-03-24 10:01:00
 mathjax: true
 tags:
-  - 图形学
+  - 计算机图形学
+  - "Direct3D 9"
 ---
 # 三维空间中的向量
 　　几何学中，我们用有向线段表示向量，如图1。向量的两个属性是他的长度和他的顶点所指的方向。因此，可以用向量来模拟既有大小又有方向的物理模型。例如，以后我们要实现的粒子系统。我们用向量来模拟粒子的速度和加速度。在3D计算机图形学中我们用向量不仅仅模拟方向。例如我们常常想知道光线的照射方向，以及在3D世界中的摄象机。向量为在3维空间中表示方向的提供了方便。
@@ -664,11 +665,11 @@ typedef struct _D3DLOCKED_RECT {
 在这里有一些关于表面锁定代码的一些说明。32-bit像素格式这个设定很重要，我们把bits转换成DWORDs。这让我们能把每一个DWORD视为表示一个像素。
 
 ### Multisampling
-由于使用像素矩阵来表示图像，在显示时会出现锯齿状，Multisampling就是使其变得平滑的技术。它的一种最普通的用法即为——全屏抗锯齿（看图1.3）。
+由于使用像素矩阵来表示图像，在显示时会出现锯齿状，Multisampling就是使其变得平滑的技术。它的一种最普通的用法即为----全屏抗锯齿。
 {% asset_img 1-3.jpg 图1.3 %}　　
-D3DMULTISAMPLE_TYPE枚举类型使我们可以指定全屏抗锯齿的质量等级：
-- D3DMULTISAMPLE_NONE——不使用全屏抗锯齿。
-- D3DMULTISAMPLE_1_SAMPLE…D3DMULTISAPLE_16_SAMPLE——设定1-16级的等级。
+`D3DMULTISAMPLE_TYPE`枚举类型使我们可以指定全屏抗锯齿的质量等级：
+- `D3DMULTISAMPLE_NONE`----不使用全屏抗锯齿。
+- `D3DMULTISAMPLE_1_SAMPLE…D3DMULTISAPLE_16_SAMPLE`----设定1-16级的等级。
 
 本书的示例程序中没有使用全屏抗锯齿的功能，因为它大大的降低了程序运行速度。如果你实在很想使用它的话，要记住使用IDirect3D9::CheckDeviceMultisampleType来检测你的显卡是否支持。
 

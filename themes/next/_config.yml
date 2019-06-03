@@ -437,8 +437,8 @@ font:
   # Font settings for <code> and code blocks.
   codes:
     external: true
-    family: Verdana
-    size: 10
+    family: Courier New
+    size: 11
 
 
 # ---------------------------------------------------------------

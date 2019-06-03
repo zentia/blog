@@ -28,10 +28,6 @@ spec = step(threshold, spec);
 ```
 但是，这种粗暴的判断方法会在高光区域的边界造成锯齿。
 ```c
-// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
 Shader "Zenita/Non-photo"
 {
     Properties
@@ -179,7 +175,7 @@ Shader "Zenita/Non-photo"
 ```c
 specular = lerp(0,1,smoothstep(-0.0001, 0.0001, specular - _Threshold));
 ```
-首先，我们计算了光照模型中需要的各个方向矢量，并对它们进行了归一化处理。然后我们计算了材质的反射率albedo和环境光照ambient。接着，我们使用内置的UNITY_LIGHT_ATTENUATION宏来计算当前世界坐标下的阴影值。随后，我们计算了半兰伯特漫反射系数，并和阴影值相乘得到最终的漫反射系数。我们使用这个漫反射系数对渐变纹理_Ramp进行采样，并将结果和材质的反射率、光照颜色颜色相乘，作为最后的漫反射光照。高光反射使用fwidth对高光区域的边界进行抗锯齿处理，并将计算得到的高光反射系数和高光反射颜色相乘，得到高光反射的光照部分。值得注意的是，我们在最后还使用了step(0.0001,_SpecularScale)，这是为了在\_SpecularScale为0时，可以完全消除高光反射的光照。最后，返回环境光照、漫反射光照和高光反射光照叠加的结果。
+首先，我们计算了光照模型中需要的各个方向矢量，并对它们进行了归一化处理。然后我们计算了材质的反射率albedo和环境光照ambient。接着，我们使用内置的`UNITY_LIGHT_ATTENUATION`宏来计算当前世界坐标下的阴影值。随后，我们计算了半兰伯特漫反射系数，并和阴影值相乘得到最终的漫反射系数。我们使用这个漫反射系数对渐变纹理_Ramp进行采样，并将结果和材质的反射率、光照颜色颜色相乘，作为最后的漫反射光照。高光反射使用fwidth对高光区域的边界进行抗锯齿处理，并将计算得到的高光反射系数和高光反射颜色相乘，得到高光反射的光照部分。值得注意的是，我们在最后还使用了`step(0.0001,_SpecularScale)`，这是为了在\_SpecularScale为0时，可以完全消除高光反射的光照。最后，返回环境光照、漫反射光照和高光反射光照叠加的结果。
 最后，我们为Shader设置了合适的Fallback:
 ```c
 Fallback "Diffuse"

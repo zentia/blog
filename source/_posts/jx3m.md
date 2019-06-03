@@ -65,6 +65,9 @@ public static void addMember(IntPtr l, string name, LuaCSFunction get, LuaCSFunc
 }
 ```
 其他注册方式类似。
+然后slua对于用户感觉是透明的，然后每个注册之后都要返回两个参数，大部分来说。生成的cs文件完全是调用另一个文件的函数。
+这种加一层的包装真好的好吗，难道用户不需要知道里面的东西吗？
+（PS：个人感受，slua这种warp的方式真的好难受），好吧，自动化的注册确实跟不要钱一样。
 ## 模块
 这里的模块是自定义的，而不是根据配置读取的，其实也无可厚非，只不过会增加了一些代码量，这里的代码量仅仅指模块名称。比如UILoadHelper.SpawdPrefabFromPool，在这里UILoadHelper被我们习惯称为模块。
 # AssetBundle
