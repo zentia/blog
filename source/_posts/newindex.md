@@ -1,5 +1,5 @@
 ---
-title: "__index,__newindex,rawset,rawget,setmetatable"
+title: index newindex rawset rawget setmetatable
 date: 2017-10-23 09:46:45
 tags:
 	Lua

@@ -139,3 +139,6 @@ Vulkan应用程序首先执行与加载程序库的握手并初始化Vulkan具�
 
 # 窗口展示表面(Window presentation surfaces)
 一旦加载器找到Vulkan具体实现的驱动程序，
+
+好了，抄完上面的就懒得抄了，我总是这个样子，做事情一直坚持不下来。无论是上面，无所谓了，这就是我吧，感觉也没什么坏处了，唯一的坏处就是常年在外然后和李浩然拌拌嘴，其他也真没上面，哦哦，还有就是来了金山这边有点能吃了，虽然吃饭不要钱。
+跟着Vulkan 向导走着，url是：https://vulkan-tutorial.com/Development_environment#page_Setting_up_Visual_Studio 访问还得翻墙，本来想买VPN来着，但是又舍不得掏钱，总是舍不得掏钱，于是配置了半天XX-NET，终于可以将就的看了。但是目前卡在了glw下载的过程中，趴着梯子看外面的世界确实不好受呀。

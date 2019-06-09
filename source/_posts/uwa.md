@@ -62,5 +62,6 @@ march指定的是当前cpu的架构，而mtune是真正作用于某一型号cpu�
 - Uesd Total 					- Unity引擎再内存方面的总体使用量。
 - Reserved Unity & Used Unity 	- Unity引擎自身各个模块内部的内存分配，宝库偶各个Manager的内存占用、序列化信息的内存站哟个，WebStream/SerializedFile内存占用和部分资源的内存暂用等等。 
 
-
-
+看知乎的时候发现一个好玩的东西，https://lab.uwa4d.com/lab/5bc42d5404617c5805d4d685 UGUI绘制图表工具，一直想做一个性能分析工具。
+GDC2018中描述了Northlight引擎的内部实现和渲染相关的一些最新进展。
+前育碧的两位资深老员工成立Second Order公司后，开发了第一款游戏《Claybook》，其中包括了许多创新技术，比如基于GPU渲染的粘土与流体模拟、完全可变性的世界与角色、光线追踪的视觉效果。

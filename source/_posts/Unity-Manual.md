@@ -57,7 +57,7 @@ WaitForSeconds只能用在协同程序中的yield声明。
 public enum CameraClearFlags
 {
 	Skybox = 1,			// 这是默认设置，在屏幕上空的部分显示当前相机的天空盒。如果当前相机没有设置天空盒，它会默认使用Edit->Render Settings里)中选择天空盒。然后它将退回使用背景颜色，另外天空盒组件可以添加到相机上。
-	SolidColor = 2, 	// 屏幕上的任何空的部分显示当前相机的背景颜色
+	SolidColor = 2, // 屏幕上的任何空的部分显示当前相机的背景颜色
 	Color = 2,
 	Depth = 3,			// 该深度的东西永远都不会被裁剪
 	Nothing = 4,		// 什么事情都不做
@@ -95,4 +95,4 @@ public enum CameraClearFlags
 在<a href="https://docs.unity3d.com/Manual/AssetBundles-Workflow.html">AssetBundle工作流</a>的文档中，我们有一个代码示例，它将三个参数传递给BuildPipeline.BuildAssetBundles函数。让我们更深入实际的了解。
 Assets/AssetBundles:这是AssetBundles输出的目录。您可以将其更改为您想要的任何输出目录，只需确保在尝试构建之前文件夹实际存在。
 ## BuildAssetBundleOptions
-BuildAssetBundleOptions您可以指定几种具有各种效果的不同。有关所有选项的表，请参阅
+BuildAssetBundleOptions您可以指定几种具有各种效果的不同。

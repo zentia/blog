@@ -24,7 +24,7 @@ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang
 cd ../..
 mkdir build
 "C:\PROGRAM FILES (X86)\MICROSOFT VISUAL STUDIO\2017\COMMUNITY\COMMON7\IDE\COMMONEXTENSIONS\MICROSOFT\CMAKE\CMake\bin\cmake.exe" -G "Visual Studio 15" ../llvm
-msbuild LLVM。sln
+msbuild LLVM.sln
 ```
 
 编译完成之后，我们来测试我们编译出的clang是否有问题。首先我们需要将生成物的目录加入环境变量PATH，以便在命令行能够找到它
@@ -46,3 +46,15 @@ D:\>python.exe build/Debug/bin/llvm-lit.py -sv --param build_mode=Debug --param 
 如果用vim修改，可以用`:%s/build_mode/build_config/g`
 最后`clang main.cpp`编译我们的项目。
 http://clang.llvm.org/get_started.html
+
+# Linux 编译
+我这边的环境是Centos7.2的虚拟机环境。
+
+    yum install docker
+    systemctl start docker
+    docker pull tim03/clang
+    docker run -it --rm -v$(pwd):/usr/src tim03/clang
+    bash-4.4# 
+    bash-4.4# clang main.c
+
+    
