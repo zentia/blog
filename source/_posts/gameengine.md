@@ -27,6 +27,8 @@ mkdir build
 msbuild LLVM.sln
 ```
 
+`Visual Studio 15 Win64`指定编译平台为64位.
+
 编译完成之后，我们来测试我们编译出的clang是否有问题。首先我们需要将生成物的目录加入环境变量PATH，以便在命令行能够找到它
 {% asset_img 2.jpg %}
 重启命令行，检查是否可以找到clang

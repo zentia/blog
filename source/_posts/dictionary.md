@@ -59,6 +59,3 @@ buckets[targetBucket] = index;
 经过上面的步骤以后，数据结构就更新成了下图这个样子
 
 {% asset_img 4.png %}
-
-# Find操作
-

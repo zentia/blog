@@ -1,5 +1,5 @@
 ---
-title: 3DMAX快捷键操作
+title: 3DMAX Manual
 mathjax: true
 date: 2019-05-11 10:10:32
 tags:
@@ -13,9 +13,15 @@ Customize\Show UI(自定义\显示用户界面)进行显示在屏幕上。
 1. 视图切换可直接按快捷键的有： T--Top（顶视图）、B--Bottom（底视图）、F--Front（前视图）
 L--Left（左视图）、U--User（用户视图）、P--Perspective（透视图）
 C--Camara（摄像机视图，只有建立摄像机后才有用）
+Shift+移动----复制
+MAX安全框 快捷键 显示/隐藏安全框 `Shitf+F`, 防止相机打出去的
+`Shift+Q`----渲染当前视图
+`Alt+X`使选中物体透明
+
 其他不能按快捷键的操作如下：
-a.激活视图，按V键，从快捷菜单中进行选择
-b.在视图名称处按右键选择Views(查看)命令后面的相应视图
+- 激活视图，按V键，从快捷菜单中进行选择
+- 在视图名称处按右键选择Views(查看)命令后面的相应视图
+
 2. 视图中的物体显示方式
 Wireframe（网格）：以物体颜色显示网格，材质不显示
 Smooth+HighLights（实体）
@@ -311,6 +317,7 @@ RESULT+HIDDEN OPERAND（结果+隐藏的操作对象）
 九.TERRAIN(地形)
 十.LOFT(放样)（针对于二维图形SHAPES）
 十一.MESHER(网格化)
+涡轮平滑(TurboSmooth)
 
 第七讲 创建二维图形（SHAPES） 
 一.二维图形
@@ -352,6 +359,17 @@ ADAPTIVE（适配圆滑，自动生成圆滑，不需要你填插入多少个点
 Amount:挤出多少
 
 第八讲 二维编辑命令（EDIT SPLINE(样条曲线) 
+## 二维样条线
+Renderer(渲染)
+在渲染中启用(Enable In Renderer)
+在视口中启用(Enable In Viewport)
+使用视口设置(User Viewport Settings)
+生成贴图坐标(Generte Mapping Coords)
+真实世界贴图大小(Real-World Map Size)
+视口(Viewport) 渲染(Renderer)
+径向(Radial)
+厚度(Thickness)
+
 EDIT SPLINE(编辑样条曲线)
 注：EDIT SPLINE是斜体--针对了多个物体
 EDIT SPLINE是正体--针对单个物体
@@ -480,7 +498,10 @@ ATTACH MULT做成复合形）
 二.模型精度不能太高(因为会影响渲染时间)
 
 第十一讲 CAMERA（照相机） 
-一.改变物体大小1.CAMERA离物体远,物体小,离物体近,物体大2.PARAMETERS(参数)1)LENS(焦距)单位：MM（毫米）(1)焦距值大----离物体近----物体大---物体越清晰相应的视野也就越小 ----看到的物体也就越少(2)焦距值小----离物体远----物体小---物体也不很清晰相应的视野也就越大 ----看到的物体也就越多2)FOV(视野)（FIELD OF VIEW）单位：DEGREE（度）(1)视野大----离物体远----物体小 ----看到的物体也就越多(2)视野小----离物体近----物体大----看到的物体也就越少3）LENS(焦距)与FOV(视野)之间是相反的。二.SHOW CONE（显示锥形）（无论是否选定照相机，照相机的视野都会显示）三.SHOW HORIZON(显示水平线)照相机的水平线四.ENVIRONMENT RANGES(环境范围)要以环境挂上钩1.RENDERING--ENVIRONMENT--ATMOSPHERE(大气)--FOG(雾)1)ACTIVE(激活雾)2) MERGE(合并另外一个场景的特效,如没特效,只是合并场景)3)TYPE(类型)STANDARD(标准雾)(均匀分布,沿水平方向分布)LAYERED(层雾)(沿垂直方向分布)2.NEAR RANGE(近距离范围)(弱,密度没有)3.FAR RANGE(远距离范围)(强,密度最大)4.NEAR RANGE到FAR RANGE之间的雾越来越多五.CLIPPING PLANES(剪切平面)1.CLIPPING MANUALLY(从NEAR到FAR两者间的物体显示,不在两者间的物体不显示)第十二讲 MATERIAL EDITOR（材质编辑器） 一.概念1.材质:是指物体外表信息的表现(包括:颜色,高光,光泽度,透明度等等)2.贴图:是指带有图案,纹理的图像信息,它附于材质之上注意:物体一定有材质,可以没有贴图3.热材质（同步材质）:赋给了物体的材质球(边有白框)4.冷材质（不同步材质）:没有赋给物体的材质球二.SHADER(阴影) BASIC（基础） PARAMETERS1.渲染模式2.WIRE（网格）1)网格与物体的分格数（SEGMENTS）有关2)用一步修改网格(1)加粗(EXTENDED PARAMETERS-WIRE-PIXELS(远近一样粗细)UNITS(远细,近粗 )3）二维物体网格--没有分格数插入EDIT SPLINE-SEGMENT-DEVIDE（注：顶盖，顶底没有）3.2-SIDED（内外所赋的材质是一样）4.FACE MAP5.FACETED三.不同渲染模式的基本参数( XXXXXX BASIC PARAMETERS)1.AMBIENT(背光区)2.DIFFUSE(主光区)3.SPECULAR(高光区,高光在什么地方与灯有必然的联系)1)SPECULAR LEVEL (高光级别)2)GLOSSINESS (光泽度,控制高光的面积)3)SOFTEN (柔和0~1,高光与非高光之间的过渡)4.SELF-ILLUMINATION (自发光,可以用数字表示,也可以用颜色表示)5.OPACITY (不透明度)1)值越低,越透明,物体越不亮2)可以进一步对透明进行修改EXTENDED PARAMETERS-ADVANCED TRANSPARENCYFALL OFF(衰减) TYPE(1)FILTER(过滤,在物体上留下一种颜色)(2)SUBTRACTIVE(当前物体颜色减去背景色)使物体更暗(3)ADDITIVE(当前物体颜色加上背景色)使物体更亮例:杯子,矿泉水瓶注意:玻璃作透明不能太厚3)INDEX OF REFRACTION(折射率)水(1.3)玻璃(1.5)高光固体(2.0)四.改变背景色的颜色(RENDERING-ENVIRONMENT)第十三讲 材质(二) 一.渲染模式*1.METAL(金属)1)SPECULAR(高光度) 最佳的取值范围（60~70）2)GLOSSINESS(光泽度) 最佳的取值范围（60~70）2.ANISOTROPIC(各向异形)主要控制高光的形状1)ANISOTROPIC(0,圆形高光,50,椭圆高光,100,线形高光)2)ORIENTATION(控制高光的方向)3.MULTI-LAYER(多层)在ANISOTROPIC基础上再增加一层来控制高光4.STRAUSS(金属加强)(金属渲染方式一种)渲染粗糙,不光滑,有凹凸感**5.BLINN(反射)柔和一点,低光照射的效果6.PHONG(多面)与BLINN相似7.OREN-NAYER-BLINN(明暗处理器)适合于制作表现物体模糊的"材质"二.图标介绍1.GET MATERIAL(获取材质)(注:只能获取材质,不能获取贴图)1)MTLIBARY (从材质库中获取材质)(C:\3DMAX4.0\MATLIBS\*.MAT)2)MTL EDITOR (从材质编辑器中获取材质)(一共有24个)3)ACTIVE (从激活的样本球(白框)中获取材质)4)SELECTED (从选定的物体中获取材质)5)SCENCE (从场景中获取材质)6)NEW (获取新的材质)2.PUT MATERIAL TO SCENE (将修改了的材质,重新赋给场景)3.ASSIGN MATERIAL TO SELECTION (将指定的材质赋给选定的对象)4.RESET MAP/MTL TO DEFAULT SETTINGS (恢复到默认的设置)5.MAKE MATERIAL COPY (将热材质进行复制)(注:1)当是热材质时,才有用 2)热材质变成冷材质,没有热材质标志)6.PUT TO LIBRARY(将编辑好的材质保存到材质库中,从材质库中可获取此材质)第十四讲 材质（三） 一.贴图（是指带有图案,纹理的图像信息,它附于材质之上）1.如何贴图1)通过选择MAPS(贴图)中的通道来贴图例:DIFFUSE COLOR(主光区颜色通道)2.图的来源方式1)自带的程序图(例如:BRICK,CELLULAR等等)**2)拾取外面的图(通过BITMAP)（注意：当你拾取外面的图时，注意图片格式图片格式是PSD的话是能拾取的）3.图的修改1)COORDINATES(贴图极坐标)(偏移,平铺,旋转)2)BITMAP PARAMETERS(位图参数)（只有拾取外面的图才有）4.有些图贴不上去,是因为贴图坐标的问题1)创建一个物体都带有GENERATE MAPPING COORDS(贴图坐标)(1)BOX5.贴图坐标的修改器MODIFIERS--UV COORDINATE--UVW MAP（针对于解决MISSING MAP COORDINATES（丢失贴图坐标）的问题）1)PLANAR (平面)2)CYLINDRICAL(圆柱体)3)SPHERICAL (球体) 4)SHRINK WRAP(收缩包裹) 5)BOX (盒子)6)FACE (面状)（与分格数有关）7)XYZ TO UVW (物体本身具有的坐标 到 图贴的方向)6.对齐 **1)FIT （适配） 2)CENTER （使图居中）3)BITMAP FIT （根据你所选的位图对齐）4)NORMAL ALIGN（法线对齐，只能在透视图中进行可任意移动图片在任意面上**5)VIEW ALIGN （以当前正交视图对齐）** 
+一.改变物体大小1.CAMERA离物体远,物体小,离物体近,物体大2.PARAMETERS(参数)1)LENS(焦距)单位：MM（毫米）(1)焦距值大----离物体近----物体大---物体越清晰相应的视野也就越小 ----看到的物体也就越少(2)焦距值小----离物体远----物体小---物体也不很清晰相应的视野也就越大 ----看到的物体也就越多2)FOV(视野)（FIELD OF VIEW）单位：DEGREE（度）(1)视野大----离物体远----物体小 ----看到的物体也就越多(2)视野小----离物体近----物体大----看到的物体也就越少3）LENS(焦距)与FOV(视野)之间是相反的。二.SHOW CONE（显示锥形）（无论是否选定照相机，照相机的视野都会显示）三.SHOW HORIZON(显示水平线)照相机的水平线四.ENVIRONMENT RANGES(环境范围)要以环境挂上钩1.RENDERING--ENVIRONMENT--ATMOSPHERE(大气)--FOG(雾)1)ACTIVE(激活雾)2) MERGE(合并另外一个场景的特效,如没特效,只是合并场景)3)TYPE(类型)STANDARD(标准雾)(均匀分布,沿水平方向分布)LAYERED(层雾)(沿垂直方向分布)2.NEAR RANGE(近距离范围)(弱,密度没有)3.FAR RANGE(远距离范围)(强,密度最大)4.NEAR RANGE到FAR RANGE之间的雾越来越多五.CLIPPING PLANES(剪切平面)1.CLIPPING MANUALLY(从NEAR到FAR两者间的物体显示,不在两者间的物体不显示)第十二讲 MATERIAL EDITOR（材质编辑器） 一.概念1.材质:是指物体外表信息的表现(包括:颜色,高光,光泽度,透明度等等)2.贴图:是指带有图案,纹理的图像信息,它附于材质之上注意:物体一定有材质,可以没有贴图3.热材质（同步材质）:赋给了物体的材质球(边有白框)4.冷材质（不同步材质）:没有赋给物体的材质球二.SHADER(阴影) BASIC（基础） PARAMETERS1.渲染模式2.WIRE（网格）1)网格与物体的分格数（SEGMENTS）有关2)用一步修改网格(1)加粗(EXTENDED PARAMETERS-WIRE-PIXELS(远近一样粗细)UNITS(远细,近粗 )3）二维物体网格--没有分格数插入EDIT SPLINE-SEGMENT-DEVIDE（注：顶盖，顶底没有）3.2-SIDED（内外所赋的材质是一样）4.FACE MAP5.FACETED三.不同渲染模式的基本参数( XXXXXX BASIC PARAMETERS)1.AMBIENT(背光区)2.DIFFUSE(主光区)3.SPECULAR(高光区,高光在什么地方与灯有必然的联系)1)SPECULAR LEVEL (高光级别)2)GLOSSINESS (光泽度,控制高光的面积)3)SOFTEN (柔和0~1,高光与非高光之间的过渡)4.SELF-ILLUMINATION (自发光,可以用数字表示,也可以用颜色表示)5.OPACITY (不透明度)1)值越低,越透明,物体越不亮2)可以进一步对透明进行修改EXTENDED PARAMETERS-ADVANCED TRANSPARENCYFALL OFF(衰减) TYPE(1)FILTER(过滤,在物体上留下一种颜色)(2)SUBTRACTIVE(当前物体颜色减去背景色)使物体更暗(3)ADDITIVE(当前物体颜色加上背景色)使物体更亮例:杯子,矿泉水瓶注意:玻璃作透明不能太厚3)INDEX OF REFRACTION(折射率)水(1.3)玻璃(1.5)高光固体(2.0)四.改变背景色的颜色(RENDERING-ENVIRONMENT)第十三讲 材质(二) 一.渲染模式*1.METAL(金属)1)SPECULAR(高光度) 最佳的取值范围（60~70）2)GLOSSINESS(光泽度) 最佳的取值范围（60~70）2.ANISOTROPIC(各向异形)主要控制高光的形状1)ANISOTROPIC(0,圆形高光,50,椭圆高光,100,线形高光)2)ORIENTATION(控制高光的方向)3.MULTI-LAYER(多层)在ANISOTROPIC基础上再增加一层来控制高光4.STRAUSS(金属加强)(金属渲染方式一种)渲染粗糙,不光滑,有凹凸感
+**5.BLINN(反射)柔和一点,低光照射的效果6.PHONG(多面)与BLINN相似7.OREN-NAYER-BLINN(明暗处理器)适合于制作表现物体模糊的"材质"二.图标介绍1.GET MATERIAL(获取材质)(注:只能获取材质,不能获取贴图)1)MTLIBARY (从材质库中获取材质)(C:\3DMAX4.0\MATLIBS\*.MAT)2)MTL EDITOR (从材质编辑器中获取材质)(一共有24个)3)ACTIVE (从激活的样本球(白框)中获取材质)4)SELECTED (从选定的物体中获取材质)5)SCENCE (从场景中获取材质)6)NEW (获取新的材质)2.PUT MATERIAL TO SCENE (将修改了的材质,重新赋给场景)3.ASSIGN MATERIAL TO SELECTION (将指定的材质赋给选定的对象)4.RESET MAP/MTL TO DEFAULT SETTINGS (恢复到默认的设置)5.MAKE MATERIAL COPY (将热材质进行复制)(注:1)当是热材质时,才有用 2)热材质变成冷材质,没有热材质标志)6.PUT TO LIBRARY(将编辑好的材质保存到材质库中,从材质库中可获取此材质)第十四讲 材质（三） 一.贴图（是指带有图案,纹理的图像信息,它附于材质之上）1.如何贴图1)通过选择MAPS(贴图)中的通道来贴图例:DIFFUSE COLOR(主光区颜色通道)2.图的来源方式1)自带的程序图(例如:BRICK,CELLULAR等等)**
+2)拾取外面的图(通过BITMAP)（注意：当你拾取外面的图时，注意图片格式图片格式是PSD的话是能拾取的）3.图的修改1)COORDINATES(贴图极坐标)(偏移,平铺,旋转)2)BITMAP PARAMETERS(位图参数)（只有拾取外面的图才有）4.有些图贴不上去,是因为贴图坐标的问题1)创建一个物体都带有GENERATE MAPPING COORDS(贴图坐标)(1)BOX5.贴图坐标的修改器MODIFIERS--UV COORDINATE--UVW MAP（针对于解决MISSING MAP COORDINATES（丢失贴图坐标）的问题）1)PLANAR (平面)2)CYLINDRICAL(圆柱体)3)SPHERICAL (球体) 4)SHRINK WRAP(收缩包裹) 5)BOX (盒子)6)FACE (面状)（与分格数有关）7)XYZ TO UVW (物体本身具有的坐标 到 图贴的方向)
+6. 对齐 **1)FIT （适配） 2)CENTER （使图居中）3)BITMAP FIT （根据你所选的位图对齐）4)NORMAL ALIGN（法线对齐，只能在透视图中进行可任意移动图片在任意面上**5)VIEW ALIGN （以当前正交视图对齐）** 
 6)REGION FIT （画一个区域进行贴，会产生重复贴， 想不重复贴回到材质编辑器，取消TILE钩）7)RESET （恢复原始值）8)ACQUIRE （从其它物体获取一个贴图坐标）（相对，绝对）（1-W的值）/2=U的值（图水平放在中间）（1-H的值）/2=V的值（图垂直放在中间）.jpg .bmp .tif .tga .png .psd（在3DMAX5.0中支持）
 
 g键关闭网格，右键对象菜单，选择对象属性，勾选以灰色显示冻结。

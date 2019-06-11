@@ -69,9 +69,9 @@ lua_load 用到的读取器函数， 每次它需要一块新的 chunk 的时候
 
 ### lua_setmetatable
 
-    int lua_setmetatable (lua_State *L, int index);
+    int lua_setmetatable(lua_State *L, int index);
 
-把一个 table 弹出堆栈，并将其设为给定索引处的值的 metatable 。
+把一个table 弹出堆栈，并将其设为给定索引处的值的 metatable 。
 
 ### lua_settable
 

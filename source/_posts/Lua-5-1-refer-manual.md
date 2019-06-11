@@ -832,8 +832,8 @@ Lua 使用一个虚拟栈来和 C 传递值。 栈上的的每个元素都是一
 
 ### C Closure
 
-当 C 函数被创建出来，我们有可能会把一些值关联在一起， 也就是创建一个 C closure ； 这些被关联起来的值被叫做 upvalue ，它们可以在函数被调用的时候访问的到。 （参见 lua_pushcclosure ）。
-无论何时去调用 C 函数，函数的 upvalue 都被放在指定的伪索引处。 我们可以用 lua_upvalueindex 这个宏来生成这些伪索引。 第一个关联到函数的值放在 lua_upvalueindex(1) 位置处，依次类推。 任何情况下都可以用 lua_upvalueindex(n) 产生一个 upvalue 的索引， 即使 n 大于实际的 upvalue 数量也可以。它都可以产生一个可接受但不一定有效的索引。
+当C函数被创建出来，我们有可能会把一些值关联在一起， 也就是创建一个Cclosure； 这些被关联起来的值被叫做upvalue ，它们可以在函数被调用的时候访问的到。（参见lua_pushcclosure）。
+无论何时去调用C函数，函数的upvalue都被放在指定的伪索引处。我们可以用`lua_upvalueindex`这个宏来生成这些伪索引。第一个关联到函数的值放在`lua_upvalueindex(1)`位置处，依次类推。任何情况下都可以用`lua_upvalueindex(n)`产生一个upvalue的索引，即使n大于实际的upvalue数量也可以。它都可以产生一个可接受但不一定有效的索引。
 
 ### LUA_REGISTRYINDEX
 
@@ -880,11 +880,9 @@ panic 函数可以从栈顶取到出错信息。
 
 ### lua_call
 
-    void lua_call (lua_State *L, int nargs, int nresults);
+    void lua_call(lua_State *L, int nargs, int nresults);
 
-调用一个函数。
-要调用一个函数请遵循以下协议： 首先，要调用的函数应该被压入堆栈； 接着，把需要传递给这个函数的参数按正序压栈； 这是指第一个参数首先压栈。 最后调用一下 lua_call； nargs 是你压入堆栈的参数个数。 当函数调用完毕后，所有的参数以及函数本身都会出栈。 而函数的返回值这时则被压入堆栈。 返回值的个数将被调整为 nresults 个， 除非 nresults 被设置成 LUA_MULTRET。 在这种情况下，所有的返回值都被压入堆栈中。 Lua 会保证返回值都放入栈空间中。 函数返回值将按正序压栈（第一个返回值首先压栈）， 因此在调用结束后，最后一个返回值将被放在栈顶。
-
+调用一个函数。要调用一个函数请遵循以下协议：首先，要调用的函数应该被压入堆栈；接着，把需要传递给这个函数的参数按正序压栈；这是指第一个参数首先压栈。 最后调用一下`lua_call`；nargs是你压入堆栈的参数个数。当函数调用完毕后，所有的参数以及函数本身都会出栈。而函数的返回值这时则被压入堆栈。返回值的个数将被调整为nresults个， 除非 nresults 被设置成 LUA_MULTRET。 在这种情况下，所有的返回值都被压入堆栈中。 Lua 会保证返回值都放入栈空间中。 函数返回值将按正序压栈（第一个返回值首先压栈）， 因此在调用结束后，最后一个返回值将被放在栈顶。
 被调用函数内发生的错误将（通过 longjmp）一直上抛。
 下面的例子中，这行 Lua 代码等价于在宿主程序用 C 代码做一些工作：
 
@@ -1009,9 +1007,9 @@ LUA_GCSETSTEPMUL: 把 arg/100 设置成 step multiplier （参见 §2.10）。 �
 
 ### lua_getfield
 
-	void lua_getfield (lua_State *L, int index, const char *k);
+	void lua_getfield(lua_State *L, int index, const char *k);
 
-把 t[k] 值压入堆栈， 这里的 t 是指有效索引 index 指向的值。 在 Lua 中，这个函数可能触发对应 "index" 事件的元方法 （参见 §2.8）。
+把 t[k] 值压入堆栈， 这里的 t 是指有效索引 index 指向的值。 在 Lua 中，这个函数可能触发对应 "index" 事件的元方法。
 
 ### lua_getglobal
 
@@ -1044,7 +1042,7 @@ LUA_GCSETSTEPMUL: 把 arg/100 设置成 step multiplier （参见 §2.10）。 �
 
     void lua_insert (lua_State *L, int index);
 
-把栈顶元素插入指定的有效索引处， 并依次移动这个索引之上的元素。 不要用伪索引来调用这个函数， 因为伪索引不是真正指向堆栈上的位置。
+把栈顶元素插入指定的有效索引处， 并依次移动这个索引之上的元素。 不要用伪索引来调用这个函数，因为伪索引不是真正指向堆栈上的位置。
 
 ### lua_Integer
 
@@ -1230,8 +1228,7 @@ LUA_ERRERR: 在运行错误处理函数时发生的错误。
 
     void lua_pushcclosure (lua_State *L, lua_CFunction fn, int n);
 
-把一个新的 C closure 压入堆栈。
-当创建了一个 C 函数后，你可以给它关联一些值，这样就是在创建一个 C closure ； 接下来无论函数何时被调用，这些值都可以被这个函数访问到。 为了将一些值关联到一个 C 函数上， 首先这些值需要先被压入堆栈（如果有多个值，第一个先压）。 接下来调用 lua_pushcclosure 来创建出 closure 并把这个 C 函数压到堆栈上。 参数 n 告之函数有多少个值需要关联到函数上。 lua_pushcclosure 也会把这些值从栈上弹出。
+把一个新的`C closure`压入堆栈。当创建了一个C函数后，你可以给它关联一些值，这样就是在创建一个`C closure`；接下来无论函数何时被调用，这些值都可以被这个函数访问到。为了将一些值关联到一个C函数上，首先这些值需要先被压入堆栈（如果有多个值，第一个先压）。接下来调用`lua_pushcclosure`来创建出closure并把这个C函数压到堆栈上。参数n告之函数有多少个值需要关联到函数上。`lua_pushcclosure`也会把这些值从栈上弹出。
 
 ### lua_pushcfunction
 
@@ -1335,4 +1332,4 @@ userdata 在 Lua 中表示一个 C 值。 light userdata 表示一个指针。 �
 
 	void lua_rawseti (lua_State *L, int index, int n);
 
-等价于 t[n] = v， 这里的 t 是指给定索引 index 处的一个值， 而 v 是栈顶的值。函数将把这个值弹出栈。 赋值操作是直接的；就是说，不会触发元方法。
+等价于`t[n] = v`，这里的 t 是指给定索引index 处的一个值， 而 v 是栈顶的值。函数将把这个值弹出栈。 赋值操作是直接的；就是说，不会触发元方法。

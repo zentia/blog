@@ -340,3 +340,83 @@ using (font2) // not recommended
 // but the method call throws an exception
 float f = font2.GetHeight();
 ```
+# HashTable HashSet和Dictionary的区别
+## HashTable
+哈希表(HashTable)表示键/值对的集合.在.NET Framework中,HashTable是System.Collections命名空间提供的一个容器,用于处理和表现类似key-value的键值对,其中key通常可用来快速查找,同时key是区分大小写;value用于存储对应于key的值.hashtable中key-value键值对均为object类型,所以hashtable可以支持任何类型的keyvalue键值对,任何非null对象都可以用作键值对.
+在哈希表添加一个key/键值对:HashTableObject.Add(key,);
+在哈希表中去除某个key/键值对:HashTableObject.Remove(key);
+从哈希表中移除所有元素:HashtableObject.Clear();
+判断哈希表是否包含特定键key:HashtableObject.Contains(key);
+## HashSet
+HashSet<T>类主要是设计用来做高性能集运算的,例如对两个集合求交集,并集,差集等.集合中包含一组不重复出现且无特性顺序的元素,HashSet拒绝接受重复的对象.
+HashSet<T>的一些特性如下:
+1. HashSet<T>中的值不能重复且没有顺序
+2. HashSet<T>的容量会按需自动添加
+
+## Dictionary
+Dictionary表示键值的集合.
+`Dictionary<string,string>`是一个泛型
+他本身有集合的功能有时候可以把它堪称数组
+它的结构是这样的:`Dictionary<[key],[value]>`
+它的特点是存入对象是需要与[key]值一一对应的存入该泛型
+通过某一个一定的`[key]`去找对应的值
+## HashTable和Dictionary的区别
+1. HashTable不支持泛型,而Dictionary支持泛型
+2. HashTable的元素属于Object类型,所以在存储或检索值类型时通常发生装箱和拆箱的操作,所以你可能需要进行类型转换的操作,而且对于int,float这些值类型还需要进行装箱等操作,非常耗时.
+3. 单线程程序中推荐使用Dictionary,有泛型优势,且读取速度较快,容量利用更充分.多线程程序中推荐使用Hashtable,默认的hashtable允许单线程写入,多线程读取,对hashtable进一步调用`synchronized()`方法可以获得完全线程安全的类型,而Dictionary非线程安全,必须人为使用lock语句进行保护,效率搭建.
+4. 在通过代码测试的时候发现key是整数型Dictionary的效率比hashtable快,如果key是字符串型,Dictionary的效率没有hashtable快.
+```CSharp
+static int count = 1000000;
+static void IntMethod()
+{
+    Dictionary<int, int> dictionary = new Dictionary<int, int>();
+    Hashtable hashtable = new Hashtable();
+    for (int i = 0; i < count; i++)
+    {
+        dictionary.Add(i,i);
+        hashtable.Add(i,i);
+    }
+    Stopwatch stopwatch = Stopwatch.StartNew();
+    for (int i = 0; i < count; i++)
+    {
+        int value = dictionary[i];
+    }
+    stopwatch.Stop();
+    UnityEngine.Debug.Log(stopwatch.ElapsedMilliseconds);
+    stopwatch = Stopwatch.StartNew();
+    for (int i = 0; i < count; i++)
+    {
+        object value = hashtable[i];
+    }
+    stopwatch.Stop();
+    UnityEngine.Debug.Log(stopwatch.ElapsedMilliseconds);
+
+}
+
+static void StringMethod()
+{
+    Dictionary<string,string> dictionary = new Dictionary<string, string>();
+    Hashtable hashtable = new Hashtable();
+    for (int i = 0; i < count; i++)
+    {
+        dictionary.Add(i.ToString(),"aaa");
+        hashtable.Add(i.ToString(), "bbb");
+
+    }
+    Stopwatch stopwatch = Stopwatch.StartNew();
+    for (int i = 0; i < count; i++)
+    {
+        string vale = dictionary[i.ToString()];
+    }
+    stopwatch.Stop();
+    UnityEngine.Debug.Log(stopwatch.ElapsedMilliseconds);
+    stopwatch = Stopwatch.StartNew();
+    for (int i = 0; i < count; i++)
+    {
+        object value = hashtable[i.ToString()];
+    }
+    stopwatch.Stop();
+    UnityEngine.Debug.Log(stopwatch.ElapsedMilliseconds);
+}
+```
+{% asset_img 1.jpg %}
