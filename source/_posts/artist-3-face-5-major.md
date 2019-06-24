@@ -3,8 +3,8 @@ title: 三大面五大调
 mathjax: true
 date: 2019-05-13 15:43:39
 tags:
-    - Art
-categories:
+    - Artist
+categories: Artist
 ---
 
 物体调子的规律可归纳为“三大面、五大调子”

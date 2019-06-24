@@ -34,3 +34,6 @@ https://github.com/jameslinden/unity-decompiled
 |IP				|Username 	|Password		|Environment|
 |---------------|-----------|---------------|-----------|
 |106.12.98.12	|root		|lyf8068353A@	|Outter net	|
+虚拟机Centos的密码都是123456789
+Mac的密码都是123456
+PC的密码是123456

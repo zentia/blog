@@ -113,15 +113,6 @@ usage: ln -s 源文件 目标文件
 i386 几乎所有的X86平台
 i686 只是i386的一个子集
 
-# 在EC2上创建root用户，并使用root用户登录
-	su
-	vim /etc/ssh/sshd_config
-	找到PasswordAuthentication no，把no改成yes
-	PermitRootLogin yes
-	sudo /sbin/service sshd restart
-	su root
-	
-
 # Linux内存管理
 <% img asset_img Linux1.webp %>
 在linux中，每一个进程都被抽象为task_struct结构体中，成为进程描述符，存储着进程各方面的信息；例如打开的文件，信号以及内存等等；然后task_struct中的一个属性mm_struct管理着进程的所有虚拟内存，成为内存描述符。在mm_struct结构体中，存储着进程各个内存段的开始以及结尾，如上图所示；进程使用的物理内存，即常驻内存RSS页数，这个内存使用的虚拟地址空间VSZ页数，还有进程虚拟内存区域集合和页表。
@@ -134,3 +125,5 @@ i686 只是i386的一个子集
 虚拟内存是不存储任何数据的，它只是将地址空间映射到物理内存。物理内存有内核伙伴系统分配，如果一块物理内存没有被映射，就可以被伙伴系统分配给虚拟内存。刚分配的物理内存可能是匿名的，存储进程数据，也可能是缓存，存储文件或块设备的数据。一块虚拟内存vm_area_struct块是由连续的虚拟内存也组成的，而这些虚拟内存块映射的物理内存却不一定连续，如下图所示：
 <% asset_img Linux3.webp  %>
 
+# 挂载
+`mount -t cifs -o username=administrator,passwd=,uid="1000",gid="1000",vers=2.0 //192.168.0.102/workspace /home/develop`

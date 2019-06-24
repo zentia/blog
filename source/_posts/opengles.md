@@ -6,6 +6,7 @@ tags:
     - "OpenGL ES 3.0"
 categories: "OpenGL ES 3.0"
 ---
+
 # Windows配置OpenGLES3开发环境
 
 OpenGL ES 3.0实现了具有可编程着色功能的图形管线，由两个规范组成：OpenGL ES 3.0 API规范和OpenGL ES着色语言3.0规范（OpenGL ES SL）。下图展示了OpenGL ES 3.0图形管线。图中带有阴影的方框表示OpenGL ES 3.0中管线的可编程阶段。下面概述OpenGL ES 3.0 图形管线的各个阶段。
@@ -83,4 +84,144 @@ void main()
 - 其他纹理格式----除了前面提到的格式之外，OpenGL ES 3.0还包含了对11-11-10RGB浮点纹理、共享指数RGB 9-9-9-5纹理、10-10-10-2整数纹理以及8位分量有符号规范化纹理的支持。
 - 非2幂次纹理（NPOT）----纹理现在可以指定为不为2的幂次的尺寸。这在许多情况下都很有用，例如来自视频或者摄像头的以不为2的幂次尺寸捕捉/记录的纹理。
 - 纹理细节级别（LOD）功能----现在，可以强制使用用于确定读取哪个Mipmap的LOD参数。此外，可以强制基本和最大Mipmap级别。这两个功能组合起来，可以流化Mipmap。在更大的Mipmap级别可用时，可以提供基本级别，LOD值可以平滑地增加，以提供平滑的流化纹理。这一功能非常实用，例如，用于通过网络连接下载纹理Mipmap。
-- 
+
+|后缀|整数类型|C语言类型|GL类型|
+|--|--|--|--|
+|b|8位有符号整数|signed char|GLbyte|
+|ub|8位无符号整数|unsigned char|GLubyte、GLboolean|
+|s|16位有符号整数|short|GLshort|
+|us|16位无符号整数|unsigned short|GLushort|
+|i|32位有符号整数|int|GLint|
+|ui|32位无符号整数|unsigned int|GLuint、GLbitfield、GLenum|
+|x|16.16定点数|int|GLfixed|
+|f|32位浮点数|float|GLfloat、GLclampf|
+|i64|64位整数|khronos_int64_t(取决于平台)|GLint64|
+|ui64|64位无符号整数|khronos_uint64_t(取决于平台)|GLuint64|
+最后，OpenGL ES定义了GLvoid类型。该类型用于接受指针的OpenGL ES命令。
+## 错误处理
+若不正确使用OpenGL ES命令，应用程序会生成一个错误代码。这个错误代码将被记录，可以用glGetError查询。在应用程序用glGetError查询第一个错误代码之前，不会记录其他错误。一旦查询到错误代码，当前错误代码便被复位为GL_NO_ERROR。
+
+错误代码|描述
+--|--
+GL_NO_ERROR|从上一次调用glGetError以来没有生成任何错误
+GL_INVALID_ENUM|GLenum参数超出范围。忽略生成该错误的命令
+GL_INVALID_VALUE|数值型参数超出范围。忽略生成这个错误的命令
+GL_INVALID_OPERATION|特定命令在当前OpenGL ES状态下不能执行。忽略生成该错误的命令
+GL_OUT_OF_MEMORY|内存不足时执行该命令。如果遇到这个错误，除非是当前错误代码，否则OpenGL ES管线的状态被认为未定义
+
+## 基本状态管理
+每个管线阶段都有一个可以启用或者警用的状态，每个上下文维护相应的状态值。状态的例子有混合启用、混合因子、剔除启用、提出曲面。在初始化OpenGL ES上下文(EGLContext)时，状态用默认值初始化。启用状态可以用glEnable和glDisable命令设置。
+```c
+void glEnable(GLenum cap);
+void glDisable(GLenum cap);
+```
+glEnable和glDisable启用各种功能。除了GL_DITHER被设置为GL_TRUE之外，其他功能的初始化均被设置为GL_FALSE。如果cap不是有效的状态枚举值，则生成错误代码GL_INVALID_ENUM。
+cap是要启用或者禁用的状态，可以是：
+```c
+GL_BLEND
+GL_CULL_FACE
+GL_DEPTH_TEST
+GL_POLYGON_OFFSET_FILL
+GL_PRIMITIVE_RESTART_FIXED_INDEX
+GL_SAMPLE_APLHA_TO_COVEARAGE
+GL_SAMPLE_COVERAGE
+GL_SCISSOR_TEST
+GL_STENCIL_TEST
+```
+# 你好，三角形：一个OpenGL ES 3.0实例
+- 用EGL创建屏幕上的渲染表面
+- 加载顶点和片段着色器
+- 创建一个程序对象，连接顶点和片段着色器，并链接程序对象
+- 设置视口
+- 清除颜色缓冲区
+- 渲染简单图元
+- 时颜色缓冲区的内从在EGL窗口表面中可见
+
+## 显示后台缓冲区
+屏幕上可见的帧缓冲区由一个像素数据的二维数组表示。我们可以将屏幕上显示图像视为绘制时简单地更新可见帧缓冲区中地像素数据。但是，直接在可显示缓冲区上更新像素有一个严重的问题，在典型的显示系统中，物理屏幕以固定的速率从帧缓冲区内存中更新。如果我们直接绘制到帧缓冲区，那么用户在部分更新帧缓冲区时会看到伪像。
+为了解决这个问题，我们使用所谓的双缓冲区。在这种方案中，有两个缓冲区：前台缓冲区和后台缓冲区。所有渲染都发生在后台缓冲区，它位于不可见于屏幕的内存区域。当所有渲染完成后，这个缓冲区被“交换”到前台缓冲区（或者可见缓冲区）。然后前台缓冲区变成下一帧的后台缓冲区。
+使用这种技术，我们在一帧上的所有渲染完成之前不显示可见表面。在OpenGL ES应用程序中，这种活动通过EGL函数eglSwapBuffers控制（我们的框架在调用Draw回调函数之后调用该函数）：
+`eglSwapBuffers(esContext->eglDisplay, esContext->eglSurface);`
+这个函数通知EGL切换前台缓冲区和后台缓冲区。发送到eglSwapBuffers的参数时EGL显示器和表面。这两个参数分别代表物理显示器和渲染表面。
+
+|属性|描述|默认值|
+|--|--|--|
+|EGL_BUFFER_SIZE|颜色缓冲区中所有颜色分量的位数|0|
+|EGL_RED_SIZE|颜色缓冲区中红色分量位数|0|
+|EGL_GREEN_SIZE|颜色缓冲区中绿色分量位数|0|
+|EGL_BLUE_SIZE|颜色缓冲区中蓝色分量位数|0|
+|EGL_LUMINANCE_SIZE|颜色缓冲区中亮度位数|0|
+|EGL_ALPHA_SIZE|颜色缓冲区中Alpha值位数|0|
+|EGL_ALPHA_MASK_SIZE|掩码缓冲区中Alpha掩码位数|0|
+|EGL_BIND_TO_TEXTURE_RGB|如果可以绑定到RGB纹理，则为真|EGL_DONT_CARE|
+|EGL_BIND_TO_TEXTURE_RGBA|如果可以绑定到RGBA问你，则为真|EGL_DONT_CARE|
+|EGL_COLOR_BUFFER_TYPE|颜色缓冲区类型：EGL_RGB_BUFFER或EGL_LUMINANCE_BUFFER|EGL_RGB_BUFFER|
+|EGL_CONFIG_CAVEAT|和配置相关的任何注意事项|EGL_DONT_CARE|
+|EGL_CONFIG_ID|唯一的EGLConfig标识符值|EGL_DONT_CARE|
+|EGL_CONFORMANT|如果用这个EGLConfig创建的上下文兼容，则为真|-|
+|EGL_DEPTH_SIZE|深度缓冲区位数|0|
+|EGL_LEVEL|帧缓冲区级别|0|
+|EGL_MAX_PBUFFER_WIDTH|用这个EGLConfig创建的PBuffer的最大宽度|-|
+|EGL_MAX_PBUFFER_HEIGHT|用这个EGLConfig创建的PBuffer的最大高度|-|
+|EGL_MAX_PBUFFER_PIXELS|用这个EGLConfig创建的PBuffer的最大尺寸|-|
+|EGL_MAX_SWAP_INTERVAL|最大缓冲区交换间隔|EGL_DONT_CARE|
+|EGL_MIN_SWAP_INTERVAL|最小缓冲区交换间隔|EGL_DONT_CARE|
+|EGL_NATIVE_RENDERABLE|如果原生渲染库可以渲染到用EGLConfig创建的表面，则为真|EGL_DONT_CARE|
+|EGL_NATIVE_VISUAL_ID|关于应原生窗口系统可视ID句柄|EGL_DONT_CARE|
+|EGL_NATIVE_VISUAL_TYPE|关于原生窗口系统可视类型|EGL_DONT_CARE|
+|EGL_RENDERABLE_TYPE|由EGL_OPENGL_ES_BIT、EGL_OPENGL_ES2_BIT、EGL_OPENGL_ES3_BIT_KHR(需要EGL_KHR_create_context扩展)、EGL_OPENGL_BIT或EGL_OPENVG_BIT组成的位掩码，代表配置支持的渲染接口|EGL_OPENGL_ES_BIT|
+|EGL_SAMPLE_BUFFERS|可用多重采样缓冲区数量|0|
+|EGL_SAMPLES|每个像素的样本数量|0|
+|EGL_STENCIL_SIZE|模板缓冲区为主|0|
+|EGL_SURFACE_TYPE|支持的EGL表面类型，可能是EGL_WINDOW_BIT、EGL_PIXMAP_BIT、EGL_PBUFFER_BIT、EGL_MULTISAMPLE_RESOLVE_BOX_BIT、EGL_SWAP_BEHAVIOR_PRESERVED_BIT、EGL_VG_COLORSPACE_LINER_BIT或者EGL_VG_ALPHA_FORMAT_PRE_BIT|EGL_WINDOW_BIT|
+|EGL_TRANSPARENT_TYPE|支持的透明度|EGL_NONE|
+|EGL_TRANSPARENT_RED_VALUE|解读为透明的红色值|EGL_DONT_CARE|
+|EGL_TRANSPARENT_GREEN_VALUE|解读为透明的绿色值|EGL_DONT_CARE|
+|EGL_TRANSPARENT_BLUE_VALUE|解读为透明的蓝色值|EGL_DONT_CARE|
+
+## 创建屏幕上的渲染区域：EGL窗口
+```c
+EGLSurface eglCreateWindowSurface(EGLDisplay display, // 指定EGL显示连接
+    EGLConfig config, // 指定配置
+    EGLNativeWindowType window, // 指定原生窗口
+    const EGLint * attribList // 指定窗口属性列表；可能为NULL
+    );
+```
+下表是eglCreatePbufferSurface失败时可能的错误
+
+|错误代码|描述|
+|--|--|--|
+|EGL_BAD_ALLOC|pbuffer因为缺乏资源而无法分配时发生这种错误|
+|EGL_BAD_CONFIG|如果提供的EGLConfig不是系统支持的有效配置，则发生这种错误|
+|EGL_BAD_PARAMETER|如果属性列表中提供的EGL_WIDTH或EGL_HEIGHT是负值，则产生这种错误|
+
+## 着色器和程序
+需要创建两个基本对象才能用着色器进行渲染：着色器对象和程序对象。理解着色器对象和程序对象的最佳方式是将它们比作C语言的编译器和链接程序。C编译器为一段源代码生成目标代码（例如，.obj或者.o文件）。在创建目标文件之后，C链接程序将对象文件链接为最后的程序。
+编译之后，着色器对象可以连接到一个程序对象。程序对象可以连接多个着色器对象。在OpenGL ES中，每个程序对象必须连接一个顶点着色器和一个片段着色器（不多也不少），这和桌面OpenGL不同。程序对象被链接为用于渲染的最后“可执行程序”。
+获得链接后的着色器对象的一般过程包括6个步骤：
+1. 创建一个顶点着色器对象和一个片段着色器对象。
+2. 将源代码连接到每个着色器对象。
+3. 编译着色器对象。
+4. 创建一个程序对象。
+5. 将编译后的着色器对象连接到程序对象。
+6. 链接程序对象。
+
+## 创建和编译一个着色器
+使用着色器对象的第一步是创建着色器，着用glCreateShader完成。
+```c
+GLuint glCreateShader(GLenum type//创建的着色器类型可以是GL_VERTEX_SHADER或者GL_FRAGMENT_SHADER
+    );
+```
+调用glCreateShader将根据传入的type参数创建一个新的顶点或者片段着色器。返回值是指向新着色器对象的句柄。当完成着色器对象时，可以用glDeleteShader删除。
+```c
+void glDeleteShader(GLuint shader // 要删除的着色器对象的句柄
+    );
+```
+如果一个着色器链接到一个程序对象，那么调用glDeleteShader不会立刻删除着色器，而是将着色器标记为删除，在着色器不再连接到任何程序对象时，它的内存将被释放。
+一旦创建了着色器对象，下一件事通常时用glShaderSource提供着色器源代码。
+```c
+glShaderSource(GLuint shader,// 指向着色器对象的句柄
+    GLsizei count,//着色器源字符串的数量。着色器可以由多个源字符串组成，但是每个着色器只能有一个main函数。
+    const GLchar* const *string,// 指向保存数量为count的着色器源字符串的数组指针。
+    const GLint *length);//指向保存每个着色器字符串大小且元素数量为count的整数数组指针。如果length为NULL，着色器字符串被认定为空。如果length不为NULL，则它的每个元素保存对应于string数组的着色器的字符数量。如果任何元素的length值均小于0，则该字符串被认定以null结束。
+```

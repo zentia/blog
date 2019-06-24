@@ -13,3 +13,15 @@ categories: Houdini
 5. https://www.anastasiaopara.com/houdini-hive-siggraph-17
 6. http://www.tokeru.com/cgwiki/index.php?title=Main_Page#
 7. https://www.bilibili.com/video/av29099924 很渣
+
+{% asset_img 1.jpg %}
+空格键+数字键1：透视图
+空格键+数字键2：顶视图
+空格键+数字键3：前视图
+空格键+数字键4：左视图
+空格键+鼠标左键：旋转视图
+空格键+鼠标中键：移动视图
+空格键+鼠标右键：缩放视图
+空格键+F键：选中当前对象
+空格键+G键：选中当前对象并还原视口
+D键打开Display Option

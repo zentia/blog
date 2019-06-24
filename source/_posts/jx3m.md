@@ -3,8 +3,8 @@ title: 剑网3口袋版笔记
 mathjax: true
 date: 2019-05-23 10:40:02
 tags:
-    - 剑网3口袋版
-categories: 剑网3口袋版
+    - JX3M
+categories: JX3M
 ---
 Unity版本2018.3
 2D场景，3D模型，确实有点惊喜，场景里面的东西看到的基本都是用片做的。那么定位就应该偏向格斗了，可能是帧同步吧。
@@ -248,3 +248,11 @@ public static void CreateNewLua()
 好吧，浪费还是蛮严重的。
 ## 艺术字
 看着像是按照静态字体的方式制作的。
+## 相机
+相机有一个UIMainCamera和一个FrontCamera，这里有个坑的地方就是在编辑器和模拟器上当前视图是使用的FrontCamera渲染，后置视图使用UIMainCamera并添加高斯模糊。
+所以要注意在任何时候的相机操作。
+# 工具
+## 调试器
+这里有很多调试器，都值得一试，它可能会帮助你修复难以解决的问题。
+在Tools下面有RemoteDebugger.HierarchyPanel，打开面板，点击Query，然后所有的对象可以陈列在面板上，而且你可以对他进行修改，除了name和transform。
+name是禁止修改的，但是transform怀疑是bug，导致无法修改。

@@ -50,6 +50,7 @@ categories:
 
 - \lt \gt \le \ge \neq 表示 $\lt \gt \le \ge \neq$，还可以在不等号上加\not，如\not\lt 表示 $\not\lt$
 - \times \div \pm \mp 表示 $\times \div \pm \mp$，点乘用\cdot表示，如 x \cdot y 表示 $x \cdot y$
+- $\in$ : \in
 
 # 矢量
 
