@@ -1,8 +1,9 @@
 ---
-title: 第十六章 高级着色器语言入门(Introduction to the High-Level Shading Language)
+title: 高级着色器语言入门(Introduction to the High-Level Shading Language)
 mathjax: true
 date: 2019-04-11 15:27:51
 tags:
+  - Direct3D
 categories: Direct3D
 ---
 
@@ -23,9 +24,9 @@ HLSL 同C和C++语法很类似, 所以缩短了学习曲线。
 * 学习如何定、编译一个HLSL 着色器程序。
 * 学习如何将程序中的数据传送到着色器程序。
 * 熟悉语法、类型，和HLSL的内建函数。
-16.1 编写HLSL 着色器
-   我们可以在程序源文件中用长字符串直接编写HLSL 着色器代码，然而更方便、更模块化的方法是把它与程序代码分离出来。因此，我们在记事本中编写着色器并保存成一般的ASCII文本文件，然后可以用D3DXCompileShaderFromFile函数(section 16.2.2)来编译它们。
-   作为介绍，下面是用HLSL编写的一个简单的顶点着色器，用记事本生成并保存成文本文件“Transform.txt”。全部工程都在标题为Transform的目录下，顶点着色器用组合视图和投影矩阵转换顶点，并设置顶点漫射光为蓝色。
+# 编写HLSL着色器
+我们可以在程序源文件中用字符串直接编写HLSL着色器代码，然而更方便、更模块化的方法是把它与程序代码分离出来。因此，我们在记事本中编写着色器并保存成一般的ASCII文本文件，然后可以用D3DXCompileShaderFromFile函数(section 16.2.2)来编译它们。
+作为介绍，下面是用HLSL编写的一个简单的顶点着色器，用记事本生成并保存成文本文件“Transform.txt”。全部工程都在标题为Transform的目录下，顶点着色器用组合视图和投影矩阵转换顶点，并设置顶点漫射光为蓝色。
    
    注意：这是一个顶点着色器的例子，不必关心顶点着色器做了什么，这是下一章包含的内容，现在的目标是熟悉HLSL编程的语法和格式。
 // File: transform.txt

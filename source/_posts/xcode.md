@@ -11,3 +11,4 @@ categories: XCode
 |Windows键+鼠标右键|转定义|
 |Windows键+Ctrl+->|前进|
 |Windows键+Ctrl+<-|后退|
+|Windows将+Shift+o|快速打开函数|

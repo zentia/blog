@@ -109,3 +109,7 @@ Ghost
 
 Can't adjust divide
 Try use Dynamesh,but this operator may be make your mode have a few of triangle.
+
+|快捷键|说明|
+|Ctrl+Shift+Alt然后框选物体|剪切掉框选的物体|
+|Ctrl+Shitf然后框选物体|剪切掉除了框选之外的物体|

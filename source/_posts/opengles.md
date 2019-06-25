@@ -225,3 +225,330 @@ glShaderSource(GLuint shader,// 指向着色器对象的句柄
     const GLchar* const *string,// 指向保存数量为count的着色器源字符串的数组指针。
     const GLint *length);//指向保存每个着色器字符串大小且元素数量为count的整数数组指针。如果length为NULL，着色器字符串被认定为空。如果length不为NULL，则它的每个元素保存对应于string数组的着色器的字符数量。如果任何元素的length值均小于0，则该字符串被认定以null结束。
 ```
+```c
+void glLinkProgram(GLuint program//指向程序对象的句柄
+    );
+```
+链接操作负责生成最终的可执行程序。链接程序将检查各种对象的数量，确保成功链接。
+链接程序之后，你必须检查链接是否成功，可以使用glGetProgramiv检查链接状态。
+```c
+void glGetProgramiv(GLuint program, // 需要获取信息的程序对象句柄
+    GLenum pname,
+    GLint *params // 指向查询结果整数存储位置的指针
+    );
+```
+pname 获取信息的参数，可以是：
+```
+GL_ACTIVE_ATTRIBUTES
+GL_ACTIVE_ATTRIBUTE_MAX_LENGTH
+GL_ACTIVE_UNIFORM_BLOCK
+GL_ACTIVE_UNIFORM_BLOCK_MAX_LENGTH
+GL_ACTIVE_UNIFORMS
+GL_ACTIVE_UNIFORM_MAX_LENGTH
+GL_ATTACHED_SHADERS
+GL_DELETE_STATUS
+GL_INFO_LOG_LENGTH
+GL_LINK_STATUS
+GL_PROGRAM_BINARY_RETRIEVABLE_HINT
+GL_TRANSFORM_FEEDBACK_BUFFER_MODE
+GL_TRANSFORM_FEEDBACK_VARYINGS
+GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH
+GL_VALIDATE_STATUS
+```
+## 统一变量和属性
+一旦链接了程序对象，就可以在对象上进行许多查询。首先，你可能需要找出程序中的活动统一变量。统一变量（uniform）是存储应用程序通过OpenGL ES 3.0 API传递给着色器的只读常数值的变量。
+统一变量被组合成两类统一变量块。第一类是命名统一变量块，统一变量的值由所谓的统一变量缓冲区对象支持。命名统一变量块被分配一个统一变量块索引。下面的例子声明一个名为TransformBlock并包含3个统一变量（matViewProj、matNormal和matTexGen）的统一变量块：
+```
+uniform TransformBlock
+{
+    mat4 matViewProj;
+    mat3 matNormal;
+    mat3 matTexGen;
+};
+```
+第二类是默认的统一变量块，用于在命名块统一变量块之外声明的统一变量。和命名统一变量块不同，默认统一变量块没有名称或者统一变量块索引。下面的例子在命名统一变量块之外生命同样的3个统一变量：
+```
+uniform mat4 matViewProj;
+uniform mat3 matNormal;
+uniform mat3 matTexGen;
+```
+### 获取和设置统一变量
+要查询程序中活动统一变量的列表，首先要用GL_ACTIVE_UNIFORMS参数调用glGetProgramiv。这样可以获得程序中活动统一变量的数量。这个列表包含命名统一变量块中的统一变量、着色器代码中生命的默认统一变量块中统一变量以及着色器代码中使用的内建统一变量。如果统一变量被程序使用，就认为它是“活动”的。换言之，如果你在一个着色器中声明了一个统一变量，但是从未使用，链接程序可能会在优化时将其去掉，不在活动统一变量列表中饭回。你还可能发现程序中最大统一变量名称的字符数量（包括null终止符）；这可以用GL_ACTIVE_UNIFORM_MAX_LENGTH参数调用glGetProgramiv获得。
+知道活动统一变量和存储统一变量名称所需的字符数之后，我们可以用glGetActiveUniform和glGetActiveUniformsiv找出每一个统一变量的细节。
+`void glGetActiveUniform(GLuint program, GLuint index, GLsizei bufSize, GLsizei *length, GLint *size, GLenum *type, GLchar *name);`
+program 程序对象句柄
+index 查询的统一变量索引
+bufSize 名称数组中的字符数
+length 如果不是NULL，则是名称数组中写入的字符数（不含null终止符）
+size 如果查询的统一变量时个数组，这个变量便将写入程序中使用的最大数组元素（加1）；如果查询的统一变量不是数组，则该值为1
+type 将写入统一变量类型；可以为：
+```
+GL_FLOAT,GL_FLOAT_VEC2,GL_FLOAT_VEC3,GL_FLOAT_VEC4,
+GL_INT,GL_INT_VEC2,GL_INT_VEC3,GL_INT_VEC4,GL_UNSIGNED_INT,GL_UNSIGNED_INT_VEC2,GL_UNSIGNED_INT_VEC3,
+GL_UNSIGNED_INT_VEC4,GL_BOOL,GL_BOOL_VEC2,GL_BOOL_VEC3,GL_BOOL_VEC4,GL_FLOAT_MAT2,
+GL_FLOAT_MAT3,GL_FLOAT_MAT4,GL_FLOAT_MAT2x3,GL_FLOAT_MAT2x4,GL_FLOAT_MAT3x2,GL_FLOAT_MAT3x4,
+GL_FLOAT_MAT4x2,GL_FLOAT_MAT4x3,GL_SAMPLER_2D,GL_SAMPLER_3D,GL_SAMPLER_CUBE,
+GL_SAMPLER_2D_SHADOW,GL_SAMPLER_2D_ARRAY,GL_SAMPLER_2D_ARRAY_SHADOW,
+GL_SAMPLER_CUBE_SHADOW,GL_INT_SAMPLER_2D,GL_INT_SAMPLER_3D,GL_INT_SAMPLER_CUBE,
+GL_INT_SAMPLER_2D_ARRAY,
+GL_UNSIGNED_INT_SAMPLER_2D,
+GL_UNSIGNED_INT_SAMPLER_3D,
+GL_UNSIGNED_INT_SAMPLER_CUBE,
+GL_UNSIGNED_INT_SAMPLER_2D_ARRAY
+```
+name 写入统一变量名称，最大字符数为bufSize,这是一个null终止的字符串。
+`void glGetActiveUniformsiv(GLuint program, GLsizei count, const GLuint *indeices, GLenum pname, GLint *params);`
+program 程序对象句柄
+count 索引（indices）数组中的元素数量
+indices 统一变量索引列表
+pname   统一变量索引中每个统一变量的属性，将被写入params元素；可以是：
+        GL_UNIFORM_TYPE, GL_UNIFORM_SIZE，
+        GL_UNIFORM_NAME_LENGTH,GL_UNIFORM_BLOCK_INDEX,
+        GL_UNIFORM_OFFSET, GL_UNIFORM_ARRAY_STRIDE，
+        GL_UNIFORM_MATRIX_STRIDE, GL_UNIFORM_IS_ROW_MAJOR
+params 将被写入由对应统一变量的pname所指定的结果
+### 统一变量缓冲区对象
+可以使用缓冲区对象存储统一变量数据，从而在程序中的着色器之间甚至程序之间共享统一变量。这种缓冲区对象乘坐统一变量缓冲区对象。使用统一变量缓冲区对象，你可以在更新大的统一变量块时降低API开销。此外，这种方法增加了统一变量的可用存储，因为你的可以不受默认统一变量块大小的限制。
+要更新统一变量缓冲区对象中的统一变量数据，你可以用glBufferData、glBufferSubData、glMapBufferRange和glUnmapBuffer等命令修改缓冲区对象的内容。
+在统一变量缓冲区对象中，统一变量在内存中以如下形式出现：
+- 类型为bool、int、uint和float的成员保存在内存的特定偏移，分别作为单个unity、int、unit和float类型的分量。
+- 基本数据类型bool、int、uint或者float的向量保存在始于特定便宜的连续内存位置中，第一个分量在最低偏移处。
+- C列R行的列优先矩阵被当成C浮点列向量的一个数组对待，每个向量包含R个分量。相类似，R行C列的行优先矩阵被当成R浮点行向量的一个数组，每个向量包含C个分量。列向量或者行向量连续存储，但是有些实现的存储中可能有缺口。矩阵中两个向量之间的偏移量被称作列跨距或者行跨距（GL_UNIFORM_MATRIX_STRIDE），可以在链接的程序中用glGetActiveUniformsiv查询。
+- 标量、向量和矩阵的数组按照元素的顺序存储与内存中，成员0放在最低偏移处。数组中每个元素之间的偏移量时一个常熟，称作数组跨距（GL_UNIFORM_ARRAY_STRIDE），可以在链接的程序中用glGetActiveUniformsiv查询。
+
+# OpenGL ES着色语言
+- 向量和矩阵的构造及选择
+- 常量
+- 结构和数组
+- 运算符、控制流和函数
+- 输入/输出变量、统一变量、统一变量块和布局限定符
+- 预处理器和指令
+- 统一变量和插值器打包
+- 精度限定符和不变性
+
+`#version 300 es`
+没有声明版本号的着色器被认定使用OpenGL ES着色语言的1.00版本。着色语言的1.00版本用于OpenGL ES 2.0。对于OpenGL ES 3.0，规范的作者决定匹配API和着色语言的版本号。
+## 变量和变量类型
+在计算机图形中，两个基本数据类型组成了变换的基础：向量和矩阵。这两种数据类型在OpenGL ES着色语言中也是和兴。
+
+|变量分类|类型|描述|
+|--|--|--|
+|标量|float,int,uint,bool|用于浮点、整数、无符号整数和布尔值的基于标量的数据类型|
+|浮点向量|float,vec2,vec3,vec4|有1、2、3、4个分量的基于浮点的向量类型|
+|整数向量|int,ivec2,ivec3,ivec4|有1、2、3、4个分量的基于整数的向量类型|
+|无符号整数向量|uint,uvec2,uvec3,uvec4|有1、2、3、4个分量的基于无符号整数的向量类型|
+|布尔向量|bool,bvec2,bvec3,bvec4|有1、2、3、4个分量的基于无符号整数的向量类型|
+|矩阵|mat2（或mat2x2),mat2x3,mat2x4,mat3x2,mat3(或mat3x3),mat3x4,mat4x2,mat4x3,mat4(或mat4x4)|2x2,2x3,2x4,3x2,3x3,3x4,4x2,4x3或4x4的基于浮点的矩阵|
+
+对于矩阵的构造，着色语言很灵活。下面是构造的一些基本规则：
+- 如果只为矩阵构造器提供一个标量参数，则该值被放在矩阵的对角线上。例如，mat4(1.0)将创建一个4x4的单位矩阵。
+- 矩阵可以从多个向量参数构造。例如，mat2可以从两个vec2构造。
+- 矩阵可以从多个标量参数构造，每个参数代表矩阵中的一个值，从左到右使用。
+
+OpenGL ES中的矩阵以列优先顺序存储。使用矩阵构造器时，参数按列填充矩阵。下面的例子中的注释说明了矩阵构造参数如何映射到列中。
+```c
+mat3 myMat3 = mat3(1.0,0.0,0.0,// First column
+    0.0,1.0,0.0,//Second column
+    0.0,1.0,1.0);// Third column
+```
+## 常量
+可以将任何基本类型声明为常数变量。常数变量是着色器中不变的值。声明常量时，在声明中加入const限定符。常数变量必须在声明时初始化。下面是const声明的一些例子：
+```c
+const float zero = 0.0f;
+const float pi = 3.14159;
+const vec4 red = vec4(1.0,0.0,0.0,1.0);
+const mat4 identity = mat4(1.0);
+```
+正如在C或者C++中那样，声明为const的变量是只读的，不能在源代码中修改。
+## 结构
+除了使用语言中提供的基本类型之外，还可以和C语言一样将变量聚合成结构。
+OpenGL ES着色语言中声明结构的语言如下例所示：
+```c
+struct fogStruct
+{
+    vec4 color;
+    float start;
+    float ent;
+}fogVar;
+```
+上述定义的结果是一个名为fogStruct的新用户类型和一个新变量fogVar。
+结构可以用构造器初始化。在定义新的结构类型之后，也用与类型相同的名称顶一个新的结构构造器。
+## 函数
+函数的声明方法和C语言相通。
+
+|限定符|描述|
+|--|--|
+|in|（没有指定时的默认限定符）这个限定符指定参数按值传送，函数不能修改|
+|inout|这个限定符规定变量按照引用传入函数，如果该值被修改，它将在函数退出后变化|
+|out|这个限定符表示该变量的值不被传入函数，但是在函数返回时将被修改|
+
+## 统一变量
+OpenGL ES着色语言中的变量类型限定符之一是统一变量。统一变量存储应用程序通过OpenGL ES 3.0 API传入着色器的只读值，对于保存着色器所需的所有数据类型（如变化矩阵、照明参数和颜色）都很有用。本质上，一个着色器的任何参数在所有顶点或者片段中都应该以统一变量的形式传入。在编译时已知值的变量应该是常量，而不是统一变量，这样可以提供效率。
+
+|限定符|描述|
+|--|--|
+|shared|shared限定符指定多个着色器或者多个程序中统一变量块的内存布局相同。要使用这个限定符，不同定义中的row_major/column_major值必须相等。覆盖std140和packed（默认）|
+|packet|packet布局限定符指定编译器可以优化统一变量块的内存布局。使用这个限定符时必须查询偏移位置，而且统一变量块无法在顶点/片段着色器或者程序见共享。覆盖std140和shared|
+|std140|std140布局限定符指定统一变量块的布局基于OpenGL ES 3.0规范的“标准统一变量快布局”中定义的一组标准规则。
+|raw_major|矩阵在内存中以行优先顺序布局|
+|column_major|矩阵在内存中以列优先顺序布局（默认）|
+
+## 顶点和片段着色器输入/输出
+这个着色的两个顶点输入变量a_position和a_color的数据由应用程序加载。本质上，应用程序将为每个顶点创建一个顶点数组，该数组包含位置和颜色。
+```c
+// Vector Shader
+#version 300 es
+uniform mat4 u_matViewProjection;
+layout(location = 0) in vec4 a_position;
+layout(location = 1) in vec3 a_color
+out vec3 v_color
+void main(void)
+{
+    gl_Position = u_matViewProjection * a_position;
+    v_color = a_color;
+}
+// Fragment Shader
+#version 300 es
+precision mediump  float 
+
+// Input from vertex shader
+in vec3 v_color;
+// Output of fragment shader
+layout(location = 0) out vec4 o_fragColor;
+void main()
+{
+    o_fragColor = vec4(v_color, 1.0);
+}
+```
+layout限定符用于指定顶点属性的索引。布局限定符是可选的，如果没有指定，链接程序将自动为顶点输入变量分配位置。
+和统一变量一样，底层硬件通常可在输入顶点着色器的属性变量数目上有限制。OpenGL ES实现支持的最大属性数量由内建变量gl_MaxVertexAttribs给出（也可以使用glGetIntegerv查询GL_MAX_VERTEX_ATTRIBS得到）。OpenGL ES 3.0实现可支持的最小属性为16个。不同的实现可以支持更多变量，但是如果想要编写保证能在任何OpenGL ES 3.0实现上运行的着色器，则应该将属性限制为不多于16个。
+## 插值限定符
+在没有限定符时，默认的插值行为是执行平滑着色。也就是说，来自顶点着色器的输出变量在图元中线性插值，片段着色器接受线性插值之后的数值作为输入。我们可以明确的请求平滑着色，而不是依赖默认行为，如下：
+```c
+// ...Vertex shader...
+// Vertex shader output
+smooth out vec3 v_color;
+
+// ..Fragment shader
+// Input from vertex shader
+smooth in vec3 v_color;
+```
+OpenGL ES 3.0引入了平面着色。在平面着色中，图元的值没有进行插值，而是将一个顶点设为驱动顶点(Provoking Vertex)，该顶点的值被用于图元中的所有片段。我们可以声明如下的平面着色输出/输入：
+```c
+// ...Vertex Shader...
+// Vertex shader output
+flat out vec3 v_color;
+
+// ...Fragment shader...
+// Input from fragment shader
+flat in vec3 v_color;
+```
+最后，可以用centroid关键字在插值器中添加另一个限定符。质心采样(centroid sampling)
+```c
+// ..Vertex shader
+// Vertex shader output
+smooth centroid out vec3 v_color;
+
+// ...Fragment shader
+// Input from vertex shader
+smooth centroid in vec3 v_color;
+```
+## 预处理器和指令
+```c
+#define
+#undef
+#if
+#ifdef
+#ifndef
+#else
+#elif
+#endif
+```
+注意，宏不能定义为带有参数(在C++的宏中可以这样)。#if、#else和#elif指令可以使用defind测试来查看宏是否已经定义。下面的宏是预先定义的，接下来将作说明：
+```c
+__LINE__    // Replaced with the current line number in a shader
+__FILE__    // Always 0 in OpenGL ES 3.0
+__VERSION__ // The OpenGL ES shading language version
+GL_ES       // This will be defind for ES shaders to a value of 1
+```
+
+|扩展行为|描述|
+|--|--|
+|require|扩展是必须的，因为预处理器在扩展不受支持时将抛出错误。如果指定了all，将总是抛出错误|
+|enable|扩展被启用，因为扩展不受支持时预处理将抛出警告。如果扩展被启用，该语言将被处理。如果指定all，将总是抛出错误|
+|warn|对于扩展的任何使用均提出警告，除非这种使用时另一个已经启用扩展所必需的。如果指定all，则在使用扩展时都将抛出警告。而且，如果扩展不受支持，将抛出警告|
+|disable|扩展被禁用，因此如果使用扩展将被抛出错误。如果指定all（默认），则不启用任何扩展|
+
+## 统一变量和插值器打包
+统一变量通常保存在所谓的“常量存储”中，这可以看作向量的物理数组。顶点着色器输出/片段着色器输入一般保存在插值器中，这通常也保存为一个向量数组。
+在OpenGL ES 3.0中，定义插值器和统一变量映射到物理存储空间的方式。打包规则基于物理存储空间被组织为一个每个存储位置4列（每个向量分量一列）和1行的网格的概念。打包规则寻求打包变量，使生成代码的复杂度保持不变。换言之，打包规则不景行重排序操作（这种操作需要编译器生成合并打包数据的额外指令），而是试图在部队运行时性能产生负面影响的情况下，优化物理地址空间的使用。
+我们来看一组统一变量声明的例子，看看如何打包它们：
+```c
+uniform mat3 m;
+uniform float f[6];
+uniform vec3 v;
+```
+如果完全不进行打包，你可能发现许多常量存储空间将被浪费。矩阵m将占据3行，数组f占据6行，向量v占据1行，共需要10行才能存储这些变量。下表展示了任何不进行任何打包的结果。
+
+|位置|X|Y|Z|W|
+|--|--|--|--|--|
+|0|m[0].x|m[0].y|m[0].z|-|
+|1|m[1].x|m[1].y|m[1].z|-|
+|2|m[2].x|m[2].y|m[2].z|-|
+|3|f[0]|-|-|-|
+|4|f[1]|-|-|-|
+|5|f[2]|-|-|-|
+|6|f[3]|-|-|-|
+|7|f[4]|-|-|-|
+|8|f[5]|-|-|-|
+|9|v.x|v.y|v.z|-6|
+
+下表表示打包之后的结果
+
+|位置|X|Y|Z|W|
+|--|--|--|--|--|
+|0|m[0].x|m[0].y|m[0].z|f[0]|
+|1|m[1].x|m[1].y|m[1].z|f[1]|
+|2|m[2].x|m[2].y|m[2].z|f[2]|
+|3|v.x|v.y|v.z|f[3]|
+|4|-|-|-|f[4]|
+|5|-|-|-|f[5]|
+
+在使用打包规则时，只需硧6个物理常量位置。你将会注意到，数组f的元素会跨越行的边界，原因是GPU通常会按照向量位置索引对常量存储进行索引。打包必须时数组跨域行边界，这样索引才能够起作用。
+所有打包对OpenGL ES着色语言的用户都是完全透明的，除了一个细节：打包影响统一变量和顶点着色器输出/片段着色器输入的计数方式。如果你想要编写保证能够在所有OpenGL ES 3.0实现上运行的机器，就不应该使用打包之后超过最小运行存储大小的统一变量或者插值器。
+## 精度限定符
+精度限定符使着色器创作者可以指定着色器变量的计算精度。变量可以声明为低、中高。这些限定符用于提示编译器允许在较低的范围和精度上执行变量计算。在较低的精度上，有些OpenGL ES实现在运行着色器时可能更快，或者电源效率更高。
+当然，这种效率的提升是以精度为代价的，在没有正确使用精度限定符时可能造成伪像。
+注意，OpenGL ES规范中没有规定底层硬件中必须支持多种精度，所以某个OpenGL ES实现在最高精度上进行所有运算并见到那地忽略限定符是完全正常地。不过，在某些是线上，使用较低地精度可能带来好处。
+精度限定符可以用于指定任何基于浮点数或者整数的变量的精度。指定精度的关键字是lowp、mediump和highp。下面是一些带有精度限定符的声明示例：
+```c
+highp vec4 position;
+varying lowp vec4 color;
+mediump float specularExp;
+```
+除了精度限定符之外，还有默认精度的概念。也就是说，如果变量声明时没有使用精度限定符，它将拥有该类型的默认精度。默认精度限定符在顶点或者片段着色器的开头用如下语法指定：
+```c
+precision highp float;
+precision mediump int;
+```
+在顶点着色器中，如果没有指定默认精度，则int和float的默认精度都为highp。也就是说，顶点着色器中所有没用精度限定符声明的变量都使用最高的精度。片段着色器的规则与此不同。在片段着色器中，浮点值没有默认的精度值：每个着色器必须声明一个默认的float精度，或者为每个float变量指定精度。
+## 不变性
+OpenGL ES着色语言中引入的invariant关键字可以用于任何可变的顶点着色器输出。不变性是什么意思，为什么它很必要呢？问题在于着色器需要编译，而编译器可能进行导致指令重新排序的优化。这种指令重排意味着两个着色器之间等价计算不能保证产生完全相同的结果。这种不一致性在多遍着色器特效时尤其可能称为问题，在这种情况下，相同的对象Alpha混合绘制在自身上方。如果用于计算输出位置的数值的精度不完全一样，精度差异就会导致伪像。这个问题通常表现为“深度冲突”(Z fighting)，每个像素的Z（深度）精度差异导致不同遍着色相互之间有微小的偏移。
+invariant关键字可以用于变量声明，或者用于已经声明的变量。下面是一些例子：
+```c
+invariant gl_Position;
+invariant texCoord;
+```
+一旦某个输出变量声明了不变性，编译器便保证相同的计算和着色器输入条件下结果相同。例如，两个顶点着色器通过将视图投影矩阵和输入位置位置相乘计算输出位置，你可以保证这些位置不变。
+```c
+#version 300 es
+uniform mat4 u_viewProjMatrix;
+layout(location = 0) in vec4 a_vertex;
+invariant gl_Position;
+void main()
+{
+    // Will be the same value in all shaders with the same viewProjMatrix and vertex
+    gl_Position = u_viewProjMatrix * a_vertex;
+}
+```
+也可以用#pragma指定让所有变量
