@@ -9,6 +9,8 @@ tags:
 |--|--|
 |public static float Mathf.Round(float f)|四舍五入|
 
+DisallowMultipleComponent 禁止一个脚本被加载多次
+
 ### YieldInstruction 中断指令
 
 所有yield指令的基类

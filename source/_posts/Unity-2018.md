@@ -3,8 +3,8 @@ title: Unity-2018
 mathjax: true
 date: 2019-03-30 22:42:25
 tags:
-	- Unity2018
-categories: Unity2018
+	- Unity-2018
+categories: Unity
 ---
 Shader中使用"UsePass"引用同一个Shader的另外一个SubShader的Pass会导致崩溃，这个是Bug还是就是不能这么写？我使用的版本是2017.4.6f1。例如这样：
 ```C

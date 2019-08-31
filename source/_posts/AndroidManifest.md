@@ -61,4 +61,7 @@ adb connect 127.0.0.1:7555 # 连接木木模拟器
 adb connect 127.0.0.1:62001 # 连接夜神模拟器
 adb shell
 logcat
+-----
+adb devices
+
 ```

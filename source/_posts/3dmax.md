@@ -6,6 +6,7 @@ tags:
     - 3DMax
 categories: 3DMax
 ---
+
 # 工具栏
 主工具栏（Main Toolbars）:按ALT+6可以进行隐藏/显示，其他工具栏可以选择菜单
 Customize\Show UI(自定义\显示用户界面)进行显示在屏幕上。
@@ -524,5 +525,22 @@ W:是一个双重工具。选择并且移动。X键可以放大或者缩小。
 E：旋转功能
 R：缩放功能，放在中心区域，三个轴同时缩放。
 Zomm Extends All Selected
-Alt+W：最大化视图
 Orbit Subobject:旋转视图。
+
+# 烘培法线
+首先创建一个正方体
+{% asset_img 1.jpg %}
+复制一个出来，改成其他颜色，接下来白色模型卡线，加涡轮平滑或者网格平滑命令。
+{% asset_img 2.jpg %}
+选中线少的正方体，打开UVW展开编辑器
+{% asset_img 3.jpg %}
+接下来开始烘培法线，先选中底模，先按大键盘的0键打开烘培面板，然后选取高模。
+{% asset_img 4.jpg %}
+重置一下，然后数量给2或者3
+{% asset_img 5.jpg %}
+{% asset_img 6.jpg %}
+{% asset_img 7.jpg %}
+{% asset_img 8.jpg %}
+{% asset_img 9.jpg %}
+{% asset_img 10.jpg %}
+然后点击渲染，这里法线贴图得到所在文件夹去查找。

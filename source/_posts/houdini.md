@@ -25,3 +25,4 @@ categories: Houdini
 空格键+F键：选中当前对象
 空格键+G键：选中当前对象并还原视口
 D键打开Display Option
+感觉最右边的那个按钮表示激活。
