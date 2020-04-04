@@ -7,21 +7,19 @@ mathjax: true
 categories: "Unity Shader"
 ---
 
-### 像素光 Pixel Light
+## 像素光 Pixel Light
 
 Unity中将平行光称作为像素光，第一个像素光是基础平行光，以LightMode=ForwardBase标签修饰，每多一个像素光都以LightMode=ForwardAdd标签修饰。
 并不是所有的光源在运行时都会反射到物体上，而是根据Project的Quality中设置的像素光数量来渲染的。
 默认的像素光的数量应该是2，我们有更多的平行光照在物体上，就需要在Edit->Project Setting->Quality中去调节像素光的数量Pixel Light Count
 当场景中的实际像素光数量超过这个设定值的时候，Unity只会渲染最重要的光。
 
-### 关于像素光的叠加原理
+## 关于像素光的叠加原理
 
 片段着色器是要将mesh组件传递的信息最终计算为颜色(或者深度)存储在帧缓存(Frame Buffer)中。
 每个Pass之间输出的颜色通过一定的公式进行混合。
 在这里我们简单使用一比一的模式进行颜色混合，即混合指令为：
-
-	Blend One One
-
+`Blend One One`
 第二个Pass的代码同样的也直接复制第一个Pass即可，相应的将Tags标签中LightMode=ForwardBase修改为LightMode=ForwordAdd。
 
 ```shader
@@ -32,7 +30,7 @@ Shader "Custom/Multi-Light Diffuse" {
 }
 ```
 
-### 渲染流水线
+# 渲染流水线
 渲染流水线的工作任务在于由一个三维场景触发、生成（或者说渲染）一张二维图像。换句话说，计算机需要从一系列的顶点数据、纹理等信息出发，把这些信息最终转换成一张人眼可以看到的图像。而这个工作通常是由CPU和GPU共同完成的。
 《Render-Time Rendering, Third Edition》将一个渲染流程分成3个阶段：**应用阶段(Application Stage)、几何阶段(Geometry Stage)、光栅化阶段(Rasterizer Stage)**。
 {% asset_img shader.webp 渲染流水线 %}
@@ -54,21 +52,29 @@ Shader "Custom/Multi-Light Diffuse" {
 光栅化概念阶段中的**三角形设置（Triangle Setup）**和**三角形遍历（Triangle Traversal）**阶段也都是固定函数（Fixed-Function）的阶段。接下来的**片元着色器（Fragment Shader）**，则是完全可编程的，它用于实现逐片元（Per-Fragment）的着色操作。最后，**逐片元操作（Per-Fragment Operations）**阶段负责执行很多重要的操作，例如修改颜色、深度缓冲、进行混合等，它不是可编程，但具有很高的可配置型。
 Unity内置的DiffuseShader,也就是说我们创建一个Material出来时默认的Shader也是多光源的，所以这篇文章完成的Shader与默认的diffuse shader基本效果一致。
 
-### CPU与GPU之间的通信
+## 2.2 CPU与GPU之间的通信
 
 渲染流水线的起点是CPU，即应用阶段。应用阶段可以分为下面3个阶段：
 - 把数据加载到显存中
 - 设置渲染状态
 - 调用Draw Call
 
-1. 数据加载到显存中
+### 2.2.1 把数据加载到显存中
 基本步骤就是纹理、网格等数据从硬盘加载到系统内存在加载到显存中。数据记载到显存后系统内存中的数据就可以被移除了，但是对于一些数据来说CPU需要访问他们，例如用于碰撞检测用的网格数据，这些数据则会被保留。
 
-2. 设置渲染状态
+### 2.2.3 设置渲染状态
 渲染状态指的是场景中的网格是如何被渲染的，例如使用哪个Vertex Shader或者哪个Fragment Shader、光源属性、材质等。
 
-3. 调用Draw Call
-Draw Call指的是一个命令，发起方为CPU，接收方为GPU。当给定了一个Draw Call时，GPU会根据渲染状态（例如材质、纹理、着色器等）和所有输入的顶点数据
+### 2.2.3 调用Draw Call
+Draw Call指的是一个命令，发起方为CPU，接收方为GPU。当给定了一个Draw Call时，GPU会根据渲染状态（例如材质、纹理、着色器等）和所有输入的顶点数据来进行计算，最终输出成屏幕上显示的那些漂亮的像素。而这个计算过程，就是我们下一节要讲的GPU流水线。
+## 2.3 GPU流水线
+当GPU从CPU那里得到渲染命令后，就会进行一系列流水线操作，最终把图元渲染到屏幕上。
+### 2.3.1 概述
+在上一节中，我们解释了在应用阶段，CPU是如何和GPU通信，并通过调用Draw Call来命令GPU进行渲染。GPU渲染的过程就是GPU流水线。
+
+对于概念阶段的后两个阶段，即几何阶段和光栅化阶段，开发者无法拥有绝对的控制权，其实现的载体是GPU。GPU通过实现流水线化，大大加快了渲染速度。虽然我们无法完全控制这两个阶段的实现细节，但GPU向开发者开放了很多控制权。在这一节中，我们将具体了解GPU是如何实现这两个概念阶段的。
+
+几何阶段和光栅化阶段可以分为若干更小的流水线阶段，这些流水线阶段由GPU来实现，每个阶段GPU提供了不同的可配置性或可编程性。
 
 ### 从应用程序阶段模型数据给顶点着色器时支持的语义
 

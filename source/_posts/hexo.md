@@ -4,25 +4,21 @@ date: 2017-10-12 16:58:15
 tags:
   - Hexo
 ---
+`<span id="jump">跳转到的地方</span>`
+<span id="jump">跳转到的地方</span>
 # 安装
-
-	npm install -g hexo-cli
-
+`npm install -g hexo-cli`
 如果提示timeout的话，使用下面指令
-
-	npm config delete proxy
-
+`npm config delete proxy`
 # 关闭背景动画
 背景动画基于canvas，个人感觉比较耗，毕竟i3，所以关闭，在\themes\next\_config.yml中修改字段
 ```javascript
 three_waves: false
 ```
-
 # 嵌入PDF
-npm install --save hexo-pdf
+`npm install --save hexo-pdf`
 添加
-
-	hexo deploy -- 发布
+`hexo deploy -- 发布`
 编辑主题的 source/css/_variables/custom.styl 文件，新增变量：
 ```
 // 修改成你期望的宽度
@@ -31,23 +27,11 @@ $content-desktop = 700px
 // 当视窗超过 1600px 后的宽度
 $content-desktop-large = 900px
 ```
-
 # 发布
-
-	hexo d -g
-
+`hexo d -g`
 如果发布失败的话，将ssh换成https://github.com/zentia/zentia.github.io.git
-
-# Insert Image
-```
-{% asset_img example.jpg This is an example image %}
-```
-
 # Font
-
-```
-<font size = 4 color=red></font> # 字体大小颜色设置
-```
+`<font size = 4 color=red></font> # 字体大小颜色设置`
 
 - **列表嵌套**
    + 上一级和下一级之间敲三个空格即可
@@ -98,10 +82,17 @@ top: 999
   img { margin: 0 auto; }
 }
 ```
-
 # algolia
 由于zentia.site这个域名没有备案，导致一直无法使用，然后只能使用zentia.github.io。然后一直没有更新algolia导致搜索还是访问之前的源，这个问题痛苦了好久。然后今天解决
+`hexo algolia`
+可能会提示
+`ERROR [hexo-algolia] Please set an HEXO_ALGOLIA_INDEXING_KEY environment varia`
+这个问题，然后`export HEXO_ALGOLIA_INDEXING_KEY='f4ca7ae2408d2e27ffc8269ad8d34273'`这样就解决了。
+# 上下标
+`H<sub>2</sub>O CO<sub>2</sub>`
+`引用<sup><a href="http://www.baidu.com" target="_blank" title="百度一下">[1]</a></sup>`
+引用<sup><a href="http://www.baidu.com" target="_blank" title="百度一下">[1]</a></sup>
 
-    hexo algolia
-
-可能会提示"ERROR [hexo-algolia] Please set an `HEXO_ALGOLIA_INDEXING_KEY` environment varia"这个问题，然后"export HEXO_ALGOLIA_INDEXING_KEY='f4ca7ae2408d2e27ffc8269ad8d34273'"这样就解决了。
+# 跳转
+`[点击跳转](#jump)`
+[点击跳转](#jump)

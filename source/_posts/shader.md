@@ -169,3 +169,26 @@ ColorMask可让我们指定渲染结果的输出通道，而不是通常情况�
 |_SinTime|float4|t是时间的正弦值，4个分量分别是(t/8,t/4,t/2,t)|
 |_CosTime|float4|t是时间的余弦值，4个分量分别是(t/8,t/4,t/2,t)|
 |unity_DeltaTime|float4|dt是时间增量，4个分量分别是(dt,1/dt,smoothDt,1/smoothDt)|
+{% asset_img head.gif %}
+# shader中函数的基本理解
+1. smoothstep获取较为平滑的过渡效果length(uv)降维效果
+2. length(uv)将2D转换为1D
+3. atan(u,v)获取角度，配合length可以得到极坐标
+4. pow(f,n)将曲线变化变得平滑或尖锐
+5. sin cos 周期函数，用于实现周期的效果（如来回移动，循环的移动等）
+6. hash获取标志ID，常用于基于空间划分的效果的实现
+7. noise同时具有随机性和连续性的函数
+8. fbm在基本函数的基础上，不断的叠加高频信息，丰富细节
+
+假如uv是(-0.5,-0.5)到(.5,0.5)
+1. smoothstep eg:绘制smoothstep曲线
+f(x)=x*x*(3.0-2.0*x)
+具有淡入淡出效果
+```c
+float3 DrawSmoothstep(float2 uv){
+	uv+=0.5；
+	float val = smoothstep(0.0,1.0,uv.x);
+	val = step(abs(val-uv.y),0.01);
+	return float3(val,val,val);
+}
+```

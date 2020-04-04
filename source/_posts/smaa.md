@@ -26,3 +26,35 @@ MSAA的原理和SSAA一致，都是通过将图形拉伸至更高倍率之下的
 # SSAA画质与性能变化
 我们再来对比开启SSAA之后的情况，首先这里可以看到SSAA的一个特点，虽然抗锯齿技术逃不过采样的过程，但是这里可以看到开启SSAA之后，原本充满锯齿的地方首先还是一如既往的清晰、锐利，衣物和衣物的过度非常干净，完全没有后处理抗锯齿那种模糊的干净，而是锯齿真的缩小既视感，不过开启SSAA的代价确实高，2倍环境下Benchmark成绩已经滑落至49.08帧。
 {% asset_img 3.png %}
+
+# OpenGL中的MSAA
+如果我们想要在OpenGL中使用MSAA，我们必须要使用一个能在每个像素中存储大于1个颜色值的颜色缓冲（因为多重采样需要我们为每个采样点都储存一个颜色）。所以，我们需要一个新的缓冲类型，来存储特定数量的的多重采样样本，它叫做多重采样缓冲（Multisample Buffer）。
+
+大多数的窗口系统都应该提供一个多重采样缓冲，用以代替默认的颜色缓冲。GLFW同样给了我们这个功能，我们所要做的只是提示(Hint)GLFW，我们希望使用一个包含N个样本的多重采样缓冲。这可以在创建窗口之前调用glfwWindowHint来完成。
+
+```c
+glfwWindowHint(GLFW_SAMPLES, 4);
+```
+
+现在再调用glfwCreateWindow创建渲染窗口时，每个屏幕坐标就会调用一个包含4个子采样点的颜色缓冲了。GLFW会自动创建一个每像素4个子采样点的深度和样本缓冲。这也意味着所有缓冲的大小都增长了4倍。
+
+现在我们已经向GLFW请求了多重采样缓冲，我们还需要调用glEnable并启用GL_MULTISAMPLE，来启用多重采样。再大多数OpenGL的驱动上，多重采样都是默认启用的，所以这个调用可能会有点多余，但显示地调用可能会有点多余，但显示地调用一下会更保险一点。这样子不论是什么OppenGL地实现都能够正常启用多重采样了。
+```c
+glEnable(GL_MULTISAMPLE);
+```
+只要默认的帧缓冲有了多重采样缓冲的附件，我们所要做的只是调用`glEnable`来启用多重采样。因为多重采样的算法都在OpenGL驱动的光栅器中实现了，我们不需要再多做什么。如果现在再来渲染本节一开始的那个绿色的立方体，我们应该能看到更平滑的边缘：
+
+# 离屏MSAA
+由于GLFW负责了创建多重采样缓冲，启用MSAA非常简单。然而，如果我们想要使用我们自己的帧缓冲来进行离屏渲染，那么我们就必须要自己手动生成多重采样缓冲了。
+
+有两种方式可以创建多重采样缓冲，将其作为帧缓冲的附件：纹理附件和渲染缓冲附件，这和帧缓冲教程中所讨论的普通附件很相似。
+
+## 多重采样纹理附件
+
+为了创建一个支持存储多个采样点的纹理，我们使用`glTexImage2DMultisample`来替代glTexImage2D，它的纹理目标是`GL_TEXTURE_2D_MULTISAPLE`。
+
+```c
+glBindTexture(GL_TEXTURE_2D_MULTISAPLE, tex);
+glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAPLE, samples, GL_RGB, width, height, GL_TRUE);
+glBindTexture(GL_TEXTURE_2D_MULTISAPLE, 0);
+```

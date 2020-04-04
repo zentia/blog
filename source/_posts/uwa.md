@@ -65,3 +65,16 @@ march指定的是当前cpu的架构，而mtune是真正作用于某一型号cpu�
 看知乎的时候发现一个好玩的东西，https://lab.uwa4d.com/lab/5bc42d5404617c5805d4d685 UGUI绘制图表工具，一直想做一个性能分析工具。
 GDC2018中描述了Northlight引擎的内部实现和渲染相关的一些最新进展。
 前育碧的两位资深老员工成立Second Order公司后，开发了第一款游戏《Claybook》，其中包括了许多创新技术，比如基于GPU渲染的粘土与流体模拟、完全可变性的世界与角色、光线追踪的视觉效果。
+
+- 请问Unity的stats窗口上显示的Batches和SnapdragonProfiler转出来的DC差距比较大可能是因为什么？
+{% asset_img 1.jpg %}
+这个Batches的数量其实并不代表DrawCall的数量，他其实和Render面板Total Batches的数量匹配，你如果要看DrawCall的数量，那么可以查看Render面板上面的DrawCall统计，这个统计应该和你SnapdragonProfiler抓出来的差不多。然后再贴一下Rendering面板上几个参数代表啥意思，仅供参考。这是我本机的截图
+{% asset_img 2.jpg %}
+Render界面各个参数说明
+SetPass Calls:shader状态切换次数
+Draw Calls:绘制调用次数
+Total Batches:总合批的数量=静态合批+动态合批+实例合批；这个数一定是比Draw Calls的数量小，小的越多说明合并的物体越多。
+动态合批：Batched Draw calls:表示合批过的mesh数，比如上面显示的60个mesh合批。
+动态合批：Batched：表示合批的次数，上面截图数据说明60个mesh通过47次合批才完成。其实如果情况好的时候可能几次合批就能够合并掉60个mesh，可惜可能是很多属性不符合动态合并要求。
+静态合批与实例化与上面动态合批的解释相同。
+- so热更新除了只更新il2cpp.so还是修改global-metadata.data，其他的so不需要更新。

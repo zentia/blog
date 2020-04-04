@@ -1,5 +1,5 @@
 ---
-title: Unity 2D描边实现介绍
+title: Unity 2D Outline
 date: 2017-10-05 23:25:51
 tags:
     - Unity
@@ -8,7 +8,7 @@ tags:
 # 像素着色器描边：
 首先最直观的想法，就是使用fragment shader找出2D角色贴图透明像素和非透明像素的边界，然后通过边界周边Alpha值Blur的方式，给边界上描边色。
 
-```Shader
+```c
 Shader "Hidden/NewImageEffectShader"
 {
     Properties

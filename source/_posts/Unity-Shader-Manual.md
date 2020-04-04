@@ -110,7 +110,15 @@ a和b的位置无所谓前后，结果都是一样的
 ARB_precision_hint_fastest 是用最快的方式，以最低的精度运行，提升片段着色器的运行速度，减少时间。（通常是指FP16,16bit，半精度）牺牲表现换取运行速度。
 
 # UnpackNormal
-
-    half3 normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));
-
+`half3 normal = UnpackNormal(tex2D(_NormalMap, IN.uv_NormalMap));`
 UnpackNormal是定义在UnityCG.cginc文件中的方法，UnpackNormal接受一个fixed4的输入，并将其转换为所对应的法线值(fixed3)。
+
+# TANGENT_SPACE_ROTATION
+```c
+float3 binormal = cross(v.normal,v.tangent.xyz)*v.tangent.w;
+flaot3x3 rotation = float3x3(v.tangent.xyz,binormal,v.normal);
+```
+也就是构造出tangent space的坐标系，定义转换world space的向量到tangent space的rotation矩阵。
+
+# UNITY_MATRIX_IT_MV
+专门用于将发现从模型空间变换到观察空间，为UNITY_MATRIX_MV的逆转置矩阵，

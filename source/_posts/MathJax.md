@@ -9,21 +9,24 @@ categories:
 
 # 希腊字母
 
-|小写       |Tex|大写|Tex|
-|-----------|--|--|---|
-|$\alpha$   |\alpha     |
-|$\beta$    |\beta  |
-|$\gamma$   |\gamma     |
-|$\delta$   |\delta |
-|$\epsilon$ |\epsilon   |
-|$\zeta$    |\zeta  |
-|$\eta$     |\eta       |
+|序号|小写       |Tex|大写|Tex|汉语注音|
+|--|-----------|--|--|---|--|
+|1|$\alpha$   |\alpha     |||阿尔法|
+|2|$\beta$    |\beta  |||贝塔|
+|3|$\gamma$|\gamma|$\Gamma$|\Gamma|伽马|
+|4|$\delta$   |\delta |$\Delta$|\Delta|德尔塔|
+|5|$\epsilon$ |\epsilon   |||伊普西隆|
+|6|$\zeta$    |\zeta  |||泽塔|
+|7|$\eta$     |\eta       |
 |$\theta$   |\theta |
 |$\upsilon$ |\upsilon   |
 |$\phi$     |\phi   |
 |$\omega$   |\omega     |$\Omega$   |\Omega |
 |$\in$      |\in        |
-|$\lambda$  |\lambad    |$\Lambda$  |\Lambda|
+|$\lambda $  |\lambda    |$\Lambda$  |\Lambda|
+||$\varrho$|\varrho|
+||$\varsigma$|\varsigma|
+||$\varphi$|\varphi|
 - 若需要大写希腊字母，将命令首字母大写即可。 \Omega 呈现为 $\Omega$
 - 需需要斜体希腊字母，将命令前面加上var。\varpi 呈现为 $\varPi$
 
@@ -55,3 +58,32 @@ categories:
 # 矢量
 
 \vec{a} \cdot \vec{b} = 0 显示 $\vec{a} \cdot \vec{b} = 0$
+
+# 如何插入公式大括号
+
+```
+方法一：
+$ f(x)=\left\{
+\begin{aligned}
+x & = & \cos(t) \\
+y & = & \sin(t) \\
+z & = & \frac xy
+\end{aligned}
+\right.
+$
+```
+方法一：
+$ f(x)=\left\{
+\begin{aligned}
+x & = & \cos(t) \\
+y & = & \sin(t) \\
+z & = & \frac xy
+\end{aligned}
+\right.
+$
+
+# 开方
+\sqrt{a+b} : $\sqrt{a+b}$
+# 矩阵
+`\begin{matrix}...\end{matrix}`，每一行以\结尾，hexo markdown中`\\\\`。&分割矩阵元素。
+括号除了上面的\left...\right方式外，还可以pmatrix $\begin{pmatrix} 1&2\\\\3&4 \end{pmatrix}$，bmatrix $\begin{bmatrix} 1&2\\\\3&4 \end{bmatrix}$，Bmatrix $\begin{Bmatrix} 1&2\\\\3&4 \end{Bmatrix}$，vmatrix $\begin{vmatrix} 1&2\\\\3&4 \end{vmatrix}$，Vmatrix $\begin{Vmatrix} 1&2\\\\3&4 \end{Vmatrix}$。

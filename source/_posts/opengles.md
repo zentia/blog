@@ -180,6 +180,54 @@ GL_STENCIL_TEST
 |EGL_TRANSPARENT_GREEN_VALUE|解读为透明的绿色值|EGL_DONT_CARE|
 |EGL_TRANSPARENT_BLUE_VALUE|解读为透明的蓝色值|EGL_DONT_CARE|
 
+## 与窗口系统通信
+
+EGL提供了OpenGL ES 3.0（和其他Khrons图形API）和运行于计算机上的原生窗口系统（如GNU/Linux系统上常见的X Window系统、Microsoft Windows或者Mac OS X的Quartz）之间的一个“结合”层次。在EGL能够确定可用的绘制表面类型（或者底层系统的其他特性）之前，它必须打开和窗口系统的通信渠道。注意，Apple提供自己的EGL API的iOS实现，称为EAGL。
+因为每个窗口系统都有不同的语义，所以EGL提供基本的不透明类型--EGLDisplay，该类型封装了所有系统相关，用于和原生窗口系统接口。任何使用EGL的应用程序必须执行的第一个操作是创建和初始化与本地EGL显示的连接。这采用例3-1所示的两次调用序列完成。
+例3-1 初始化EGL
+```
+EGLint majorVersion;
+EGLint minorVersion;
+
+EGLDisplay display = eglGetDisplay(EGL_DEFAULT_DISPLAY);
+if (display == EGL_NO_DISPLAY)
+{
+    // Unable to open connection to local windowinng system
+}
+
+if (!eglInitialize(display,&majorVersion,&minorVersion))
+{
+    // Unable to initialize EGL; handle and recover
+}
+```
+调用如何函数打开与EGL显示服务器的连接：
+`EGLDisplay eglGetDisplay(EGLNativeDisplayType displayId)`
+displayId 指定显示连接，默认连接为EGL_DEFAULT_DISPLAY
+
+## 检查错误
+EGL中的大部分函数在成功时返回EGL_TRUE，否则返回EGL_FALSE。但是，EGL所做的不仅是告诉你调用是否失败--它将记录错误，指示故障原因。不过，这个错误代码不会直接返回给你；你需要明确地查询EGL错误代码，为此可以调用如何函数完成：
+`EGLint eglGetError()`
+## 初始化EGL
+成功地打开连接之后，需要初始化EGL，这通过调用如何函数完成：
+`EGLBoolean eglInitialize(EGLDisplay display,EGLint *majorVersion,EGLint *minorVersion)`
+display         指定EGL显示连接
+majorVersion    指定EGL实现返回的主版本号，可能为NULL
+minorVersion    指定EGL实现返回的次版本号，可能为NULL
+## 确定可用的表面配置
+一旦初始化了EGL，就可以确定可用渲染表面的类型和配置，这有两种方法：
+- 查询每个表面配置，找出最好的选择。
+- 指定一组需求，让EGL推荐最佳匹配。
+
+## 查询EGLConfig属性
+现在，我们说明与EGLConfig相关的EGL值，并说明如何检索这些值。
+EGLConfig包含关于EGL启用的表面的所有信息。这包括关于可用颜色、与配置相关的其他缓冲区（如后面将要讨论的深度和模版缓冲区）、表面类型和许多其他特性。下面是可以从EGLConfig中查询的属性的一个列表。在本章中我们只讨论一个子集，表3-1中列出了完整的列表作为参考。
+使用如何函数可以查询与EGLConfig相关的特定属性：
+`EGLBoolean eglGetConfigAttrib(EGLDisplay display,EGLConfig config,EGLint attribute,EGLint *value)`
+display 指定EGL显示连接
+config 指定要查询的配置
+attribute 指定返回的特定属性
+value 指定返回值
+上述函数在调用成功时返回EGL_TRUE，失败时返回EGL_FALSE，如果attribute不是有效的属性，则还要返回EGL_BAD_ATTRIBUTE错误。
 ## 创建屏幕上的渲染区域：EGL窗口
 ```c
 EGLSurface eglCreateWindowSurface(EGLDisplay display, // 指定EGL显示连接
@@ -195,7 +243,8 @@ EGLSurface eglCreateWindowSurface(EGLDisplay display, // 指定EGL显示连接
 |EGL_BAD_ALLOC|pbuffer因为缺乏资源而无法分配时发生这种错误|
 |EGL_BAD_CONFIG|如果提供的EGLConfig不是系统支持的有效配置，则发生这种错误|
 |EGL_BAD_PARAMETER|如果属性列表中提供的EGL_WIDTH或EGL_HEIGHT是负值，则产生这种错误|
-
+## 同步渲染
+你可能会碰到一些情况，即需要协调多个图形API在单个窗口中的渲染。例如，你可能发现使用OpenVG更容易找到比OpenGL ES 3.0更适于窗口绘制字符的原生窗口系统字体渲染函数。在这种情况下，需要让应用程序允许多个库渲染到共享窗口。EGL有几个函数有助于同步任务。
 ## 着色器和程序
 需要创建两个基本对象才能用着色器进行渲染：着色器对象和程序对象。理解着色器对象和程序对象的最佳方式是将它们比作C语言的编译器和链接程序。C编译器为一段源代码生成目标代码（例如，.obj或者.o文件）。在创建目标文件之后，C链接程序将对象文件链接为最后的程序。
 编译之后，着色器对象可以连接到一个程序对象。程序对象可以连接多个着色器对象。在OpenGL ES中，每个程序对象必须连接一个顶点着色器和一个片段着色器（不多也不少），这和桌面OpenGL不同。程序对象被链接为用于渲染的最后“可执行程序”。
@@ -207,7 +256,7 @@ EGLSurface eglCreateWindowSurface(EGLDisplay display, // 指定EGL显示连接
 5. 将编译后的着色器对象连接到程序对象。
 6. 链接程序对象。
 
-## 创建和编译一个着色器
+### 创建和编译一个着色器
 使用着色器对象的第一步是创建着色器，着用glCreateShader完成。
 ```c
 GLuint glCreateShader(GLenum type//创建的着色器类型可以是GL_VERTEX_SHADER或者GL_FRAGMENT_SHADER
@@ -257,8 +306,8 @@ GL_TRANSFORM_FEEDBACK_VARYING_MAX_LENGTH
 GL_VALIDATE_STATUS
 ```
 ## 统一变量和属性
-一旦链接了程序对象，就可以在对象上进行许多查询。首先，你可能需要找出程序中的活动统一变量。统一变量（uniform）是存储应用程序通过OpenGL ES 3.0 API传递给着色器的只读常数值的变量。
-统一变量被组合成两类统一变量块。第一类是命名统一变量块，统一变量的值由所谓的统一变量缓冲区对象支持。命名统一变量块被分配一个统一变量块索引。下面的例子声明一个名为TransformBlock并包含3个统一变量（matViewProj、matNormal和matTexGen）的统一变量块：
+一旦链接了程序对象，就可以在对象上进行许多查询。首先，你可能需要找出程序中的活动统一变量。统一变量（uniform）---- 在关于着色语言的下一章中详细介绍----是存储应用程序通过OpenGL ES 3.0 API传递给着色器的只读常数值的变量。
+统一变量被组合成两类统一变量块。第一类是命名统一变量块，统一变量的值由所谓的统一变量缓冲区对象（下面将详细介绍）支持。命名统一变量块被分配一个统一变量块索引。下面的例子声明一个名为TransformBlock并包含3个统一变量（matViewProj、matNormal和matTexGen）的统一变量块：
 ```
 uniform TransformBlock
 {
@@ -273,6 +322,8 @@ uniform mat4 matViewProj;
 uniform mat3 matNormal;
 uniform mat3 matTexGen;
 ```
+我们将在5.14节更详细地说明统一变量块。
+如果统一变量在顶点着色器和片段着色器中均有声明，则声明的类型必须相同，且在两个着色器中的值也需相同。在链接阶段，链接程序将为程序中与默认统一变量块相关的活动统一变量指定位置。
 ### 获取和设置统一变量
 要查询程序中活动统一变量的列表，首先要用GL_ACTIVE_UNIFORMS参数调用glGetProgramiv。这样可以获得程序中活动统一变量的数量。这个列表包含命名统一变量块中的统一变量、着色器代码中生命的默认统一变量块中统一变量以及着色器代码中使用的内建统一变量。如果统一变量被程序使用，就认为它是“活动”的。换言之，如果你在一个着色器中声明了一个统一变量，但是从未使用，链接程序可能会在优化时将其去掉，不在活动统一变量列表中饭回。你还可能发现程序中最大统一变量名称的字符数量（包括null终止符）；这可以用GL_ACTIVE_UNIFORM_MAX_LENGTH参数调用glGetProgramiv获得。
 知道活动统一变量和存储统一变量名称所需的字符数之后，我们可以用glGetActiveUniform和glGetActiveUniformsiv找出每一个统一变量的细节。
@@ -317,7 +368,18 @@ params 将被写入由对应统一变量的pname所指定的结果
 - C列R行的列优先矩阵被当成C浮点列向量的一个数组对待，每个向量包含R个分量。相类似，R行C列的行优先矩阵被当成R浮点行向量的一个数组，每个向量包含C个分量。列向量或者行向量连续存储，但是有些实现的存储中可能有缺口。矩阵中两个向量之间的偏移量被称作列跨距或者行跨距（GL_UNIFORM_MATRIX_STRIDE），可以在链接的程序中用glGetActiveUniformsiv查询。
 - 标量、向量和矩阵的数组按照元素的顺序存储与内存中，成员0放在最低偏移处。数组中每个元素之间的偏移量时一个常熟，称作数组跨距（GL_UNIFORM_ARRAY_STRIDE），可以在链接的程序中用glGetActiveUniformsiv查询。
 
+## 着色器编译器
+当你要求OpenGL ES编译和链接着色器时，光花一点时间思考OpenGL ES实现必须做到的事。着色器代码通常解析为某种中间表现形式，这和大部分编译语言相同（例如，抽象语法树）。编译器必须将抽象表现形式转化为硬件的机器指令。理想状态下，这个编译器还应该进行大量的优化，例如无用代码删除、常量传播等。进行这些工作需要付出代价----主要是CPU时间和内存。
+OpenGL ES 3.0实现必须支持在线着色器编译（用glGetBooleanv检索的GL_SHARDER_COMPILER值必须是GL_TRUE）。你可以指定着色器使用glShaderSource，就像我们在示例中所做的那样。你还可以尝试缓解着色器编译对资源的影响。也就是说，一旦完成了应用程序中着色器的编译，就可以调用glReleaseShaderCompiler。这个函数提示OpenGL ES实现你已经完成了着色器编译器的工作，可以释放它的资源了。注意，这个函数只是一个提示，如果决定用glCompileShader编译更多的着色器，那么OpenGL ES实现需要重新为编译器分配资源。
+`void glReleaseShaderCompiler(void)`
+提示OpenGL ES实现可以释放着色器编译器使用的资源。因为这个函数只是个提示，所以有些实现可能忽略对这个函数的调用。
+## 程序二进制码
+程序二进制码是完全编译和链接的程序的二进制表现形式。它们很有用，因为可以保存到文件系统供以后使用，从而避免在线编译的代价。你也可以使用程序二进制码，这样就没有必要在实现中分发着色器源代码。
+
 # OpenGL ES着色语言
+在前面几章中你已经看到，着色器是OpenGL ES 3.0API的一个基础和兴概念。每个OpenGL ES 3.0程序都需要一个顶点着色器和片段着色器，以渲染有意义的图片。考虑到着色器是API概念的核心，我们希望确保你在深入了解图形API的更多细节之前，掌握编写着色器的基础知识。
+本章的目标是确保你理解着色语言中的如下概念：
+- 变量和变量类型
 - 向量和矩阵的构造及选择
 - 常量
 - 结构和数组
@@ -327,10 +389,17 @@ params 将被写入由对应统一变量的pname所指定的结果
 - 统一变量和插值器打包
 - 精度限定符和不变性
 
+我们在第2章中的例子里已经介绍了这些概念的少数细节。现在，我们将用更多的细节来充实这些概念，确保你理解如何编写和阅读着色器。
+## OpenGL ES着色语言基础知识
+在阅读本书时，你会看到许多着色器。如果你开始开发自己的OpenGL ES 3.0应用程序，则很有可能编写许多着色器。目前，你应该已经理解了着色器作用的基本概念以及它融入管线的方式。如果还不理解，可以复习第1张，在那里我们介绍了管线，并且描述了顶点着色器和片段着色器融入其中的方式。
+现在我们要关注的是着色器究竟是由什么组成的。你可能已经观察到，着色器的语法和C编程语言有很多相似之处。如果你能够理解C代码，理解着色器的语法就没有太大的难度。但是，两种语言之间当然有一些重大的区别，首先是版本规范和所支持的原生数据类型。
+## 着色器版本规范
 `#version 300 es`
 没有声明版本号的着色器被认定使用OpenGL ES着色语言的1.00版本。着色语言的1.00版本用于OpenGL ES 2.0。对于OpenGL ES 3.0，规范的作者决定匹配API和着色语言的版本号。
 ## 变量和变量类型
-在计算机图形中，两个基本数据类型组成了变换的基础：向量和矩阵。这两种数据类型在OpenGL ES着色语言中也是和兴。
+在计算机图形中，两个基本数据类型组成了变换的基础：向量和矩阵。这两种数据类型在OpenGL ES着色语言中也是核心。表5-1具体描述了着色语言中存在的基于标量、向量和矩阵的数据类型。
+
+表 5-1 OpenGL ES 着色语言中的数据类型
 
 |变量分类|类型|描述|
 |--|--|--|
@@ -340,6 +409,9 @@ params 将被写入由对应统一变量的pname所指定的结果
 |无符号整数向量|uint,uvec2,uvec3,uvec4|有1、2、3、4个分量的基于无符号整数的向量类型|
 |布尔向量|bool,bvec2,bvec3,bvec4|有1、2、3、4个分量的基于无符号整数的向量类型|
 |矩阵|mat2（或mat2x2),mat2x3,mat2x4,mat3x2,mat3(或mat3x3),mat3x4,mat4x2,mat4x3,mat4(或mat4x4)|2x2,2x3,2x4,3x2,3x3,3x4,4x2,4x3或4x4的基于浮点的矩阵|
+
+##　变量构造器
+OpenGl ES着色语言在类型转换方面有非常严格的规则。也就是说，变量只能赋值为相同类型的其他变量或者相同类型的变量进行运算。在语言不允许隐含类型转换的原因是，这样可以避免着色器作者遇到可能导致难以跟踪的缺陷的意外转换。
 
 对于矩阵的构造，着色语言很灵活。下面是构造的一些基本规则：
 - 如果只为矩阵构造器提供一个标量参数，则该值被放在矩阵的对角线上。例如，mat4(1.0)将创建一个4x4的单位矩阵。
@@ -555,3 +627,53 @@ void main()
 也可以用#pragma指定让所有变量全都不变：
 `#pragma STDGL invariant(all)`
 警告：因为编译器需要保证不变性，所以可能限制它所做的优化。因此，invariant限定符应该只在必要时使用；否则可能导致性能下降。由于这个原因，全局启用不变性的#pragma指令之应该在不变性对于所有变量都必需的时候使用。还要注意，虽然不变性表示在指定GPU上计算会得到相同的结果，但是并不意味着计算在任何OpenGL ES实现之间保持不变。
+## 复制缓冲区对象
+迄今为止，我们已经说明如何用glBufferData、glBufferSubData和glMapBufferRange加载缓冲区对象。所以这些技术都涉及从应用程序到设备的数据传输。OpenGL ES 3.0还可以从一个缓冲区对象将数据完全复制到设备，这可用glCopyBufferSubData函数完成。
+`void glCopyBufferSubData(GLenum readTarget,GLenum writeTarget,GLintptr readoffset,GLinptr writeoffset,GLsizeptr size)`
+readtarget 读取的缓冲区对象目标
+writetarget 写入的缓冲区对象目标。readtarget和writetarget都可以设置为如下目标中的任何一个（尽管它们不必设置为同一个目标）
+`GL_ARRAY_BUFFER`
+`GL_ELEMENT_ARRAY_BUFFER`
+`GL_COPY_READ_BUFFER`
+`GL_COPY_WRITE_BUFFER`
+`GL_PIXEL_PACK_BUFFER`
+`GL_PIXEL_UNPACK_BUFFER`
+`GL_TRANSFORM_FEEDBACK_BUFFER`
+`GL_UNIFORM_BUFFER`
+readoffset 需要复制的读缓冲区数据中的偏移量，以字节表示
+writeoffset 需要复制的写缓冲区数据中的偏移量，以字节表示
+size 从读缓冲区数据复制到写缓冲区数据的字节数
+
+调用glCopyBufferSubData将从绑定到readtarget的缓冲区复制指定的字节到writetarget。缓冲区绑定根据每个目标的最后一次glBindBuffer调用确定。任何类型的缓冲区对象（数组、元素数组、变化反馈等）都可以绑定到GL_COPY_READ_BUFFER或GL_COPY_WRITE_BUFFER目标。这两个目标是一种方便的措施，使得应用程序在执行缓冲区的复制不改变任何真正的缓冲区绑定。
+
+## 小结
+本章探索了OpenGL ES3.0中指定顶点属性和数据的方法，特别是介绍了如下主题：
+- 如何使用glVertexAttrib*函数指定常量顶点属性和用glVertexAttrib[I]Point函数指定顶点数组。
+- 如何在顶点数组状态在顶点数组对象中如何封装，以及如何使用VAO改进性能。
+- 加载缓冲区对象数组的各种方法：glBuffer[Sub]Data、glMapBufferRange和glCopyBufferSubData。
+现在我们知道了指定顶点数据的方法，下一章将介绍在OpenGL ES中可以使用顶点数据的各种图元。
+
+# 图元装配和光栅化
+
+本章描述OpenGL ES支持的图元和几何形状和对象的类型，并说明绘制它们的方法。然后描述发生在顶点着色器处理图元处理顶点之后的图元装配阶段。在这一阶段，执行裁剪、透视分割和视口变换操作，对这些操作将做详细的讨论。本章以光栅化阶段的描述作为结束。光栅化是将图元转换为一组二维片段的过程，这些片段由片段着色器处理，代表可以在屏幕上绘制的像素。
+## 图元
+
+图元是可以用OpenGL ES中的glDrawArrays、glDrawElements、glDrawRangeElements、glDrawArraysInstanced和glDrawElementsInstanced命令绘制的几何形状对象。图元由一组表示顶点位置的顶点描述。其他如颜色、纹理坐标和几何法线等信息也作为通用属性和每个顶点关联。
+OpenGL ES3.0可以绘制如下图元：
+- 三角形
+- 直线
+- 点精灵
+
+### 三角形
+三角形代表着描述由3D应用程序渲染的几何形状对象时最常用的办法。OpenGL ES支持的三角形图元有GL_TRIANGLES、GL_TRIANGLE_STRIP和GL_TRIANGLE_FAN。
+图7-1展示了支持的三角形图元类型示例。
+{% asset_img 6.jpg %}
+GL_TRIANGLES绘制一系列单独的三角形。在图7-1中，绘制了顶点为$(v_0,v_1,v_2)$和$(v_3,v_4,v_5)$的两个三角形。总共绘制了n/3个三角形，其中n是前面提到的glDraw***API中的Count指定的索引。
+GL_TRIANGLE_STRIP绘制一系列相关连接的三角形。在图7-1的例子中，绘制了3个顶点为$(v_0,v_1,v_2)$、$(v_2,v_1,v_3)$（注意顺序）和$(v_2,v_3,v_4)$的三角形。总共绘制了n-2个三角形，其中n是glDraw***API中的Count指定的索引。
+GL_TRIANGLE_FAN也绘制了一系列相连的三角形。
+
+### 纹理过滤和mip贴图
+到目前为止，我们对2D纹理的介绍仅限于单个2D图像。尽管这使得我们能够解释纹理的概念，但是OpenGL ES纹理的指定和使用还有一些其他的方法。这种复杂性与使用单个纹理贴图时发生的视觉危象和性能问题有关。正如我们到目前为止所描述的那样，纹理坐标用于生成一个2D索引，以从纹理贴图中读取。当缩小和放大过滤器设置为GL_NEAREST时，就会发生这样的情况：一个纹素将在提供的纹理坐标位置上读取。这称作点采样或者最近采样。
+但是，最近采样可能产生严重的视觉危象，这是因为三角形在屏幕空间中变得较小，在不同像素间的插值中，纹理坐标有很大的跳跃。结果是，从一个大的纹理贴图中取得少量样本，造成
+### 纹理坐标包装
+纹理包装模式用于指定纹理坐标超出[0.0,1.0]范围是所发生的的行为，用glTexParamter 
