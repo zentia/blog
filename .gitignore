@@ -5,4 +5,4 @@ db.json
 public/
 .deploy*/
 .idea
-.depoly_git
+.deploy_git
