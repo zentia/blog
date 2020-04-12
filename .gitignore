@@ -4,3 +4,5 @@ db.json
 *.log
 public/
 .deploy*/
+.idea
+.depoly_git

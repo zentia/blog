@@ -2,6 +2,8 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/themes/next/fancybox" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/.deploy_git" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/themes/next/source/lib/algolia-instant-search" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/themes/next/source/lib/fancybox" vcs="Git" />
   </component>
 </project>
