@@ -7,3 +7,5 @@ public/
 .idea
 .deploy_git
 node_modules
+.idea
+node_modules
