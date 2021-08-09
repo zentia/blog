@@ -1,4 +1,12 @@
-﻿# LevelSequence（关卡序列）使用说明
+﻿---
+title: LevelSequencer
+mathjax: true
+date: 2021-06-29 20:55:59
+tags:
+categories: "UE4"
+---
+
+# LevelSequence（关卡序列）使用说明
 以下文档都来自官方文档，但是我这边还是单独拿出来分析以下，足以证明，这块还是很有意思的。
 ## 基础操作
 https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/ReferenceEditor/
@@ -7,6 +15,7 @@ https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/ReferenceEdi
 
 ## 从摄像机导轨拍摄
 https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/HowTo/CameraRigRail/
+
 
 ## 在Sequencer中使用帧标记
 https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/HowTo/FrameMarkers/

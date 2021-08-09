@@ -91,8 +91,8 @@ flowchart:
   # flowchart: # optional, the source url of flowchart.js
   options: # options used for `drawSVG`
 algolia:
-  applicationID: 'W8FJT5MTZU'
-  apiKey: 'f4ca7ae2408d2e27ffc8269ad8d34273'
+  applicationID: 'LAEJN7HTXI'
+  apiKey: 'db483f3dceb8b9b4ac8ca1fcf782c13e'
   indexName: 'hexo'
   chunkSize: 5000
 # 自动生成sitemap
