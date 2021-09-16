@@ -29,3 +29,13 @@ enum ENetMode
     NM_MAX,
 }
 ```
+# 搭建DS服务器
+
+Actor的所有权-ROLE
+UE将Actor的控制权分成了三类，分别是：
+- ROLE_None：这个None就是我们平常理解的None，不属于下面三种的都是None
+- ROLE_Authority: 服务器拥有所有 Actor的控制权，即所有的Actor的服务端的控制权都是ROLE_Authority
+- ROLE_AutonomousProxy:客户端对本地Actor拥有这个控制权
+- ROLE_SimulatedProxy:客户端对网络Actor,即其他端的Actor，拥有这个控制权
+
+这三个属性是UE设计Actor时就为Actor设计好的固有属性，可以用于判断一个Actor所在位置，因为UE的服务器代码和客户端代码是一体的，所以Actor设计这个属性是十分必要的。
