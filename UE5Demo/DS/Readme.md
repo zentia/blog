@@ -29,6 +29,26 @@ enum ENetMode
     NM_MAX,
 }
 ```
+# 编译时确定的网络模式
+虚幻中有一堆宏来控制编译，和网络模式相关有如下几个
+- `UE_SERVER`: 开了这个宏的肯定是服务器了，编译时就会把客户端相关的模块给剔除掉，比如渲染相关的
+- `WITH_SERVER_CODE`: 这个宏来控制网络逻辑代码的开关，如果是`!WITH_SERVER_CODE`，那就是纯客户端了，在`PlatformProperties.h`中，`FWindowsPlatformProperties/FMacPlatformProperties/FLinuxPlatformProperties`，这三个模板类的`IS_CLIENT_ONLY`参数传的就是`!WITH_SERVER_CODE`
+
+`FPlatformProperties`中封装了几个函数来判断编译是一什么模式来编译的
+- `IsServerOnly`:如果是true则表示编译的时候是以`DedicatedServer`的模式来编译代码，会剔除客户端相关的代码，比如渲染模块，也不包含`Editor`相关的代码
+- `IsGameOnly`:如果是true则表示编译时剔除`Editor`相关的代码
+- `IsClientOnly`:如果是true则表示编译时剔除了服务器和`Editor`相关的代码，这里需要注意的时，在以`xxx client`模式来出包，如果出的是`Windows/Mac/Linux`，则这个函数返回的是true，如果出的移动端的包，则返回false，因为`FIOSPlatformProperties/FAndroidPlatfromProperties`，没有覆盖掉父类中的默认`IsClientOnly`实现，父类的默认实现返回的false，不明白这里为啥行为不一致
+
+# IsRunningDedicatedServer/IsRunningGame/IsRunningClientOnly
+这几个函数和上面的三个函数类似，在非`Editor`模式下的返回值和上面三个函数一致，区别在于当运行`Editor`时，可以通过命令行来切换运行模式，具体如下
+- 命令行中包含`SERVER`或者`RUN=SERVER`时，以`DedicatedServer`模式模拟运行
+- 命令行中包含`GAME`时，以无`Editor`模式模拟运行
+- 命令行中包含`GAME`和`ClientOnly`时，以纯客户端模式模拟运行
+
+# 编译配置和GetNetMode的关系
+编译配置联机模式（主机）GetNetMode返回值联机模式（客户端）GetNetMode返回值单机模式GetNetMode返回值xxx Client无此模式`NM_ClientNM_Standalone`xxx
+Server`NM_DedicatedServer`无此模式
+Debug/DebugGame/Development/Shipping `NM_ListenServerNM_ClientNM_Standalone`
 # 搭建DS服务器
 
 Actor的所有权-ROLE
