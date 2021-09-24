@@ -8,3 +8,4 @@ public/
 .deploy_git
 node_modules
 themes
+UE5Demo/.vscode
