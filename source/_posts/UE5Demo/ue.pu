@@ -1,0 +1,21 @@
+@startuml UE
+scale 2
+class UObjectBase
+{
+    {static} EmitBaseReferences(UClass *RootClass);
+    LowLevelRename(FName NewName,UObject *NewOuter = NULL);
+    RegisterDependencies();
+    Register(const TCHAR* PackageName,const TCHAR* Name);
+    DeferredRegister(UClass *UClassStaticClass,const TCHAR* PackageName, const TCHAR* Name);
+    -AddObject();
+    +IsValidLowLevel() const;
+}
+note left of UObjectBase::"EmitBaseReferences(UClass *RootClass)"
+Emit GC token for UObjectBase, this might be UObject::StaticClass or Default_Class
+end note
+
+class UClass
+{
+
+}
+@enduml
