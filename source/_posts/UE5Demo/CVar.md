@@ -1,3 +1,9 @@
+---
+title: Unreal CVar
+date: 2022-01-02 14:18:00
+tags:
+    - Unreal
+---
 sg 是 scalability 的缩写 通过配置文件设置
 # r.ScreenPercentage and sg.ResolutionQuality
 

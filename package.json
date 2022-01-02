@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.8.0"
+    "version": "5.4.0"
   },
   "dependencies": {
     "gulp": "^4.0.2",
@@ -12,7 +12,7 @@
     "gulp-imagemin": "^5.0.3",
     "gulp-minify-css": "^1.2.4",
     "gulp-uglify": "^3.0.2",
-    "hexo": "^3.8.0",
+    "hexo": "^5.2.0",
     "hexo-algolia": "^1.3.2",
     "hexo-asset-image": "git+https://github.com/7ym0n/hexo-asset-image.git",
     "hexo-deployer-git": "^1.0.0",

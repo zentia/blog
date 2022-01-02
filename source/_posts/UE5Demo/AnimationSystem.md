@@ -1,3 +1,10 @@
+---
+title: Unreal Animation System
+date: 2022-01-02 14:20:00
+tags:
+    - Unreal
+---
+
 # Animation System
 ## Skeleton(骨架)
 骨骼资源是一切骨骼动画的基础，通过分层结构，一般描述一个生物及非生物的骨架形状。

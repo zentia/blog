@@ -224,7 +224,7 @@ rigidbody.AddForce/AddForceAtPosition,都是rigidbody的成员函数
 string a = new string(“abc”);
 a = (a.ToUpper() + “123”).SubString(0, 2);
 答:其实在C#第一行是会出错的(Java中倒是可行),应该这样初始化
-string b = new string(new char[]{‘a’, ‘b’, ‘c’}}
+string b = new string(new char[]{‘a’, ‘b’, ‘c’})
 10. 请简述关键字Sealed用在类声明和函数声明时的作用
 答:类声明时可防止其他类继承此类,在方法中声明则可防止派生类重写此方法
 11. 简述四元数的作用,四元数对欧拉角的优点?
