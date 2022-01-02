@@ -14,6 +14,7 @@ tags:
 角色和场景绘制耗时4.15ms(此时是LOD2的)
 PostAO占了1.98ms
 ## 关闭
+![NoSkyLightShadowDepth](/images/Unreal/ZPlan/NoSkyLightShadowDepth.png)
 # Skeleton LOD
 ## MinLOD0
 ## MinLOD1
