@@ -100,3 +100,9 @@ sitemap:
   path: sitemap.xml
 baidusitemap:
   path: baidusitemap.xml
+# 文章加密
+encrypt:
+  enable: true
+  default_abstract: 这是一篇加密文章。
+  default_message: 输入密码，查看文章。
+
