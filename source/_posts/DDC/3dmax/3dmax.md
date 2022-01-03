@@ -126,9 +126,9 @@ Isolate Selection:单独显示被选择的物体（alt+q ），自动隐藏其�
 3、复制石凳（使用旋转工具）
 要点：A：移动和对齐轴心点；B：捕捉角度
 
-第三讲 
-一、复习
-二、群组操作
+# 第三讲 
+## 一、复习
+### 二、群组操作
 Group（成组）：将多个选择的物体组成一个组
 Ungroup（解组）：将群组解散，一次只能解散一个组
 Open（打开组）：打开的组仍然存在，可以对组中的单个成员进行编辑
@@ -529,18 +529,18 @@ Orbit Subobject:旋转视图。
 
 # 烘培法线
 首先创建一个正方体
-{% asset_img 1.jpg %}
+![1](/images/DDC/3DMax/1.jpg)
 复制一个出来，改成其他颜色，接下来白色模型卡线，加涡轮平滑或者网格平滑命令。
-{% asset_img 2.jpg %}
+![2](/images/DDC/3DMax/2.jpg)
 选中线少的正方体，打开UVW展开编辑器
-{% asset_img 3.jpg %}
+![3](/images/DDC/3DMax/3.jpg)
 接下来开始烘培法线，先选中底模，先按大键盘的0键打开烘培面板，然后选取高模。
-{% asset_img 4.jpg %}
+![4](/images/DDC/3DMax/4.jpg)
 重置一下，然后数量给2或者3
-{% asset_img 5.jpg %}
-{% asset_img 6.jpg %}
-{% asset_img 7.jpg %}
-{% asset_img 8.jpg %}
-{% asset_img 9.jpg %}
-{% asset_img 10.jpg %}
+![5](/images/DDC/3DMax/5.jpg)
+![6](/images/DDC/3DMax/6.jpg)
+![7](/images/DDC/3DMax/7.jpg)
+![8](/images/DDC/3DMax/8.jpg)
+![9](/images/DDC/3DMax/9.jpg)
+![10](/images/DDC/3DMax/10.jpg)
 然后点击渲染，这里法线贴图得到所在文件夹去查找。

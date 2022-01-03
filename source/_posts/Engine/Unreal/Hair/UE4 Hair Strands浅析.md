@@ -1,4 +1,10 @@
-# [UE4 Hair Strands浅析](https://zhuanlan.zhihu.com/p/128669105)
+---
+title: Unreal Hair Strands浅析
+date: 2022-01-03 20:10:00
+tags:
+    - Unreal
+---
+# [Hair Strands浅析](https://zhuanlan.zhihu.com/p/128669105)
 
 1. 基于Niagara实现的物理模拟
 2. Visibility Buffer管线

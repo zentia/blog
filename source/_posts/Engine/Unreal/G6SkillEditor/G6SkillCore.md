@@ -1,4 +1,0 @@
-这个是Runtime
-是由蓝图驱动的
-分为段动作`SegmentAction`,技能分支条件`SkillBranchCondition`
-很传统的MMO那种技能思维方式

@@ -141,8 +141,8 @@ site_state: true
 # Key is the link label showing to end users.
 # Value before `||` delimiter is the target permalink, value after `||` delimiter is the name of Font Awesome icon.
 social:
-  #GitHub: https://github.com/yourname || fab fa-github
-  #E-Mail: mailto:yourname@gmail.com || fa fa-envelope
+  GitHub: https://github.com/zentia
+  E-Mail: mailto:363476658@qq.com
   #Weibo: https://weibo.com/yourname || fab fa-weibo
   #Google: https://plus.google.com/yourname || fab fa-google
   #Twitter: https://twitter.com/yourname || fab fa-twitter
@@ -243,6 +243,13 @@ post_meta:
 
 # Post wordcount display settings
 # Dependencies: https://github.com/next-theme/hexo-word-counter
+post_worldcount:
+item_text: true
+wordcount: true
+min2read: true
+totalcount: true
+separated_meta: true
+
 symbols_count_time:
   separated_meta: true
   item_text_total: false
@@ -374,7 +381,7 @@ back2top:
   # Back to top in sidebar.
   sidebar: false
   # Scroll percent label in b2t button.
-  scrollpercent: false
+  scrollpercent: true
 
 # Reading progress bar
 reading_progress:
@@ -429,8 +436,8 @@ font:
   # Global font settings used for all elements inside <body>.
   global:
     external: true
-    family: Lato
-    size:
+    family: Monda
+    size: 14px
 
   # Font settings for site title (.site-title).
   title:
@@ -731,7 +738,7 @@ algolia_search:
 # Local Search
 # Dependencies: https://github.com/next-theme/hexo-generator-searchdb
 local_search:
-  enable: false
+  enable: true
   # If auto, trigger search by changing input.
   # If manual, trigger search by pressing enter key or search button.
   trigger: auto

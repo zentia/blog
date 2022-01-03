@@ -1,3 +1,10 @@
+---
+title: GamePlay Ability System
+date: 2022-01-03 20:11:00
+tags:
+    - Unreal
+---
+
 [Gameplay Ability System学习资料](https://zhuanlan.zhihu.com/p/368201577)
 
 [GASDocument](https://github.com/tranek/GASDocumentation#concepts-asc)
