@@ -34,15 +34,6 @@ categories: 3DMax
 |`Ctrl+V`   |拷贝复制|
 
 # 美术资源
-## 软件地址
-3Dmax各版本软件下载链接: [有效] http://pan.baidu.com/s/1jIa4DvS 密码: chdw
-各个版本的3Dmax（附加Vary）链接：https://pan.baidu.com/s/1fAhYzCec9yZ0X6mVtkr87Q 提取码：ofpq
-Vray各版本软下载链接: [有效] https://pan.baidu.com/s/1ctHPs6 密码: 4ufa
-CAD各版本软件下载链接: [有效] http://pan.baidu.com/s/1eRBAuYI 密码: pbjk
-PS各版本软件下载链接: [有效] http://pan.baidu.com/s/1nuUYNNz 密码: chxi
-CDR各版本软件下载链接: [有效] http://pan.baidu.com/s/1qXSkWKs 密码: cxv8
-AI各版本软件下载链接: [有效] https://pan.baidu.com/s/1gfOFISz 密码: 2gnn
-office各版本软件下载链接: [有效] http://pan.baidu.com/s/1jHND2Sm 密码: 37hw
 ## 视频地址
 3DMAX灯光教程全套视频：https://www.bilibili.com/video/av27889940/?spm_id_from=333.788.b_636f6d6d656e74.54
 3DMAX材质教程全套视频：https://www.bilibili.com/video/av27252253/

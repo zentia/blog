@@ -18,8 +18,7 @@ RayTracying最关键的点是：
 
 
 
-{% asset_img raytracing.png %}
-
+![raytracing](/images/Render/RayTracying/raytracing.png)
 
 这也是这个算法叫做ray tracying - 光线跟踪的原因。
 
@@ -32,11 +31,11 @@ RayTracying最关键的点是：
 
 一般来说屏幕坐标都是始于左上角，然后朝右和下延伸。
 
-{% asset_img screen_coordinate.png %}
+![screen_coordinate](/images/Render/RayTracying/screen_coordinate.png)
 
 不过这里为了作图方便，我们把坐标系按照数学中更常见的方式把原点放于屏幕中央，x和y的延伸方向按照平时的习惯来放。
 
-{% asset_img canvas_coordinate.png %}
+![screen_coordinate](/images/Render/RayTracying/canvas_coordinate.png)
 这样可以知道屏幕坐标系$S_x$和画布坐标系$C_x$的变换:
 
 
@@ -54,7 +53,7 @@ $$
 
 那么对于画布上的任意一点，在窗户上都有一个对应的位置，因为它们是中心相同平面平行。
 
-{% asset_img window.png %}
+![window](/images/Render/RayTracying/window.png)
 
 所以对画布上的每一个点$C_x, C_y$我们都能找到窗户上的对应点$V_x, V_y$，加上上一段话中的对应关系，实际上就是一个比例的问题，所以我们可以继续知道画布坐标系$C_x, C_y$在窗户上的对应坐标$V_x, V_y$为：
 
@@ -83,9 +82,8 @@ $$
 P = O + t\overrightarrow{D}
 $$
 
-{% asset_img vector.png %}
-
-{% asset_img vector2.png %}
+![vector](/images/Render/RayTracying/vector.png)
+![vector2](/images/Render/RayTracying/vector2.png)
 
 这里需要注意的是: O,P,V是位置，$\overrightarrow{OP}， \overrightarrow{D}$是向量。
 
@@ -105,13 +103,11 @@ $$
 这里我们在空间中放置一个球体
 
 
-{% asset_img sphere.png %}
-
+![sphere](/images/Render/RayTracying/sphere.png)
 
 球心为C，那么球上点P需要满足方程：
 
-{% asset_img sphere2.png %}
-
+![sphere2](/images/Render/RayTracying/sphere2.png)
 
 $$
 |P - C| = r 
@@ -122,8 +118,7 @@ $$
 
 假设OP就是我们看出去的光线，来追踪它，当看向球体时，它会与球体产生交互，图中这条光线就是和球体相遇了：
 
-{% asset_img raymeetsphere0.png %}
-
+![raymeetsphere0](/images/Render/RayTracying/raymeetsphere0.png)
 球上的属于这条光线的P点应该满足：
 
 $$
@@ -190,8 +185,7 @@ $$
 
 对应的就是下图的状况：
 
-{% asset_img raymeetsphere2.png %}
-
+![raymeetsphere2](/images/Render/RayTracying/raymeetsphere2.png)
 
 所以问题就变简单了，如果我们有交互，那么我们应该展示的是近的点$t_1$的颜色，如果我们没有交互，那么我们展示的就是背景色。
 
@@ -253,8 +247,7 @@ TraceRay(O, D, t_min, t_max){
 
 我们在空间中放入三个小球：
 
-{% asset_img 3spheres.png %}
-
+![3spheres](/images/Render/RayTracying/3spheres.png)
 ### 画到画布上
 
 在上述三个伪码函数中，最终是TraceRay这个函数调用了其余两个函数，那么我们现在需要来设定它的参数。
@@ -296,8 +289,7 @@ for x in [-Cw/2, Cw/2]{
 
 对应的窗户大小和距离都可以在代码中看到，看结果：
 
-{% asset_img raytracying01.png %}
-
+![raytracying01](/images/Render/RayTracying/raytracying01.png)
 
 这根本看起来不3d，很简单，因为我们并没有考虑**光**的作用。
 

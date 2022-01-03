@@ -8,6 +8,6 @@ tags:
 
 # [GamePlay架构（十）总结](https://zhuanlan.zhihu.com/p/24170697)
 
-![MVC](/images/Unreal/MVC.jpg)
+![MVC](/images/Unreal/GamePlay/MVC.jpg)
 
-![GamePlay](/images/Unreal/GamePlay.jpg)
+![GamePlay](/images/Unreal/GamePlay/GamePlay.jpg)
