@@ -13,3 +13,5 @@ iOS GPU不管怎么降画质，耗时一直在十几毫秒。
 `r.LightShaftQuality` 我们没用这个，我们用的上帝之光，半透明的mask材质，不知道那个损耗低一些。抽空试一下。
 `r.RefractionQuality`我们没用
 `r.MobileContentScaleFactor` 移动内容设备缩放系数
+
+为了能在XCode上捕获GPU信息，需要进入UE4Game的Scheme里面设置

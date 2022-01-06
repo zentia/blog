@@ -31,7 +31,7 @@ UpScale (300.97us)
 
 ## 关闭
 ![NoSkyLight](/images/Unreal/ZPlan/NoSkyLight.PNG)
-### 阴影
+### 阴影 (r.ShadowQuality)
 ![NoSkyLightShadowDepth](/images/Unreal/ZPlan/NoSkyLightShadowDepth.png)
 227us
 ### 角色场景
@@ -60,7 +60,7 @@ LOD 这里只测试强制LOD，因为不一定能截取到同一画面。导致�
 ![Shadow0](/images/Unreal/ZPlan/Shadow0.PNG)
 ![Shadow1](/images/Unreal/ZPlan/Shadow1.PNG)
 ## Quality 1
-# AntiAntiAliasing
+# AntiAntiAliasing (r.DefaultFeature.AntiAliasing)
 iOS是必须开的，不开会白屏，目前不知道什么原因。
 # Model RMA (Roughtess, Metallic, Ambient)
 其实没啥意义，现在瓶颈主要是在GPU，而贴图卡顿主要是带宽，如果带宽不足的话，其实不管会卡GPU，而且会卡Draw，SkyLight就是这样子的，有一个2000多的uniformBuffer。
@@ -80,14 +80,17 @@ iOS是必须开的，不开会白屏，目前不知道什么原因。
 ## Close
 ![Bloom0](/images/Unreal/ZPlan/Bloom0.PNG)
 # SSR
+开启和关闭大概有3ms的差距，所以一般还是关闭比较好，怀疑这个甚至比PPR还要耗(抽空测试一下)
 ## Open
+![SSR](/images/Unreal/ZPlan/SSR.PNG)
 ## Close
+![NoSSR](/images/Unreal/ZPlan/NoSSR.PNG)
 # HDR(Tonemapper)
 不支持，开了就卡死，材质找不到提示。暂时没时间去细察。PC上效果如下所示：
 ![LDR](/images/Unreal/ZPlan/LDR.png)
 ![LDRProfiling](/images/Unreal/ZPlan/LDR-Profiling.png)
 可以看出，当关了HDR之后是没有tonemapper。
-
+手机效果可以用`r.Mobile.TonemapperFilm 0`来看看，不过效果是有的，但是抓帧里面还有tonemapper。
 # PlanarReflection
 ![PlanarReflection](/images/Unreal/ZPlan/planarReflection.png)
 比较不解的是，已经关掉了平面反射，但是 iOS还在跑，需要实验删掉看看情况是否好转。
@@ -106,3 +109,21 @@ iOS是必须开的，不开会白屏，目前不知道什么原因。
 
 关闭天光的阴影真题耗时为227.41us
 ![NoSkyLightShadowDepth](/images/Unreal/ZPlan/NoSkyLightShadowDepth.png)
+
+# MobileBasePass_PostAO(环境光遮蔽)
+`r.Mobile.PixelProjectedReflectionQuality`
+![PostAO](/images/Unreal/ZPlan/postAO.png)
+这里控制开启和关闭
+## Open
+![OpenPostAO](/images/Unreal/ZPlan/OpenPostAO.png)
+## Close (sg.PostProcessQuality 0)
+
+# Fog
+```C++
+static TAutoConsoleVariable<int32> CVarFog(
+	TEXT("r.Fog"),
+	1,
+	TEXT(" 0: disabled\n")
+	TEXT(" 1: enabled (default)"),
+	ECVF_RenderThreadSafe | ECVF_Scalability);
+```
