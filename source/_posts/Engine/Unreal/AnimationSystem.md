@@ -81,3 +81,23 @@ Blend by Variable(混合动作)
 Use Cached Pose
 Layeredblend Per Bone
 Inverse Kinematics(反向动力学)
+
+|Name                               |Desc   |
+|   ---                             |   ---|
+|USkeletalMesh                      |绑定到可以为使网格变形而设置的骨骼层级骨架的几何体。由两部分组成：构造网格表面的多边形和可用于为多边形设置动画的层级骨架。|
+|FSkeletalMeshRenderData            |渲染数据，包括LOD渲染数据等。|
+|FSkeletalMeshLODRenderData         |骨骼蒙皮LOD渲染数据，包括蒙皮权重、皮肤权重配置文件数据等。|
+|USceneComponent                    |需要添加到FScene中的任意对象的基础类，如光照、网格体、雾等。|
+|UPrimitiveComponent                |基元组件，是可视性和相关性的基本单位。可渲染或进行物理交互（碰撞检测）的任意资源的基础类。也可以作为可视性剔除的粒度和渲染属性规范（投射阴影等）。与所有UObjects一样，游戏线程拥有所有变量和状态，渲染线程不应直接对其进行访问。是一些可见几何体的父类，比如：ShapeComponents(Capsule, Sphere, Box)：用于碰撞检测但不渲染。StaticMeshComponent、SkeletalMeshComponent：包含渲染的预构建几何体，也可用于碰撞检测。|
+|UMeshComponent                     |继承自UPrimitiveComponent，是所有具有可渲染的三角形集合实例的组件的抽象基类，如：UStaticMeshComponent、USkeletalMeshComponent。|
+|UStaticMeshComponent               |继承自UMeshComponent，用于创建UStaticMesh实例，静态网格是由一组静态多边形组成的几何体。|
+|USkinnedMeshComponent              |继承自UMeshComponent，支持骨骼蒙皮网格渲染，不支持动画。提供USkeletalMesh接口等。|
+|USkeletalMeshComponent             |继承自USkinnedMeshComponent，创建带动画的SkeletalMesh资源的实例。支持动画。|
+|FScene                             |UWorld的渲染器版本。对象仅在其被添加到FScene（注册组件时调用）后才会存在于渲染器中。渲染线程拥有FScene中的所有状态，游戏线程无法直接对其进行修改。主要操作是添加或删除图元（Primitive）和灯光。|
+|FPrimitiveSceneProxy               |UPrimitiveComponent的渲染器版本，为渲染线程映射UPrimitiveComponent状态。存在于引擎模块中，用于划分为子类以支持不同类型的基元（骨架、刚体、BSP等）。实现某些非常重要的函数，如GetViewRelevance、DrawDynamicElements等。|
+|FPrimitiveSceneInfo                |内部渲染器状态（FRendererModule实现专用），对应于UPrimitiveComponent和FPrimitiveSceneProxy。存在于渲染器模块中，因此引擎看不到它。单个UPrimitiveComponent的内部渲染器状态。|
+|FDynamicSkelMeshObjectDataGPUSkin  |存储顶点蒙皮所需的更新矩阵。|
+|FSkeletalMeshObjectCPUSkin         |CPU蒙皮网格渲染数据。|
+|FSkeletalMeshObjectStatic          |静态网格渲染数据。|
+|FSkeletalMeshObjectGPUSkin         |GPU蒙皮渲染数据。包含FDynamicSkelMeshObjectDataGPUSkin& DynamicData，它用于动态更新和渲染。|
+|FGPUBaseSkinVertexFactory          |存储皮肤处理所需的骨基质，以及对GPU皮肤顶点工厂着色器代码需要用作输入的各种顶点缓冲区的引用。|
