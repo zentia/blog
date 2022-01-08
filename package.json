@@ -26,11 +26,15 @@
     "hexo-generator-searchdb": "^1.4.0",
     "hexo-generator-sitemap": "^1.2.0",
     "hexo-generator-tag": "^0.2.0",
+    "hexo-markmap": "^1.0.2",
     "hexo-renderer-ejs": "^0.3.1",
     "hexo-renderer-kramed": "^0.1.4",
     "hexo-renderer-mathjax": "^0.6.0",
     "hexo-renderer-stylus": "^0.3.3",
+    "hexo-seo-autopush": "^2.0.5",
     "hexo-server": "^0.3.3",
+    "hexo-steam-games": "^1.2.1",
+    "hexo-url-submission": "^1.0.6",
     "hexo-wordcount": "^6.0.1"
   }
 }

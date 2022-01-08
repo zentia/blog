@@ -1,7 +1,8 @@
 ---
 title: Objective-C
 date: 2018-03-24 16:05:37
-tags:
+categories:
+- Objective-C
 ---
 
 # Objective-C: C的超集

@@ -1,8 +1,8 @@
 ---
 title: '第一部分 几何体'
 date: 2018-03-03 15:25:02
-tags:
-	- GPU Gems
+categories:
+- GPU Gems
 ---
 
 # 第一部分 几何体

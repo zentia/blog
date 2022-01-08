@@ -316,7 +316,7 @@ $G(l,v,h)=G_1(l)G_1(v)$
 ## 6.1 分解求和近似（Split Sum Approximation）
 
 基于重要性采样的思路，将蒙特卡洛积分公式代入渲染方程可得：
-{%asset_img 26.jpg%}
+![26](/images/Render/PBR-Guide-Vol1/26.jpg)
 $$
 ### 6.3.1 流派1：2D LUT
 UE4在[Real Shading in Unreal Engine 4,2013]中提出，第二个求和项，使用Schlick近似后，$F_0$可以从积分中分出来：

@@ -1,8 +1,9 @@
 ---
 title: Unity Shader
 date: 2017-10-12 22:53:40
-tags:
-  - Unity
+categories:
+- Unity
+- Renderer
 ---
 
 CGPROGRAM和ENDCG包裹的部分就是CG\HLSL语言部分。

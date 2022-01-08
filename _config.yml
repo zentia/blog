@@ -4,16 +4,16 @@
 
 # Site
 title: liyanfeng
-subtitle: 
-description: 
-keywords: 
+subtitle: 依然去爱，依然热泪盈眶
+description: 依然去爱，依然热泪盈眶
+keywords: Unreal, Unity, Math, Renderer, GPU
 author: liyanfeng
 language: zh-CN
 timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://zentia.github.io
+url: http://zentia.gitee.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -32,7 +32,6 @@ skip_render:
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
-external_link: true # Open external links in new tab
 filename_case: 0
 render_drafts: false
 post_asset_folder: true
@@ -100,3 +99,38 @@ sitemap:
   path: sitemap.xml
 baidusitemap:
   path: baidusitemap.xml
+
+# enable: 开启/关闭 推送
+# cron: 执行时间周期
+# count: 每次提交最新的10篇文章
+# date: 更新时间(updated)|创建日期(created)
+# https://github.com/lete114/hexo-seo-autopush.git
+hexo_seo_autopush:
+  cron: 0 4 * * *
+  baidu:
+    enable: true
+    date: created 
+    count: 10
+  bing:
+    enable: true
+    date: created 
+    count: 10
+  google:
+    enable: true
+    date: created 
+    count: 10
+    google_file: google_service_account.json # 谷歌服务账户
+steam:
+  enable: true
+  steamId: '*****' #steam 64位Id
+  path:
+  title: Steam游戏库
+  quote: '+1+1+1+1+1'
+  tab: recent
+  length: 1000
+  imgUrl: '*****'
+  proxy:
+    host:
+    port:
+  extra_options:
+    key: value

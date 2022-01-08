@@ -48,7 +48,6 @@ protected并不比public更有封装性（其实我不是很喜欢封装这个�
 
 |||
 |--|--|--|
-|腾讯开发者平台|http://zentia.coding.me|git@git.dev.tencent.com:Zentia/Hexo.git   |
 |github        |http://zentia.github.io     |git@github.com:zentia/zentia.github.io.git|
 |码云          |http://zentia.gitee.io      |git@gitee.com:zentia/zentia.git           |
 
@@ -83,7 +82,6 @@ top: 999
 }
 ```
 # algolia
-由于zentia.site这个域名没有备案，导致一直无法使用，然后只能使用zentia.github.io。然后一直没有更新algolia导致搜索还是访问之前的源，这个问题痛苦了好久。然后今天解决
 `hexo algolia`
 可能会提示
 `ERROR [hexo-algolia] Please set an HEXO_ALGOLIA_INDEXING_KEY environment varia`
