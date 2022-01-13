@@ -27,3 +27,16 @@ r.Shaders.KeepDebugInfo=1
 ![2](/images/Unreal/Shader/RenderDoc/2.png)
 就会打开调试面板
 ![3](/images/Unreal/Shader/RenderDoc/3.png)
+
+# Slate性能跟踪
+## 查看UI绘制批次
+1. 建立空场景，加入需要测试的UI，一定要在-game模式下运行
+   1. 输入`stat slate`，NumBatcher就是DrawCall次数
+
+2. 查看具体批次绘制
+   1. 安装RenderDoc安装包，UE4启用RenderDoc插件
+   2. 输入`renderdoc.CaptureAllActivity 1`
+   3. 输入`renderdoc.CaptureFrame` 
+
+
+https://zhuanlan.zhihu.com/p/31499684

@@ -7,6 +7,8 @@ tags:
 # 目的
 自动化工具是为了检测游戏性能而存在的。
 
+https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/
+
 # 设计
 ## 核心逻辑
 游戏业务接入之后自动测试性能。

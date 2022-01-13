@@ -46,3 +46,16 @@ c 像素着色器执行以下操作：
 `r.CapsuleShadows`
 # Unreal原理解析
 主要代码文件`ShadowSetup.cpp`, `DirectionLightComponent.cpp`
+
+# GenerateMeshDistanceFields
+
+在ProjectSetting->Render->GenerateMeshDistanceFields 勾选重启
+`DistanceFieldAtlas.cpp`
+```c++
+static TAutoConsoleVariable<int32> CVarDistField(
+    TEXT("r.GenerateMeshDistanceFields"),
+    0,
+    TEXT("Whether to build distance fields to static meshes, needed for distance field AO, which is used to implement Movable SkyLight shadows.\n")
+    
+);
+```
