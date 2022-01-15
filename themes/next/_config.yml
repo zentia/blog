@@ -572,7 +572,7 @@ comments:
   style: tabs
   # Choose a comment system to be displayed by default.
   # Available values: disqus | disqusjs | changyan | livere | gitalk | utterances
-  active:
+  active: true
   # Setting `true` means remembering the comment system selected by the visitor.
   storage: true
   # Lazyload all comment systems.
@@ -618,12 +618,12 @@ livere_uid: # <your_uid>
 # Gitalk
 # For more information: https://gitalk.github.io
 gitalk:
-  enable: false
-  github_id: # GitHub repo owner
-  repo: # Repository name to store issues
-  client_id: # GitHub Application Client ID
-  client_secret: # GitHub Application Client Secret
-  admin_user: # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
+  enable: true
+  github_id: zentia # GitHub repo owner
+  repo: zentia.github.io # Repository name to store issues
+  client_id: 5fa04050d83c7d8f86b3 # GitHub Application Client ID
+  client_secret: bccf7fe290374da863138c46fdc1a956d2f35bcd # GitHub Application Client Secret
+  admin_user: zentia # GitHub repo owner and collaborators, only these guys can initialize gitHub issues
   distraction_free_mode: true # Facebook-like distraction free mode
   # When the official proxy is not available, you can change it to your own proxy address
   proxy: https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token # This is official proxy address
@@ -714,7 +714,7 @@ firestore:
 # Show Views / Visitors of the website / page with busuanzi.
 # For more information: http://ibruce.info/2015/04/04/busuanzi/
 busuanzi_count:
-  enable: false
+  enable: true
   total_visitors: true
   total_visitors_icon: fa fa-user
   total_views: true
@@ -816,13 +816,13 @@ tabs:
 # So, you have to install the dependency of pdf.js if you want to use pdf tag and make it available to all browsers.
 # Dependencies: https://github.com/next-theme/theme-next-pdf
 pdf:
-  enable: false
+  enable: true
   # Default height
   height: 500px
 
 # Mermaid tag
 mermaid:
-  enable: false
+  enable: true
   # Available themes: default | dark | forest | neutral
   theme:
     light: default
@@ -850,7 +850,7 @@ motion:
 # Progress bar in the top during page loading.
 # For more information: https://github.com/CodeByZach/pace
 pace:
-  enable: false
+  enable: true
   # All available colors:
   # black | blue | green | orange | pink | purple | red | silver | white | yellow
   color: blue

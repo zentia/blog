@@ -9,28 +9,38 @@ categories:
 
 # 希腊字母
 
-|序号|小写       |Tex|大写|Tex|汉语注音|
-|--|-----------|--|--|---|--|
-|1|$\alpha$   |\alpha     |||阿尔法|
-|2|$\beta$    |\beta  |||贝塔|
-|3|$\gamma$|\gamma|$\Gamma$|\Gamma|伽马|
-|4|$\delta$   |\delta |$\Delta$|\Delta|德尔塔|
-|5|$\epsilon$ |\epsilon   |||伊普西隆|
-|6|$\zeta$    |\zeta  |||泽塔|
-|7|$\eta$     |\eta       |
+|小写       |Tex|大写|Tex|汉语注音|
+|-----------|--|--|---|--|
+|$\alpha$   |\alpha     |||阿尔法|
+|$\beta$    |\beta  |||贝塔|
+|$\gamma$   |\gamma|$\Gamma$|\Gamma|伽马|
+|$\delta$   |\delta |$\Delta$|\Delta|德尔塔|
+|$\epsilon$ |\epsilon   |||伊普西隆|
+|$\zeta$    |\zeta  |||泽塔|
+|$\eta$     |\eta       |
 |$\theta$   |\theta |
 |$\upsilon$ |\upsilon   |
 |$\phi$     |\phi   |
 |$\omega$   |\omega     |$\Omega$   |\Omega |
 |$\in$      |\in        |
-|$\lambda $  |\lambda    |$\Lambda$  |\Lambda|
-||$\varrho$|\varrho|
-||$\varsigma$|\varsigma|
-||$\varphi$|\varphi|
+|$\lambda $ | \lambda    |$\Lambda$  |\Lambda|
+|$\varrho$  |\varrho|
+|$\varsigma$|\varsigma|
+|$\varphi$  |\varphi|
 - 若需要大写希腊字母，将命令首字母大写即可。 \Omega 呈现为 $\Omega$
 - 需需要斜体希腊字母，将命令前面加上var。\varpi 呈现为 $\varPi$
 
-# 字母修饰
+# 关系运算符
+
+|显示    |命令  |显示|命令|
+| ---    | ---  |---|---|
+| $\leq$ | \leq | $\propto$ |\propto|
+| $\geq$ | \geq |
+
+# 集合运算符
+|latex  |show   |
+|---    |---    |   
+|\in    |$\in$  |
 
 # 上下标
 
@@ -44,8 +54,8 @@ categories:
 
 # 求和与积分
 
-\sum用来表示求和符号，其下标表示求和上线，商标表示上限。如\sum_1^n：$\sum_1^n$
-
+\sum用来表示求和符号，其下标表示求和上线，上标表示上限。如\sum_1^n：$\sum_1^n$
+积分：`\int`
 \int
     \int_0^\infty{fxdx} 呈现为$\int_0^\infty{fxdx}$
 
@@ -87,3 +97,26 @@ $
 # 矩阵
 `\begin{matrix}...\end{matrix}`，每一行以\结尾，hexo markdown中`\\\\`。&分割矩阵元素。
 括号除了上面的\left...\right方式外，还可以pmatrix $\begin{pmatrix} 1&2\\\\3&4 \end{pmatrix}$，bmatrix $\begin{bmatrix} 1&2\\\\3&4 \end{bmatrix}$，Bmatrix $\begin{Bmatrix} 1&2\\\\3&4 \end{Bmatrix}$，vmatrix $\begin{vmatrix} 1&2\\\\3&4 \end{vmatrix}$，Vmatrix $\begin{Vmatrix} 1&2\\\\3&4 \end{Vmatrix}$。
+
+# 方程组
+- 需要cases环境：起始、结束处以{cases}生命
+- 举例
+  ```
+  $\begin{cases}
+    a_1x+b_1y+c_1z=d_1\\
+    a_2x+b_2y+c_2z=d_2\\
+    a_3x+b_3y+c_3z=d_3\\
+    \end{cases}
+  $
+  ```
+
+$\begin{cases}
+    a_1x+b_1y+c_1z=d_1\\
+    a_2x+b_2y+c_2z=d_2\\
+    a_3x+b_3y+c_3z=d_3\\
+    \end{cases}
+  $
+# 戴帽符号
+$\hat{y}$:`\hat{y}`
+$\check{y}$:`\check{y}`
+$\breve{y}$:`\breve{y}`

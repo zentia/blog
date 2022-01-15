@@ -1,25 +1,43 @@
 ---
-title: Unreal的3D渲染流水线处理流程
+title: 3D渲染相关基本概念
 categories: 
 - Unreal
 - Renderer
 date: 2017-09-24 10:56:00
 ---
+https://www.cnblogs.com/kekec/p/8463292.html
+# 渲染管线
+图形渲染管线（Graphics Pipeline）：将三维模型渲染到二维屏幕上的过程。为了满足实时性，管线在GPU硬件上进行实现，其与CPU流水线一样，各个步骤都会以并行的形式运行。
+固定管线（Fixed-Function Pipeline）：通常是指在较旧的GPU上实现的渲染流水线，通过DX、OpenGL等图形接口函数，开发者来对渲染流水线进行配置，控制权十分有限。
+可编程管线（Programmable Pipeline）：随着人们对画面品质和GPU硬件能力的提升，在原有固定管线流程中插入了Vertex Shader、Geometry Shader（非必需）、Fragment (Pixel) Shader等可编程的阶段，让开发者对管线拥有更大的控制权
+例如：Vertex Shader修改顶点属性（如顶点空间变换、逐顶点光照、uv变换）以及通过自定义属性向管线传入一些数据，Geometry Shader可增删和修改图元，Fragment (Pixel) Shader来进行逐像素的渲染。
+![1](1.png)
+# 管线资源
+材质（Material）：用于描述光与物体的交互方式的程序（即shader）、贴图以及其他属性的集合。
+在执行光照计算时，需要用到一些材质属性才能得到表面的最终颜色。
+常见的几种属性有Diffuse（漫反射）、Emissive（自发光）、Specular（高光）、Normal（法线）等。
+着色器（Shader）：是执行在GPU上可编程的图形管线的代码片段，用于告诉图形硬件如何绘制物体。包括：Vertex Shader、Fragment (Pixel) Shader、Geometry Shader。
+Shader在早期是用汇编来写的，后面出现更高级的着色语言，如DirectX的HLSL（High Level Shading Language）、OpenGL的GLSL（OpenGL Shading Language）以及Nvidia的CG(C for Graphic)。
+![2](2.png)
+GLSL具有跨平台性，其在被OpenGL使用前不需要进行额外编译，而是由显卡驱动直接编译成GPU使用的机器指令。
+HLSL仅能在windows平台上使用，需预先编译成与硬件无关的DX中间字节码（DXBC/DXIL)才能被D3D使用。
+CG语法上与HLSL高度相似，具有真正意义上的跨平台：在不同的平台上实现了shader的编译器，并通过CG OpenGL Runtime和CG D3D Runtime来讲CG转换成GLSL和DX中间字节码。
+纹理（Texture）：可以理解为运行时的贴图，可以通过UV坐标映射到模型的表面。另外，其拥有一些渲染相关的属性，如：纹理地址模型（ADDRESSU、ADDRESSV），纹理过滤方法（MAGFILTER、MINFILTER、MIPFILTER）等
 
-# 流水线
-
-3D渲染流水线也类似一个工厂的流水线，它的原材料是一系列的3D网格数据，最终产品就是显示在2D屏幕的3D场景。
-3D渲染流水线的处理和照相机的原理很像，它们都同样是通过将3D世界的内容放置到2D平面上，通过2D的方式来展示3D世界，
-顶点管线中有这么几个坐标空间：局部空间->世界空间->相机空间->投影空间->屏幕空间(视口空间),初始的网格数据是在局部空间中的，顶点管线将其从局部空间变换到屏幕空间作为输入供"像素管线"处理。比如局部空间内，一个人物的骨骼模型，它的中心点就是根骨骼的位置，在进行骨骼层次计算的时候，根谷歌放在中心位置是易于计算的，如果将其放置到世界空间中进行骨骼计算，那么根骨骼的位置不在原点且朝向也不为0，计算起来相当复杂。而世界空间中，易于描述场景中各个物体间的关系，易于作碰撞处理，伤害计算，顶点光照计算等。在相机空间中，容易描述被观察物体与观察者之间的关系，利用相机视锥体对物体进行裁剪，把观察不到的物体剔除掉。
-
-VertexShader--顶点着色器是用来替换这个阶段中固定管线的定点变换及光照计算的，传统管线处理顶点及光照的方式都是固定流程的，所以固定管线下的3D程序特效都有很大的局限性，引入顶点着色器之后，顶点在空间中的变换以及光照处理都可以可编程化了。顶点着色器主要是用来改变顶点固定流程中的变换过程，所以使用顶点着色器表现出来的大多是几何外形的变化以及顶点的光照，纹理等数据的变化。
-
-在UE3中，是不能直接编写Shader语言的，UE3中把所有的Shader特效都绑定到材质中，只能通过材质编辑器来间接的编辑顶点着色器和像素着色器内容。UE3中修改顶点着色器的方式也是在材质编辑器中进行的，其中比较典型的一个输入节点叫做WorldPositionOffset，它就是在顶点管道阶段对材质对应的网络物体顶点进行编辑的一个节点，对应到底层是修改了该材质对应的顶点着色器代码(通过HLSL按钮能够看到该材质对应的Shader代码
-
-这个阶段会逐像素地处理该像素的纹理映射，光照颜色，alpha融合，深度测试，模板测试等，并且根据该像素的距离信息进行雾化公式的应用，所以，顾名思义，像素管道主要处理的是像素信息，最终输出像素最终的颜色。
-
-传统的3D管线只能通过有限几个图形API接口来操作像素，比如DX中设置多纹理的一些接口以及Alpha融合的接口，能够操作的范围很有限。
-
-像素着色器所替换固定流水线的功能就是在这个阶段，在引入像素着色器之后，就可以根据需要对像素做许多自由的处理，因为帧缓存内的像素信息不止包含该像素的颜色、Alpha值、深度信息和模版信息，还可以包含该像素对应的法线贴图信息、高光贴图信息、凹凸贴图信息等（这些贴图实际上保存的是一系列向量信息），通过传入一定的参数，比如时间信息、物理量等，就能制作出各种贴近现实的精美特效。
-
-UE3中的像素着色器也是通过材质编辑器中的表达式来处理的，UE3材质编辑器中的大部分输入节点都是用于处理像素着色的，如图所示
+# 图形API概念
+DrawCall：为CPU向GPU发起的一个命令（如：OpenGL中的glDrawElements函数、D3D9中的DrawIndexPrimitive函数、D3D11中的Draw、DrawIndexed函数）。
+这个命令仅仅会指向一个需要被渲染的图元（primitives）列表（IBO，Index Buffer Object）。发起DrawCall时，GPU就会根据渲染状态和输入的顶点数据（VBO，Vertex Buffer Object）来计算，最终输出成屏幕上显示的像素。
+渲染状态（RenderState）：这些状态定义了场景中Mesh是怎样被渲染的。如：使用哪个vs、哪个fs、光源属性、纹理、材质等。
+颜色缓冲区（Color Buffer）：即帧缓冲区（Frame Buffer，Back Buffer），用于存放渲染出来的图像。D3D存放在一个RTV（RenderTargetView）中。
+深度缓冲区（Depth Buffer）：用于存放深度的图像。D3D存在在一个DSV（DepthStencilView）中。
+模板缓冲区（Stencil Buffer）：用于获取某种特定效果的离屏缓存。分辨率与颜色缓冲区及深度缓冲区一致，因此模板缓冲区中的像素与颜色缓冲区及深度缓冲区是一一对应的。
+其功能与模板类似，允许动态地、有针对性地决定是否将某个像素写入后台缓冲中。
+D3D中，与深度缓冲区一起存放在一个DSV（DepthStencilView）中。
+表面（Surface）：D3D在显存中用于存储2D图像数据的一个像素矩阵。D3D9中对应的COM接口为IDirect3DSurface9。
+Render Target（RT，渲染目标）：对应显卡中一个内存块，D3D中概念（OpenGL中叫做FBO，FrameBuffer Object），常用于是离屏渲染。
+渲染管线默认使用后备缓冲区（BackBuffer）RT来存放渲染结果，可通过调用CreateRenderTarget或RTT来创建多个额外的RT来进行离屏渲染，最后将它们组装到后备缓冲区（BackBuffer）中以产生最终的渲染画面。
+注1：调用Device->CreateRenderTarget创建RT成功后，会返回`IDirect3DSurface9* pRTSurface`；然后调用`Device->SetRenderTarget(0,pRTSurface)`绑定`pRTSurface`到指定的RT索引。
+在执行`SetRenderTarget`前可调用`Device->GetRenderTarget(0,pOriginRTSurface)`，以便在完成RT绘制后还原回`pOriginRTSurface`所指向RT的Surface
+对于不支持MRT的显卡，只会有一个索引为0的RT；对于支持MRT（N个）的显卡，索引可以为0,1,...N-1，可同时绑定N个Surface到N个RT的索引上。
+注2：成功绑定RT后：对于不支持MRT的显卡，在Pixel Shader中通过标识COLOR0来写入内容索引为0的RT中；对于支持MRT(N个)的显卡，在Pixel Shader中通过标识COLOR0，COLOR1，...COLOR(N-1)来写入内容到对应的RT中
+注3：可以调用`Device->StretchRect`来讲RT的Surface拷贝到后备缓冲区
