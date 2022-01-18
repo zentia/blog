@@ -2,12 +2,15 @@
 title: Mobile GPU Architecture
 mathjax: true
 date: 2019-09-04 08:53:59
-tags:
-    - GPU
 categories:
     - GPU
 ---
 
+https://zhuanlan.zhihu.com/p/444083670
+
+# 图形流水线
+![图0 图形应用流水线](0.jpg)
+![图1 图形应用在GPU上的工作原理](1.jpg)
 # 山高水远催生独立王国
 习惯了桌面端GPU的那一套玩法，初次接触移动端GPU会有许多新鲜感。
 

@@ -1,14 +1,297 @@
 ---
-title: 高级着色器语言入门(Introduction to the High-Level Shading Language)
+title: HLSL着色器语言基础
 mathjax: true
 date: 2019-04-11 15:27:51
-tags:
-  - Direct3D
-categories: Direct3D
+categories: 
+- Direct3D
+- HLSL
 ---
 
+# HLSL语言基础
+HLSL(High-Level Shading Language, 高级着色语言)是由微软开发的一种着色器语言，D3D9及以上版本使用其作为着色语言（注：D3D8的Shader使用是类似汇编的语言来编写），拥有如下特点：
+1. 基于C语言的语法（如：大小写敏感，每条语句必须以分号结尾），是一门面向过程的强类型语言（type sensitive language）
+2. 除了bool、int、uint、half、float、double基础类型外，还支持数组类型，另外HLSL还内置了适合3D图形操作的向量和矩阵类型，以及采样器（纹理）类型
+3. 基础类型的隐式转换规则与C语言一致
+4. 变量没有赋初值时，都会被填充为false、0或0.0
+5. if条件语句和switch条件语言与C语言一致
+6. for循环语句和while循环语句与C语言一致
+7. return、continue和break与C语言一致。另外引入了discard，该关键字只能在PS中使用，表示放弃当前像素，直接处理下一个像素。注：也可以使用clip内置函数来将当前像素裁剪掉。
+8. 无指针、无字符和字符串类型
+9. 无union、无enum
+10. 向量、矩阵可通过构造函数进行初始化
+
+# 通用着色器核心
+
+所有的可编程着色器阶段使用通用着色器核心来实现相同的基础功能。此外，顶点着色阶段、几何着色阶段和像素着色阶段提供了独特的功能。
+例如几何着色阶段可以生成新的图元或删减图元，像素着色阶段可以决定当前像素是否被抛弃等。
+下图展示了数据是怎么流向一个着色阶段，以及通用着色器核心与着色器内存资源之间的关系：
+![1](1.png)
+
+Input Data:顶点着色器从输入装配阶段获取数据；几何着色器则从上一个着色器阶段的输出获取等等。通过给形参引入可以使用的系统值可以提供额外的输入
+Output Data:着色器生成输出的结果然后传递给管线的下一个阶段。有些输出会被通用着色器核心解释成特定用途（如顶点位置、渲染目标对应位置的值），另外一些输出则由应用程序来解释。
+Shader Code:着色器代码可以从内存读取，然后用于执行代码中所期望的内容。
+Samplers:采样器决定了如何对纹理进行采样和滤波。
+Textures:纹理可以使用采样器进行采样，也可以基于索引的方式按像素读取。
+Buffers:缓冲区可以使用读取相关的内置函数，在内存中按元素直接读取。
+Constant Buffers:常量缓冲区对常量值的读取有所优化。他们被设计用于CPU对这些数据的频繁更新，因此他们有额外的大小、布局和访问限制。
+
+# 注释
+单行注释
+```C
+// Hello HLSL.
+```
+
+# 多行注释
+```C
+/********************************
+This is my first HLSL.
+Let's take a look.
+********************************/
+```
+# 预处理
+#if #elif [defined(),!defined()] #else #ifdef #ifndef #endif // 条件编译
+```C
+#define TEST1 // 定义为空的宏
+
+#ifdef TEST1 // 条件成立
+#endif 
+
+#define TEST1 1 // 定义TEST1宏为1 注：可以不用先undef TEST1宏 但会报warning X1519: 'TEST1' : macro redefinition
+
+#undef TEST1 // 取消 TEST1宏
+
+#if TEST1 // 条件不成立
+#endif
+
+#ifndef TEST1 // 条件成立
+#endif 
+
+#define TEST1 -1 // 定义为int的宏
+
+#define TEST2 // 定义为空的宏
+
+#if TEST1 && defined(TEST2) // 条件成
+#endif
+
+#define TEST3 true // 定义为bool宏
+
+#if TEST3 // 条件不成立
+#endif 
+
+#if !TEST3 // 条件成立
+#endif
+
+#if TEST3==true // 条件成立
+#endif
+
+#if !defined(TEST0) && TEST1 && defined(TEST2) // 条件成立
+#endif
+
+#define TEST4 100 // 定义为int的宏
+
+#if TEST4 // 条件成立
+#endif
+
+#if TEST4 > 150
+#elif (TEST4 > 120) || TEST1 // 进入elif分支
+#endif
+
+#if TEST4 > 160
+#else // 进入else分支
+#define xx2 1
+#endif
+
+#if !TEST4
+#elif (TEST4 > 110)
+#else // 进入 else分支
+#endif
+
+#define TEST5 2.0 // 定义为float的宏
+
+// #if TEST5 // float 不能进行条件判断 编译失败
+// #endif
+
+// #if TEST5 > 0.0 // float 不能进行条件判断 编译失败
+```
+
+#define #undef // 宏定义、宏取消
+```C
+#define TEST1 100 // 定义TEST1宏为100
+
+#ifdef TEST1 //条件成立
+#undef TEST1 // 取消TEST1宏的定义
+#endif
+
+#if !defined(TEST1) // 条件成立
+#endif
+
+#define SQUARE(a) ((a)*(a))
+
+#define MAX(a,b) \
+   (((a) > (b)) ? (a) : (b)) // 宏必须在一行写完，多行写时必须带上 \ 行连接符，弹药注意 \ 后不要有空格，否则会编译失败
+
+#define MERGE(a, b) a##b // ## 字符拼接符
+```
+
+#line // 指示下一行的符号，及当前所在的文件；该命令会修改 __FILE__,__LINE__ 的值
+该命令是提供给编译器使用的，程序员最好不要使用该命令
+```C
+#if __LINE__==10 //判断当前行号是否为10
+#endif 
+
+#if __FILE__=0 // 条件成立 __FILE__ 始终是0
+#endif
+
+#line 116 // 指定下一行的行号为116
+#if __LINE__ == 116 // 条件成立
+#endif
+
+#line 200 "test.hlsl" // 指定下一行的行号为200，当前文件名为test.hlsl
+#if __FILE__ = 0 // 条件成立   __FILE__始终为0
+
+// test.hlsl(204,2):error:This is an error!
+#error This is an error!
+```
+
+#error //error命令被执行，会导致当前文件编译失败
+```C
+// E:\ModenD3D\HLSL-Development-Cookbook\book_sample\Chpater 1 - Forward Light\Ambient Light\ForwardLight.hlsl(40,2): error: This is an error! 
+#error This is an error!
+```
+
+#pragma // 用来控制编译器的一些行为
+```C
+#pragma warning(disable : 1519; once : 3205; error : 3206) // 忽略1519 warning, 只报一次320 warning, 3206 warning视为error
+
+#define TEST1 //  定义为空的宏
+#define TEST1 1 // 定义TEST1宏为1 注：可以不用先 undef TEST1宏 但是会报warning X1519: 'TEST1': macro redefinition
+
+#paragma message("Hello HLSL.") // Hello HLSL
+
+#paragma pack_matrix(column_major) // 将uniform参数的 matrix设置为列主序（缺省）注1：列主序生成的指令数更少、因此其效率比行主序的效率更高 注2：构造matrix时不受 #pragma pack_matrix影响，始终为行主序
+#paragma pack_matrix(row_major) //  将uniform 参数的 matrix设置为行主序
+
+#error This is an error! //  hlsl中出现error时，才会打印 pragma message和warning信息
+```
+
+注1：需要注意的时，hlsl中出现error时(#error或语法错误)，才会打印pragma message 和warning信息
+注2：更多error、warning number说明，详见：https://docs.microsoft.com/en-us/windows/win32/direct3dhlsl/hlsl-errors-and-warnings
+注3：在C++代码层中，DirectXMath数学库创建的矩阵都是行矩阵，但当矩阵从C++传递给HLSL时，HLSL默认是列矩阵的，因此传递前要进行一次转置。如果希望不发生转置操作的话，可以添加修饰关键字 row_major
+
+#include // 引用其他hlsl文件 与C/C++语法用法一致
+```C
+#include "common.hlsl" // 引用其他的hlsl文件
+```
+
+# typedef
+用于类型的别名，用法与C语言一致
+```C
+typedef vector<float, 3> POINT;
+typedef const float CFLOAT;
+
+POINT pt;
+CFLOAT cfl;
+```
+
+# 运算符
+除了没有指针相关的运算符外，其他的与C语言完全一致
+注1：对于向量、矩阵类型，运算符会在各个分量上进行
+注2：支持浮点数取模%
+```C
+int nl = 5 % 3; // 取模即求余数，结果为2
+float f1 = 3.3 % 1.6; // 3.3-(int)(3.3/1.6)*1.6 = 3.3-2*1.6 = 0.1
+float f2 = -3.3 % 1.6;
+```
+注3：二元运算中变量类型的提升规则：
+1. 对于二元运算来说，如果运算符左右操作数的维度不同，那么维度较小的变量类型将会被隐式提升为维度较大的变量类型。但是这种提升仅限与标量到向量的提升，即x会变成为(x,x,x)。但是不支持像float2到float3的提升。
+2. 对于二元运算来说，如果运算符左右的操作数类型不同，那么低精度变量的类型将被隐式提升为高精度变量的类型，这点和C/C++是类似的。
+
+# 控制流
+## 条件语句
+HLSL也支持`if`，`else`， `continue`，`break`，`switch`关键字，此外`discard`关键字用于像素着色阶段抛弃该像素。
+条件的判断使用一个布尔值进行，通常由各种逻辑运算符或者比较运算符操作得到。注意向量之间的比较或者逻辑操作是得到一个存有布尔值的向量，不能够直接用于条件判断，也不能用于`switch`语句。
+## 判断与动态分支
+基于值的条件分支只有在程序执行的时候被编译好的着色器汇编成两种方式：判断(predication)和动态分支(dynamic branching)。
+如果使用的是判断的形式，编译器会提前计算两个不同分支下表达式的值。然后使用比较指令来基于比较结果来“选择”正确的值。
+而动态分支使用的是跳转指令来避免一些非必要的计算和内存访问。
+着色器程序在同时执行的时候应当选择相同的分支，以防止硬件在分支的两边执行。通常情况下，硬件会同时将一系列连续的顶点数据传入到顶点着色器并行计算，或者是一系列连续的像素单元传入到像素着色器同时运算等。
+动态分支会由于执行分支指令所带来的开销而导致一定的性能损失，因此要权衡动态的开销和可以跳过的指令数目。
+通常情况下编译器会自动选择使用判断还是动态发呢之，但我们可以通过重写某些属性来修改编译器的行为。我们可以在条件语句前可以选择添加下面两个属性之一：
+
+|属性|描述|
+|---|---|
+|[branch]|缺省。根据条件值的结果，只计算其中一边的内容，会产生跳转指令。|
+|[flatten]|两边的分支都会计算，然后根据条件值选择其中一遍。可以避免跳转指令的产生。|
+
+## 循环语句
+HLSL也支持`for`，`while`和 `do while`循环。和条件语句一样，它可能也会基于运行时的条件值判断而产生动态分支，从而影响程序性能。用法如下：
+
+|属性|描述|
+|---|---|
+|[loop]|缺省。默认不加属性的循环语句为loop型。|
+|[unroll]|如果循环次数较小，我们可以使用属性[unroll]来展开属性，代价是产生更多的汇编指令。|
+
+```C
+times = 4;
+sum = times;
+[unroll]
+while (times--)
+{
+   sum += times;
+}
+```
+
+# 寄存器（register）
+用于在C++与HLSL之前传递数据，包括如下4中：
+
+|寄存器 |说明 | 上限|
+|---|---|---|
+|b | 常量缓冲区视图（CBV），用于从C++传递只读数据给HLSL|15个常量缓冲区（共16个，系统内部保留1个）|
+| t|着色器资源视图（SRV），用于从C++传递只读内存块或纹理数据给HLSL|128个|
+|u|无序访问视图（UAV），用于可读写数据的传递||
+|s|用于从C++传递采样器设置给HLSL|128个|
+
+参见：[Resource binding in HLSL(HLSL中的资源绑定)](https://docs.microsoft.com/zh-cn/windows/win32/direct3d12/resource-binding-in-hlsl)
+
+# 变量
+变量名要符合以下规则：
+1. 只能包含大小写字母、数字和下划线
+2. 变量名不能以数字开头
+3. 不能是关键字或预留的关键字
+
+全局变量：定义在函数体外的变量。作用域规则与C语言全局变量一致。
+局部变量：定义在函数体内的变量。作用域规则与C语言局部变量一致。
+
+const变量：
+该变量为一常量，需要被初始化，在运行时不能被修改，与C/C++用法一致。
+
+static变量：
+进一步可分为static局部变量和static全局变量，与c/c++用法一致。
+static局部变量需要在HLSL中自己初始化，否则使用默认初始化，初始化操作仅执行一次（首次被访问时）
+只在着色器内部可见
+
+extern变量：
+在全局变量上可用，非静态的全局变量默认是extern类型
+可在着色器外被访问，比如被C++应用程序
+
+uniform变量：
+在D3D代码中初始化，然后在作为输入传给着色器
+允许在C++应用层中修改，但在着色器执行的过程中，其值始终保持不变（运行前可变，运行时不变）。着色器程序中的全局变量默认为即uniform又extern。
+
+volatile变量
+表示该变量经常被修改，用于局部变量
+
+shared变量
+在全局变量上可用，提示效果框架该变量可在多个效果之间共享
+
+`nointerpolation` -- 修饰的变量，在将顶点着色器的输出传递到像素着色器之前，请勿对其进行插值。
+`groupshared` --  将一个变量标记为用于计算着色器的线程组共享内存
+`precise` --  用于保证该变量在计算时，是严格精确的
+`row_major` -- 标记一个可在单个行中存储4个成分的变量，以便可以将它们存储在单个常量寄存器中
+`column_major` -- 标记一个可在单个列中存储4个称为的变量，以优化矩阵数学（缺省）
+
    在这一章里我们描述高级着色器语言（High-Level Shading Language ，简称HLSL），在下三章里我们用它去编写顶点和像素着色器。简单的说，在我们写的程序里顶点和像素是很小的对象，它们由GPU来执行，是固定功能管线的一部分。用我们自己写的着色器程序替换一部分固定功能管线，在绘制效果上我们获得很大的灵活性。我们不再局限于预定义的"固定"操作。
-   为了编写着色器程序，我们需要一种语言。 在DirectX 8.x,中，着色器是用低级着色器汇编语言编写的。幸运的是，我们不必再用汇编语言来写着色器了，DirectX 9支持一种高级着色器语言来xyna写。用HLSL在汇编语言来写着色器程序与使用高级语言有同样的优势，像C++，它超越了汇编语言，即：
+   为了编写着色器程序，我们需要一种语言。 在DirectX 8.x,中，着色器是用低级着色器汇编语言编写的。幸运的是，我们不必再用汇编语言来写着色器了，DirectX 9支持一种高级着色器语言来编写。用HLSL在汇编语言来写着色器程序与使用高级语言有同样的优势，像C++，它超越了汇编语言，即：
    
 * 增加生产力—用高级语言比用低级语言写程序更快、更容易。 我们可以花费更多的时间关注于算法而不是代码。
 * 增加可读性—用高级语言写的程序更易读，这意味着用高级语言编程更易于调试和维护。
