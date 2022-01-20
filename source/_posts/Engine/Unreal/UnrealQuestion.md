@@ -1,7 +1,7 @@
 ---
 title: Unreal Engine 常见问题
 date: 2022-01-01 15:22
-tags:
+categores:
     - Unreal
 ---
 
@@ -36,3 +36,6 @@ iproxy 8080:8080 #iOS
 # Use Full Precision
 
 开启高精度float格式，默认是half。
+
+# 蓝图类型判断
+![1](1.png)
