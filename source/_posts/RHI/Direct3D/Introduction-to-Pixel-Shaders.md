@@ -2,9 +2,10 @@
 title: 第十八章 像素着色器入门(Introduction to Pixel Shaders)
 mathjax: true
 date: 2019-04-11 15:29:49
-tags:
-    - 图形学
-categories: Direct3D
+categories: 
+- RHI
+- DirectX
+- HLSL
 ---
    像素着色器是一个执行在图形卡的GPU上的程序，它运行在对每个像素进行光栅化处理时。（不像顶点着色器，Direct3D不会以软件模拟像素着色器的功能。）它实际上替换了固定功能管线的多纹理化阶段（the multitexturing stage），并赋予我们直接操纵单独的像素和访问每个像素的纹理坐标的能力。这种对像素和纹理坐标的直接访问使我们可以达成各种特效，例如：多纹理化（multitexturing）、每像素光照（per pixel lighting）、景深（depth of field）、云状物模拟（cloud simulation）、焰火模拟（fire simulation）、高级阴影技术（sophisticated shadowing technique）。
 
