@@ -1,4 +1,12 @@
-@startuml UE
+---
+title: EngineLoop
+date: 2022-01-22 11:31:00
+categories:
+- Engine
+- Unreal
+---
+{% pdf Engine.pdf %}
+{% plantuml %}
 scale 2
 class UObjectBase
 {
@@ -18,4 +26,20 @@ class UClass
 {
 
 }
-@enduml
+{% endplantuml %}
+{% plantuml %}
+class FRunnable
+{
+    +Init();
+    +Run();
+    +Stop();
+    +Exit();
+}
+note left: 线程执行体，控制改变线程的状态
+
+FRunnable <|-- FRenderingThread
+class FRenderingThread
+{
+    # FString ThreadName;
+}
+{% endplantuml %}
