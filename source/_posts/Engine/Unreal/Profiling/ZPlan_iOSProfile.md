@@ -127,3 +127,7 @@ static TAutoConsoleVariable<int32> CVarFog(
 	TEXT(" 1: enabled (default)"),
 	ECVF_RenderThreadSafe | ECVF_Scalability);
 ```
+
+# 场景材质烘培
+ios下测试，烘培要比不烘培性能要高一些，但是效果会发生改变，原因是重新生成了贴图和材质。
+|

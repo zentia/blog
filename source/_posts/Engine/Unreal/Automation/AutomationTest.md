@@ -7,6 +7,8 @@ categories:
 - Automation
 ---
 
+https://docs.unrealengine.com/4.27/zh-CN/TestingAndOptimization/Automation/TechnicalGuide/
+
 ```C++
 // AutomationTest.h
 /** Flags for specifying automation test requirements/behavior */
@@ -33,3 +35,12 @@ namespace EAutomationTestFlags
 }
 ```
 `UE4Editor.exe "[PathFromUnrealEditorBinarayToYourProjectDirectory]/[ProjectName].uproject -Game -ExecCmds="Automation RunTests [TestPrettyName]" -log`
+
+# IMPLEMENT_SIMPLE_AUTOMATION_TEST
+
+# 复杂测试
+复杂测试用于在许多输入上运行相同的代码。这些测试通常是压力测试。例如，加载所有地图或编译所有蓝图将非常适合复杂的自动化测试。注意，必须覆盖“RunTest”和“GetTests”函数。
+会将GetTests里面的返回值的信息罗列在面板上面。
+
+# 潜在命令(Latent)
+

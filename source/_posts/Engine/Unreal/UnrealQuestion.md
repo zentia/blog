@@ -39,3 +39,10 @@ iproxy 8080:8080 #iOS
 
 # 蓝图类型判断
 ![1](1.png)
+
+# 占据屏幕越多的会越耗
+
+
+# 如何获得FString的长度
+
+https://answers.unrealengine.com/questions/741711/how-to-get-fstring-size.html
