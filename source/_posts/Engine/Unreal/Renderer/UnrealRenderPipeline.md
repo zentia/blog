@@ -1,6 +1,7 @@
 ---
-title: 3D渲染相关基本概念
+title: UnrealRenderPipeline
 categories: 
+- Engine
 - Unreal
 - Renderer
 date: 2017-09-24 10:56:00
@@ -41,3 +42,21 @@ Render Target（RT，渲染目标）：对应显卡中一个内存块，D3D中�
 对于不支持MRT的显卡，只会有一个索引为0的RT；对于支持MRT（N个）的显卡，索引可以为0,1,...N-1，可同时绑定N个Surface到N个RT的索引上。
 注2：成功绑定RT后：对于不支持MRT的显卡，在Pixel Shader中通过标识COLOR0来写入内容索引为0的RT中；对于支持MRT(N个)的显卡，在Pixel Shader中通过标识COLOR0，COLOR1，...COLOR(N-1)来写入内容到对应的RT中
 注3：可以调用`Device->StretchRect`来讲RT的Surface拷贝到后备缓冲区
+
+# MobileSceneRender
+## InitViews
+## ShadowDepths
+## ClearRenderTargetView
+## ClearDepthStencilView
+## MobileBasePass
+## MobileBasePass_PostAO
+## TranslucencyPreDepthPass
+## ShadowProjectionOnOpaque
+## Translucency
+## PostProcessing
+## RenderFinish
+
+# Reference
+
+[UE4 性能 - (四) 性能分析：Render Passes(1)](https://zhuanlan.zhihu.com/p/449850501)
+[UE4 性能 - (五) 性能分析：Render Passes(2)](https://zhuanlan.zhihu.com/p/455253476)

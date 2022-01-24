@@ -1,10 +1,10 @@
 ---
-title: Unity中的渲染优化技术
+title: UnityRenderOptimize
 mathjax: true
 date: 2019-04-11 20:01:17
-tags:
-   - Shader
-categories: "Unity Shader"
+categories: 
+- Engine
+- Unity
 ---
 # 移动平台的特点
 和PC平台相比，移动平台上的GPU架构有很大的不同。由于处理资源等条件的限制，移动设备上的GPU架构专注于尽可能使用更小的带宽和公共能，也由此带来许多和PC平台完全不同的现象。

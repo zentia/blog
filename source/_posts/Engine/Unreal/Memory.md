@@ -2,9 +2,9 @@
 title: UE4的内存分配
 mathjax: true
 date: 2021-07-02 10:00:23
-tags:
-    - UE4
-categories: UE4
+categories: 
+- Engine
+- Unreal
 ---
 
 起因，看spine，看到了string，想起了stringID，然后看里面直接裸memory，在想FMemory和memory有什么区别，以及适用情况。

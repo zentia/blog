@@ -1,8 +1,10 @@
 ---
-title: Unreal Animation System
+title: AnimationSystem
 date: 2022-01-02 14:20:00
-tags:
-    - Unreal
+categories:
+- Engine
+- Unreal
+- Animation
 ---
 https://blog.csdn.net/qq_23030843/article/details/109103433
 # 动画基础概念

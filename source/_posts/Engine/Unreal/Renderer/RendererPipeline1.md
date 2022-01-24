@@ -1,8 +1,10 @@
 ---
-title: Unreal渲染管线1
+title: RenderPipeline1
 date: 2022-01-06 10:47:00
-tags:
-    -Unreal
+categories:
+- Engine
+- Unreal
+- Renderer
 ---
 游戏画质与性能、功能不可兼得，我们要在三者之间寻找平衡。
 ![1](/images/Unreal/Renderer/RendererPipeline/1.png)
@@ -22,3 +24,4 @@ tags:
 - Post Process: Temproal AA、EyeAdaption、Motion Blur、Bloom、Tone Mapping、PP Material等。
 
 https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/
+

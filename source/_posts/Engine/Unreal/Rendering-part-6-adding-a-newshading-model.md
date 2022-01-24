@@ -2,8 +2,9 @@
 title: UE4渲染第6节：添加一个新的渲染模型
 mathjax: true
 date: 2021-06-30 20:55:59
-tags:
-categories: "UE4"
+categories: 
+- Engine
+- Unreal
 ---
 
 带翻译的文章：https://80.lv/articles/river-editor-water-simulation-in-real-time/ 水

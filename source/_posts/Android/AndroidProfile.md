@@ -1,5 +1,5 @@
 ---
-title: Android丢帧分析与优化
+title: AndroidProfiler
 mathjax: true
 date: 2019-03-23 11:12:29
 categories:
@@ -11,3 +11,13 @@ categories:
 > 60fps：人眼与大脑之间的协作无法感知超过60fps的画面格纳更新。
 > Android系统每隔16ms会发出VSYNC信号重绘我们的界面
 
+# snapdragon 安卓抓帧
+
+https://zhuanlan.zhihu.com/p/66094148
+
+安卓工程需要开启 INTERNET 和 PROFILER 权限， 即在AndroidManifest.xml 配置中加入
+
+```C++
+<uses-permission android:name="android.permission.INTERNET"/>
+<uses-permission android:name="com.qti.permission.PROFILER" />
+```

@@ -2,9 +2,9 @@
 title: UE4 网格组件
 mathjax: true
 date: 2021-07-02 20:22:38
-tags:
-    - UE4
-categories: UE4
+categories: 
+- Engine
+- Unreal
 ---
 本文是对https://medium.com/realities-io/creating-a-custom-mesh-component-in-ue4-part-0-intro-2c762c5f0cd6 的一篇译文和扩充
 

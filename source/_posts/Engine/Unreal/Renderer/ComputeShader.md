@@ -1,10 +1,10 @@
 ---
-title: UE4 使用Compute Shader
+title: ComputeShader
 mathjax: true
 date: 2021-07-02 21:03:31
-tags:
-    - UE4
-categories: UE4
+categories: 
+- Engine
+- Unreal
 ---
 本文是对 https://medium.com/realities-io/using-compute-shaders-in-unreal-engine-4-f64bac65a907 的一篇译文 
 <!--more-->
