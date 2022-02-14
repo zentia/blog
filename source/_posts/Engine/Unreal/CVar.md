@@ -19,4 +19,7 @@ https://answers.unrealengine.com/questions/735329/question-about-screen-percenta
 1 FXAA
 
 # stat unit
-查看耗时
+查看耗时 游戏线程时长、渲染线程时长、GPU时长
+
+# stat Slow [-ms = 0.3] [-maxdepth = 5]
+

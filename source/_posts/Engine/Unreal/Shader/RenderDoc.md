@@ -1,8 +1,10 @@
 ﻿---
 title: RenderDoc调试UE Shader
 date: 2021-12-30 21:03:00
-tags:
-    - Unreal
+categories:
+- Engine
+- Unreal
+- Shader
 ---
 
 1. 修改Shader文件，保存，在控制台输入
