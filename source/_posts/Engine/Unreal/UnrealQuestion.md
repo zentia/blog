@@ -47,3 +47,7 @@ iproxy 8080:8080 #iOS
 # 如何获得FString的长度
 
 https://answers.unrealengine.com/questions/741711/how-to-get-fstring-size.html
+
+# STATSLOW
+STAT SLOW 用来找到性能波动问题
+它可以通过报告运行一帧中特定时间段（默认10毫秒）来逐步定位帧停顿的位置。
