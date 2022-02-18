@@ -1,8 +1,8 @@
 ---
 title: 焦散
 date: 2022-01-03 22:29:00
-tags:
-    - Shader
+categories:
+- Render
 ---
 ![1](/images/Render/Caustics/1.jpg)
 创建可信的焦散需要先了解焦散。

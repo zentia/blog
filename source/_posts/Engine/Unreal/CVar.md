@@ -23,3 +23,13 @@ https://answers.unrealengine.com/questions/735329/question-about-screen-percenta
 
 # stat Slow [-ms = 0.3] [-maxdepth = 5]
 
+# ShowFlag
+0 是 关闭 1 是开启
+- ShowFlag.Translucency # 半透明
+- ShowFlag.PostProcessing 
+- ShowFlag.StaticMeshes
+- ShowFlag.SkeletalMeshes
+- ShowFlag.Particles
+- ShowFlag.ReflectionEnvironment
+- ShowFlag.InstancedStaticMeshed
+- ShowFlag.DirectionalLights
