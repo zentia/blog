@@ -2,7 +2,7 @@
 title: Real Time Rendering 3rd
 date: 2017-09-29 15:13:03
 tags:
-   - 计算机图形学
+   - Render
 ---
 # Overview
 <img src="/2017/09/29/Real-Time-Rendering-3rd/overview.png" alt="overview">

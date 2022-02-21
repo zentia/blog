@@ -2,8 +2,6 @@
 title: C和C++混合编程（__cplusplus与external "c"的使用）
 mathjax: true
 date: 2019-03-28 14:19:33
-tags:
-    C++
 categories: C++
 ---
 # 第一种理解

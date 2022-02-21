@@ -2,9 +2,8 @@
 title: commandbuffer
 mathjax: true
 date: 2019-04-27 12:40:02
-tags:
-    - Shader
-categories: Shader
+categories:
+- Render
 ---
 # CommandBuffer
 {% asset_img 1.jpg %}

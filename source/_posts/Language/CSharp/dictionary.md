@@ -2,10 +2,11 @@
 title: Dictionary
 mathjax: true
 date: 2019-04-09 20:57:21
-tags:
-    - CSharp
-categories: CSharp
+categories: 
+- Language
+- CSharp
 ---
+是一个Hash+链表结构。
 # Entry结构体
 这是Dictionary存放数据的最小单位，调用Add(Key,Value)方法添加的元素都会被封装在这样的一个结构体中。
 ```CSharp
