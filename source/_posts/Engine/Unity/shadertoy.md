@@ -1,9 +1,9 @@
 ---
 title: shadertoy
-mathjax: true
 date: 2019-04-01 19:05:21
-tags:
 categories:
+- Engine
+- Unity
 ---
 ```c
 Shader "Shadertoy/Template" 

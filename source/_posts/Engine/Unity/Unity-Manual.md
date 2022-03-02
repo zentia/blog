@@ -1,8 +1,9 @@
 ---
 title: Unity Manual
 date: 2018-04-16 19:01:26
-tags:
-  - Unity
+categories:
+- Engine
+- Unity
 ---
 
 |||
@@ -94,7 +95,7 @@ public enum CameraClearFlags
 
 # 构建AssetBundles
 
-在<a href="https://docs.unity3d.com/Manual/AssetBundles-Workflow.html">AssetBundle工作流</a>的文档中，我们有一个代码示例，它将三个参数传递给BuildPipeline.BuildAssetBundles函数。让我们更深入实际的了解。
+在AssetBundle工作流的文档中，我们有一个代码示例，它将三个参数传递给BuildPipeline.BuildAssetBundles函数。让我们更深入实际的了解。
 Assets/AssetBundles:这是AssetBundles输出的目录。您可以将其更改为您想要的任何输出目录，只需确保在尝试构建之前文件夹实际存在。
 ## BuildAssetBundleOptions
 BuildAssetBundleOptions您可以指定几种具有各种效果的不同。

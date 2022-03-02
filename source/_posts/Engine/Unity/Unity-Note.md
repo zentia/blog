@@ -1,8 +1,9 @@
 ---
 title: Unity3D中自带事件函数的执行顺序
 date: 2018-04-11 16:16:30
-tags:
-  - Unity
+categories:
+- Engine
+- Unity
 ---
 在Unity3D继承自MonoBehavior的脚本中，有几个Unity3D自带的事件函数按照预定的顺序作为脚本执行。其执行顺序如下：
 # 编辑器（Editor）

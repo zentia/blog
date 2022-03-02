@@ -2,8 +2,8 @@
 title: Unity Shader PBR
 date: 2017-10-23 09:50:50
 categories:
+- Engine
 - Unity
-- Renderer
 ---
 # 观察两个空间
 阴影映射(Shadow Mapping)牵涉到两个空间的Z深度比较,一个是灯光空间,一个是相机空间,首先打开ShadowMapping_2下的场景,场景是默认的相机视角,单击下面的Light View按钮,可以切换到灯光视角,

@@ -1,8 +1,8 @@
 ---
 title: Unity
 date: 2018-07-01 08:47:00
-tags:
-    Unity
+categories:
+- Unity
 ---
 
 ## 命名
@@ -234,42 +234,16 @@ void OnGUI()
 
 #### 四元数
 
-## Unity3D GUI界面设计（GUI&NGUI&UGUI）
-
 ### UGUI的网格重建、动静分离
 动静分离：也就是说同一个界面下的UI，可活动的元素放在一个Canvas下，不可活动的元素放在另一个Canvas下。虽然两个Canvas打断了合批，但是却减少了网格重建时间，总体上是有优化的。
 
 究其原因，是因为在同一个Canvas下的某个元素发生变化时，同一Canvas下的所有元素都会进行网格重建(ReBatch)。井静态的元素在逻辑上是不需要重建的，因为他们都没变过，所以需要分开。
 
-#### 
-
-### GUI常用控件
-
-#### GUI Text
-
-#### GUI Texture (LazyTexture)
-
-#### Label控件
-
-#### Button控件
-
-#### TextField
-
-#### ToolBar
-
-#### Slider
-
-#### ScrollView控件
-
 #### 群组视图
 
 #### 窗口
 
-#### NGUI Panel & UGUI Canvas
-
 #### 图集制作(TexturePacket)
-
-#### UITween动画
 
 #### 顶点动画
 

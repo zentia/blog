@@ -1,10 +1,9 @@
 ---
 title: Unity GI LightMap
-mathjax: true
 date: 2019-03-30 21:44:01
-tags:
-	- Unity
-categories: Unity
+categories: 
+- Engine
+- Unity
 ---
 # 全局光照
 全局光照（GI）是一种系统，用于模拟光如何从表面反射到其他表面（间接光），而不仅限于直接从光源击中表面的光（直接光）。

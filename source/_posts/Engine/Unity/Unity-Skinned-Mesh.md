@@ -2,6 +2,7 @@
 title: Skinned Mesh原理解析
 date: 2018-03-23 11:41:53
 categories:
+- Engine
 - Unity
 ---
 

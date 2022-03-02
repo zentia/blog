@@ -1,7 +1,9 @@
 ---
 title: unity-nature-review
 date: 2018-04-10 15:36:26
-tags:
+categories:
+- Engine
+- Unity
 ---
 是否有多维子材质：多维子材质材质测试，三个子材质，50个物体，使用多维子材质12帧，330个dc，343面。拆开之后20帧，154dc，134面。多维子材质Unity无法动态合并。
 叠加模式贴图，可以不用Alpha通道

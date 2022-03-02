@@ -1,11 +1,9 @@
 ---
 title: Unity Shader 后处理：Bloom全屏泛光
-mathjax: true
 date: 2019-03-30 23:11:43
-tags:
-	- Unity
-	- 后处理
-categories: Shader
+categories: 
+- Engine
+- Unity
 ---
 全屏Bloom效果，也叫Glow效果，中文称作“全屏泛光”，这是一种可以模拟出HDR的全屏后处理效果，但是实现原理和HDR相差很远，效果比HDR差一下，但是性能高很多。
 

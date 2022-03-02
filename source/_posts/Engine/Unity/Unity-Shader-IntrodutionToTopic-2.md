@@ -1,10 +1,9 @@
 ---
 title: Unity Shader第三部分
 date: 2018-10-22 18:12:38
-tags:
-  - Shader
-mathjax: true
-categories: "Unity Shader"
+categories:
+- Engine
+- Unity
 ---
 
 # 透明效果

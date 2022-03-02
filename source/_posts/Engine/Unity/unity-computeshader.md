@@ -1,10 +1,9 @@
 ---
 title: unity-computeshader
-mathjax: true
 date: 2019-05-13 14:15:17
-tags:
-    - Unity
 categories:
+- Engine
+- Unity
 ---
 # Compute Shader
 如何创建：Project->Create->Compute Shader

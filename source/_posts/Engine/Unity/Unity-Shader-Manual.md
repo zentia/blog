@@ -1,10 +1,9 @@
 ---
 title: Unity Shader Manual
 date: 2018-10-15 13:20:27
-tags:
-  - Unity
-categories: "Unity Shader"
-mathjax: true
+categories: 
+- Engine
+- Unity
 ---
 # Properties
 ```Shader

@@ -2,9 +2,9 @@
 title: 遮挡显示
 mathjax: true
 date: 2019-04-13 12:49:05
-tags:
-    - Shader
-categories: "Unity Shader"
+categories:
+- Engine
+- Unity
 ---
 3D游戏中主角会经常被墙壁之内的东西挡住，此时为了达到突出主角的效果，会做一些特殊处理让主角显示出来。
 光栅化阶段的后期，会有一个深度测试和颜色混合的过程，此效果就是针对这个过程进行的一种特殊处理。

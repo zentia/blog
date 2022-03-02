@@ -1,8 +1,9 @@
 ---
 title: Unity Mesh
 date: 2018-04-21 14:39:23
-tags:
-    Unity
+categories:
+- Engine
+- Unity
 ---
 Mesh是Unity内的一个组件，成为网格组件。
 
@@ -89,12 +90,8 @@ public class CreateMesh : MonoBehaviour
 }
 
 ```
-效果如下(一定要加Mesh Renderer因为这玩意是负责渲染的,Unity这货材质缺失就是显示粉色的)
-<img src="http://oxcvfpext.bkt.clouddn.com/Unity-Mesh-2.png">
 
 网格已经生成了，接下来就是给网格贴图了，uv属性会直接控制贴显示贴图的哪一部分，以及如何显示贴图uv中的每一项和vertices的每一项都是一一对应的，unity在贴图的时候，会把uv中的每一个点和vertices中对应的索引的顶点一一关联起来，这样可以实现贴图任意形状实现
-最终效果
-<img src="http://oxcvfpext.bkt.clouddn.com/Unity-Mesh-3.png">
 
 ### shared
 

@@ -1,8 +1,9 @@
 ---
 title: Unity ECS
 date: 2018-04-17 19:47:16
-tags:
-    - Unity
+categories:
+- Engine
+- Unity
 ---
 <p align="center">
     <a href="https://gitter.im/sschmid/Entitas-CSharp?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge">

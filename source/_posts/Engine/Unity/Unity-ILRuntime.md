@@ -1,8 +1,9 @@
 ---
 title: Unity热更新方案-ILRuntime
 date: 2018-03-23 18:24:17
-tags:
-	- Unity
+categories:
+- Engine
+- Unity
 ---
 ILRuntime的优势同市面上的其他热更方案相比，ILRuntime主要有以下优点：
 - 无缝访问C#工程的线程代码，无需额外抽象脚本API
@@ -39,5 +40,3 @@ https://ourpalm.github.io/ILRuntime/public/v1/guide/tutorial.html
 ### 使用之前
 
 ILRuntime项目提供了一个测试用例工程ILRuntimeTest,用来验证ILRuntime的正常运行，在运行测试用例前，需要手动生成一下TestCases里面的工程，生成DLL文件。
-
-## 

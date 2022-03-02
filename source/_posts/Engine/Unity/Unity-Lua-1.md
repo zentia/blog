@@ -1,8 +1,9 @@
 ---
 title: Unity-Lua
 date: 2018-03-19 08:57:26
-tags:
-	- lua
+categories:
+- Engine
+- Unity
 ---
 逻辑使用脚本来做的好处：
 - 使用脚本语言的动态特性，客户端可以做Hotfix,服务器可以做Refresh，无论在运营还是开发期这一特性都很有用；
