@@ -6,19 +6,22 @@ categories:
 - Unreal
 - Shader
 ---
-
+# `ConsoleVariables.ini`
+`r.ShaderDevelopmentMode = 1`，当缺省material编译失败后，Unreal提示你重新编译shader。如果不设置为1，Unreal会直接崩溃掉，如果它不能编译缺省material。
 1. 修改Shader文件，保存，在控制台输入
 `recompileshaders changed`
 2. 调用`ShaderCompiler.cpp RecompileShaders`，根据指令的内容进入不同的分支，先去匹配具体的命令内容
 
 # RenderDoc调试UE Shader
-## 修改配置文件`ConsoleVariables.ini`
+
 打开
 截帧后Shader只能看到汇编代码片段，若想看到源代码，需要打开Engine\Config\ConsoleVariables.ini配置文件，取消以下两行的注释
 ```
 r.Shaders.Optimize=0
 r.Shaders.KeepDebugInfo=1
 ```
+使用低优化编译器和保留调试信息。更低优化器会降低编译时间，保留debug信息会让RenderDoc更好的调试。
+`r.DumpShaderDebugInfo = 1`和`r.DumpShaderDebugShotNames=1`在特定场合下非常有用。它将会生成后的HLSL写入硬盘（空工程，约2G），但是它会对RenderDoc调试非常有帮助。第二个变量会让变量名改变，以符合OS最大路径长度限制。
 ## 打开RenderDoc插件
 在Edit->Plugins的内置插件中搜索RenderDoc插件。
 开启后重启
