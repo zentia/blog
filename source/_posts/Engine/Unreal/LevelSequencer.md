@@ -146,3 +146,25 @@ https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/HowTo/Geomet
 https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/AnimationBlendingTools/
 
 反正官方说是测试功能，不建议使用，我们也就不要使用了吧。大概意思是说，在动画的过渡区域，普通的混合会出现由于骨骼的控制权的归属和权重控制问题导致的错乱。而这个主要是处理这个问题的。但是由于是测试功能，说明还是有些坑没有解决掉的。
+
+
+MovieSceneSkeletalAnimationTemplate.cpp 575
+求值器演算驱动器
+FMovieSceneSkeletalAnimationSectionTemplate::Evaluate
+MovieSceneSkeletalAnimationTemplate.cpp 271
+// 驱动器去执行真正的逻辑
+virtual void Actuate()
+
+MovieSceneBlendingAccumulator.cpp
+// 累加器进行步进收集执行
+void FMovieSceneBlendingAccumulator::Apply()
+MovieSceneAccumulatedBlendState.h 180
+// 令牌数不足导致无法进行驱动
+TArray<TInlineValue<FTokenEntry, 125>> TokensToBlend;
+MovieSceneBlendingAccumulator.h //混合增加令牌
+BlendToken
+
+MovieSceneAccumulatedBlendState.cpp
+void FMovieSceneAccumulatedBlendState::Consolidate()
+
+void FMovieSceneObjectCache::UpdateBindings(const FGuid& InGuid, IMovieScenePlayer& Player)

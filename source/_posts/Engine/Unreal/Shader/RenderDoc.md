@@ -21,7 +21,7 @@ r.Shaders.Optimize=0
 r.Shaders.KeepDebugInfo=1
 ```
 使用低优化编译器和保留调试信息。更低优化器会降低编译时间，保留debug信息会让RenderDoc更好的调试。
-`r.DumpShaderDebugInfo = 1`和`r.DumpShaderDebugShotNames=1`在特定场合下非常有用。它将会生成后的HLSL写入硬盘（空工程，约2G），但是它会对RenderDoc调试非常有帮助。第二个变量会让变量名改变，以符合OS最大路径长度限制。
+`r.DumpShaderDebugInfo = 1`和`r.DumpShaderDebugShortNames=1`在特定场合下非常有用。它将会生成后的HLSL写入硬盘（空工程，约2G），但是它会对RenderDoc调试非常有帮助。第二个变量会让变量名改变，以符合OS最大路径长度限制。
 ## 打开RenderDoc插件
 在Edit->Plugins的内置插件中搜索RenderDoc插件。
 开启后重启
