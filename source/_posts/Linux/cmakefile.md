@@ -2,11 +2,9 @@
 title: CMakeLists
 mathjax: true
 date: 2019-05-26 20:57:33
-tags:
-    - CMakeFile
 categories: CMakeFile
 ---
-```sh
+```
 #1.cmake verson,指定cmake版本
 cmake_minimum_required (VERSION 2.6)
 #2.指定项目名称，一般和项目的文件夹名对应

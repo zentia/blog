@@ -16,3 +16,8 @@ NDK的全称是Native Development Kit，原生开发工具包。
 ### 交叉编译
 
 交叉编译就是在一个平台上生成另一个平台上的可执行代码。
+
+ninja 是替代make的一个编译工具但是不是编译器，make也不是编译器，cmake更不是
+cmake 只是一个为ninja或者make或者vs
+ninja这个需要先下载
+然后cmake生成ninja的配置文件，然后在用ninja编译

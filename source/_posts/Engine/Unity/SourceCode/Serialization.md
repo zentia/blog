@@ -13,3 +13,5 @@ categories:
 - 预加载 - 我们如何异步加载场景和资源
 
 # 什么是一个序列化文件？
+
+类中带有`DECLARE_OBJECT_SERIALIZE();`宏定义

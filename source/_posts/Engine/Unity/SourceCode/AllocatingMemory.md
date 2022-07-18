@@ -1,5 +1,5 @@
 ---
-title: 内存分配
+title: Unity 内存分配
 categories:
 - Engine
 - Unity
@@ -23,3 +23,8 @@ allocator
 }
 ```
 为了使内存块可以正常的在jobs读写访问，
+
+# MemoryManager 内存管理器
+```C++
+
+```
