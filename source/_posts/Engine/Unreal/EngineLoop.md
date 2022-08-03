@@ -5,7 +5,6 @@ categories:
 - Engine
 - Unreal
 ---
-{% pdf Engine.pdf %}
 {% plantuml %}
 scale 2
 class UObjectBase

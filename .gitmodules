@@ -1,3 +1,6 @@
 [submodule "themes/keep"]
 	path = themes/keep
 	url = https://github.com/zentia/hexo-theme-keep.git
+[submodule "themes/oranges"]
+	path = themes/oranges
+	url = https://github.com/zchengsite/hexo-theme-oranges.git

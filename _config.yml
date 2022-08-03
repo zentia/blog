@@ -67,12 +67,12 @@ time_format: HH:mm:ss
 # Pagination
 ## Set per_page to 0 to disable pagination
 per_page: 10
-pagination_dir: page
+pagination_dir: landscape
 
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: keep
+theme: oranges
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -120,7 +120,6 @@ hexo_seo_autopush:
     date: created 
     count: 10
     google_file: google_service_account.json # 谷歌服务账户
-steam:
   enable: true
   steamId: '*****' #steam 64位Id
   path:
