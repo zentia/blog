@@ -1,7 +1,4 @@
 [submodule "themes/oranges"]
 	path = themes/oranges
-	url = https://github.com/zchengsite/hexo-theme-oranges.git
-[submodule "themes/keep"]
-	path = themes/keep
-	url = https://github.com/zentia/hexo-theme-keep.git
+	url = https://github.com/zentia/hexo-theme-oranges.git
 	branch = master
