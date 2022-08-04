@@ -1,5 +1,7 @@
 ---
 title: FlutterEngine
+categories:
+ - Flutter
 ---
 FlutterEngine主要是由c++实现的。
 是用ninja编译的。
@@ -57,3 +59,12 @@ Dart是单线程，脚本语言基本都是单线程，我见到过的，至于�
 公用配置文件
 # third_party
 这里面很大，其中vm就是在这里实现的。
+# 调试
+断点调试Flutter引擎来一步步观察引擎代码如何运行，是学习Flutter引擎代码的一个好办法。在介绍如何调试Flutter引擎前我们先来看看Flutter开发可能遇到哪些调试场景：
+1. 调试Flutter App Dart 代码
+2. 调试Flutter SDK Dart 代码
+3. 调试Flutter 引擎 Java 代码
+4. 调式Flutter 引擎 C++ 代码
+
+第一种场景非常简单，只要在Android Studio中给Flutter App中的Dart代码打上断点即可进行调试
+第二种场景也比较简单，在Android Studio中配置Dart & Flutter插件，运行调试第三方库和Flutter SDK Dart代码即可在相关源码中设置断点进行调试
