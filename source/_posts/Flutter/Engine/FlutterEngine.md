@@ -68,3 +68,16 @@ Dart是单线程，脚本语言基本都是单线程，我见到过的，至于�
 
 第一种场景非常简单，只要在Android Studio中给Flutter App中的Dart代码打上断点即可进行调试
 第二种场景也比较简单，在Android Studio中配置Dart & Flutter插件，运行调试第三方库和Flutter SDK Dart代码即可在相关源码中设置断点进行调试
+# 调试Java代码
+再来看第三种场景，调试Flutter引擎中的Java代码。
+- [Debugging Android builds with Android Studio](https://github.com/flutter/flutter/wiki/Debugging-the-engine#debugging-android-builds-with-android-studio)
+
+步骤如下：
+1. 将`engine/src/flutter/shell/platform/android`导入到Android Studio。需要Android SDK29 和JDK8。
+2. 使用自定义Flutter引擎运行Flutter App
+3. Flutter 引擎工程中给源码设置断点并启动Debugger连接到已启动的Flutter App进程
+
+# 调试C++代码
+最后来看怎样调试Flutter引擎C++代码。主要参考的是：
+- [Flutter Engine C++ 源码调试初探 | 区长](https://fucknmb.com/2019/12/06/Flutter-Engine-C-%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95%E5%88%9D%E6%8E%A2/)
+- [Flutter Engine源码调试 | xinbao的书屋](https://xinbaos.github.io/Flutter%20Engine%E6%BA%90%E7%A0%81%E8%B0%83%E8%AF%95/)
