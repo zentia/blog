@@ -1,5 +1,7 @@
 ---
 title: 基于il(Intermediate Language)的Flutter动态化方案
+categories:
+ - Flutter
 ---
 # 背景
 AOT(Ahead Of Time)要比JIT快，但是IOS无法热更新，ios无法动态修改函数地址还是啥来找，有点忘记了。

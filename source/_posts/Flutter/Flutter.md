@@ -2,6 +2,8 @@
 title: Flutter源码阅读分析：引擎初始化与启动
 categories:
  - Flutter
+tags:
+ - Flutter
 ---
 在引擎中存在两个FlutterActivity(shell/platform/android/io/flutter/app/FlutterActivity.java和shell/platform/android/io/flutter/embedding/android/FlutterActivity.java)。
 `FlutterActivity`是将Flutter集成到Flutter到Android应用中的最简单最直接的方式，用于显示一个全屏的Flutter UI。主要职责是：
@@ -495,3 +497,33 @@ bool DartIsolate::RunFromLibrary(std::optional<std::string> library_name,
   return true;
 }
 ```
+该方法将`Isolate`状态转成成`Running`，然后从`main`入口执行。其中`InvokeMainEntryPoint`方法是真正执行Dart代码的地方
+```C++
+[[nodiscard]] static bool InvokeMainEntrypoint(
+    Dart_Handle user_entrypoint_function,
+    Dart_Handle args) {
+  if (tonic::CheckAndHandleError(user_entrypoint_function)) {
+    FML_LOG(ERROR) << "Could not resolve main entrypoint function.";
+    return false;
+  }
+
+  Dart_Handle start_main_isolate_function =
+      tonic::DartInvokeField(Dart_LookupLibrary(tonic::ToDart("dart:isolate")),
+                             "_getStartMainIsolateFunction", {});
+
+  if (tonic::CheckAndHandleError(start_main_isolate_function)) {
+    FML_LOG(ERROR) << "Could not resolve main entrypoint trampoline.";
+    return false;
+  }
+
+  if (tonic::CheckAndHandleError(tonic::DartInvokeField(
+          Dart_LookupLibrary(tonic::ToDart("dart:ui")), "_runMain",
+          {start_main_isolate_function, user_entrypoint_function, args}))) {
+    FML_LOG(ERROR) << "Could not invoke the main entrypoint.";
+    return false;
+  }
+
+  return true;
+}
+```
+到此，就完成了引擎的初始化和启动流程。

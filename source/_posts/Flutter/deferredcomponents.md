@@ -1,5 +1,7 @@
 ---
 title: 关于Flutter动态化的新姿势
+categories:
+ - Flutter
 ---
 # 背景
 

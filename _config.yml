@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: liyanfeng
-subtitle: 依然去爱，依然热泪盈眶
-description: 依然去爱，依然热泪盈眶
+title: 尽吾志也而不能至者，可以无悔矣。
+subtitle: 尽吾志也而不能至者，可以无悔矣。
+description: 尽吾志也而不能至者，可以无悔矣。
 keywords: Unreal, Unity, Math, Renderer, GPU
-author: liyanfeng
+author: 尽吾志也而不能至者，可以无悔矣。
 language: zh-CN
 timezone:
 
@@ -133,3 +133,16 @@ hexo_seo_autopush:
     port:
   extra_options:
     key: value
+
+feed:
+  type: atom
+  path: atom.xml
+  limit: 20
+  hub:
+  content:
+  content_limit: 140
+  content_limit_delim: ' '
+  order_by: -date
+  icon: icon.png
+  autodiscovery: true
+  template:

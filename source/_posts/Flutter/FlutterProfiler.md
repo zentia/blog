@@ -1,5 +1,7 @@
 ---
 title: Flutter方法耗时定位于解决
+categories:
+ - Flutter
 ---
 # 背景
 一般来说，卡顿的发生主要有两大方面因素：

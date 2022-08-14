@@ -1,5 +1,7 @@
 ---
 title: 一文掌握Flutter插件开发
+categories:
+ - Flutter
 ---
 # 概述
 随着开发技术的发展，几乎所有主流的开发语言都有自己的包管理工具，Node开发npm、Android开发有Gradle，Flutter也有自己的Dart Packages仓库。插件的开发和服用能够提高开发效率，降低工程的耦合度，向网络请求(http)、用户授权（permission handler）等客户端常用的功能模块，我们只需要引入对应插件就可以为项目快速集成相关能力，专注于具体业务功能的实现。
