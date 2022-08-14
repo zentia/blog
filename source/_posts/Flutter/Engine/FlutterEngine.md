@@ -34,6 +34,18 @@ google作为一个成立24年的公司，其历史包袱肯定很重，我所在
 目前我这里还是把自己的引擎更新到下载的flutter sdk里面指定的引擎，未来我们应该要使用我们自己的flutter引擎构建出来的sdk，而且最好打通自动化构建流程。
 首先你要先fork flutter engine。
 然后创建.gclient文件
+```
+solutions = [
+  {
+    "managed": False,
+    "name": "src/flutter",
+    "url": "git@github.com:zentia/engine.git",
+    "custom_deps": {},
+    "deps_file": "DEPS",
+    "safesync_url": "",
+  },
+]
+```
 接着拉去代码。拉去速度取决于你的网速，所以公司看要不要统一办一个高带宽的梯子。
 然后开始编译，编译主要使用两个工具，gn和ninja，我们前面已经说过ninja和makefile一样是一个批处理工具，速度要比makefile快。
 那么gn其实是和cmakefile一样，是生成ninja配置的工具，毕竟Google，自己造轮子的能力还是很强大的。
