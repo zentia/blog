@@ -1,8 +1,9 @@
 ---
 title: Flutter源码阅读分析：Framework层的启动
+data: 2022-08-17 15:19:00
 categories:
  - Flutter
-Tags:
+tags:
  - Flutter
 ---
 在上一篇文章的最后，提到了引擎在启动时，会以"main"方法为入口函数，执行Dart代码。那么本文就从`main`入手，分析`Dart Framework`具体做了什么。

@@ -1,10 +1,12 @@
 ---
 title: Flutter-widget生命周期
+date: 2022-08-17 15:13:00
 categories: Flutter
+tags: Flutter
 ---
 
 # 背景
-页面生命周期是开发者在学习移动端技术栈（包括Andorid、iOS、Flutter）接触最早的一个知识点，因为业务开发中涉及最多的通常是UI交互。笔者在过去一年的flutter开发中发现我们自己项目采集的线上异常数据中，widget生命周期使用不合理的占比比预想的要高很多。下面笔者将对flutter页面生命周期做一下梳理，并将遇到的相关异常复盘总结。
+页面生命周期是开发者在学习移动端技术栈（包括Android、iOS、Flutter）接触最早的一个知识点，因为业务开发中涉及最多的通常是UI交互。
 # 生命周期存储
 StatefulWidget通过State对象存储widget的生命周期，有两种方式：
 
