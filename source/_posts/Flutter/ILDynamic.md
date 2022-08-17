@@ -1,5 +1,7 @@
 ---
 title: 基于il(Intermediate Language)的Flutter动态化方案
+date: 2022-8-18 20:50:00
+tags: Flutter
 categories:
  - Flutter
 ---

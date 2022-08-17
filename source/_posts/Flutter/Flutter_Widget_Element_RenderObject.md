@@ -68,4 +68,42 @@ class RenderObjectToWidgetAdapter<T extends RenderObject> extends RenderObjectWi
 abstract class Widget extends DiagnosticableTree {
   /// Initializes [key] for subclasses.
   const Widget({ this.key });
+
+  Element createElement();
+
+  static bool canUpdate(Widget oldWidget, Widget newWidget) {
+    return oldWidget.runtimeType == newWidget.runtimeType
+        && oldWidget.key == newWidget.key;
+  }
+
+  static int _debugConcreteSubtype(Widget widget) {
+    return widget is StatefulWidget ? 1 :
+           widget is StatelessWidget ? 2 :
+           0;
+  }
+}
+```
+分别介绍一下这几个方法和成员变量。首先是`key`这个成员变量，它用于控制在树中一个`Widget`如何替换另一个。主要有以下几种方式：更新`Element`、替换`Element`以及换位置。
+通常情况下，如果一个`Widget`是另一个的唯一孩子，那么不需要明确的`key`。
+`createElement`方法用于将配置填充为一个具体的实例。`canUpdate`方法用于判断`newWidget`能否用于更新当前以`oldWidget`为配置的`Element`。`_debugConcreteSubtype`方法返回一个编码值，用于指示`Widget`的实际子类型，1表示`StatefulWidget`，2表示`StatelessWidget`。`StatefulWidget`和`StatelessWidget`都是`Widget`的抽象子类，下面看一下这两个子类的具体情况。
+
+# StatelessWidget
+
+`StatelessWidget`用于不需要可变状态的情况。一个无状态`Widget`通过建立一些列其他更完整描述UI的`Widget`的方式，来描述部分UI。这个构建过程是一个递归的过程，直到这个描述已经被完全实现。当部分UI以来的只有其自身配置信息和`BuildContext`是，`StatelessWidget`就非常有用了。
+
+```Dart
+abstract class StatelessWidget extends Widget {
+  ...
+  @protected
+  Widget build(BuildContext context);
+}
+```
+`build`方法会在当前`Widget`被插入到给定`BuildContext`内的树中时被调用。框架会用这个方法返回的`Widget`更新当前`Widget`的子树，可能是更新现有子树，也可能是移除子树。然后根据返回的`Widget`填充一个新的子树。通常情况下，这个方法的实现，会返回一个新建的`Widget`系列，构建信息是根据从当前`Widget`构造函数和给定`BuildContext`中传递进来的信息来配置。
+
+# StatefulWidget
+
+`StatefulWidget`拥有一个可变的状态。这个状态`State`在`Widget`建立时可以同步地被读取，而在`Widget`的整个生命周期中可能会改变。`StatefulWidget`可用于可动态变化的用户描述。比如，依赖于一些系统状态或者时钟驱动的情况。
+
+```Dart
+
 ```
