@@ -105,5 +105,7 @@ abstract class StatelessWidget extends Widget {
 `StatefulWidget`拥有一个可变的状态。这个状态`State`在`Widget`建立时可以同步地被读取，而在`Widget`的整个生命周期中可能会改变。`StatefulWidget`可用于可动态变化的用户描述。比如，依赖于一些系统状态或者时钟驱动的情况。
 
 ```Dart
-
+abstract class StatefulWidget extends Widget {
+    
+}
 ```
