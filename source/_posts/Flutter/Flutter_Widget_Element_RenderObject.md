@@ -106,6 +106,24 @@ abstract class StatelessWidget extends Widget {
 
 ```Dart
 abstract class StatefulWidget extends Widget {
-    
+    ...
+    @protected
+    State createState();
 }
 ```
+`StatefulWidget`实例本身是不可变的，但是其动态信息会保存一切辅助类对象里，比如通过`createState`方法创建的`State`对象，或者是`State`订阅的对象。框架会填充一个`StatefulWidget`时调用`createState`方法。这意味着，当一个`StatefulWidget`在树中不同位置插入时，可能会有多个`State`对象与这个`StatefulWidget`关联。类似的，如果一个`StatefulWidget`先从树中移除，之后又重新插入树中，那么框架会再次调用`createState`去创建一个新的State对象，便于简化`State`对象的生命周期。
+
+可以看出，对于`StatefulWidget`来说，`State`类时关键辅助类。下面再看一下`State`类的详情。
+
+# State
+
+`State`类用于标识`StatefulWidget`的逻辑和内部状态。`State`对象有以下的生命周期
+
+- 框架通过调用`StatefulWidget.createState`方法创建`State`对象；
+- 新创建的`State`对象与一个`BuildContext`关联。这个关联是不变的，也就是说，`State`对象不回改变它的`BuildContext`。不过，`BuildContext`本身是可以在沿着子树移动。这种情况下，`State`对象可以认为是`mounted`。
+- 框架调用`initState`方法。`State`的子类都需要重载`initState`方法，来实现一次性初始化。这个初始化依赖于`BuildContext`或`Widget`，即分别对应于`context`和`widget`属性。
+- 框架调用`didChangeDependencies`方法，`State`的子类需要重写该方法，来实现包括`InderitedWidget`在内的初始化。如果调用了`BuildContext.dependOnInheritedWidgetOfExactType`方法，那么在后续`InheritedWidget`改变或当前`Widget`在树中移动时，`didChangeDependencies`方法再次被调用。
+- 此时`State`对象已经完全初始化，框架可能会调用任意次数的`build`方法来获取一个子树UI的描述。`State`对象会自发的通过调用`setState`方法来请求重建其子树。
+- 在这期间，一个父`Widget`可能会重建和请求当前位置显式一个新的`Widget`。当这些发生时，框架会将`widget`属性更新为新的`widget`，并且调用`didUpdateWidget`方法，将之前的`widget`作为一个参数传入。`State`对象应该重载`didUpdateWidget`方法来应对其关联的`Widget`的变化。框架也会在`didUpdateWidget`方法之后调用`build`方法，这意味着在`didUpdateWidget`方法内调用`setState`方法是多余的。
+- 在开发过程中，如果发生了重载，则会调用`reassemble`方法。这会使得在`iniState`方法中准备好的数据重新初始化。
+- 如果包含`State`的子树从树中移除，框架会调用`deactivate`方法。这会使得在`iniState`方法1
