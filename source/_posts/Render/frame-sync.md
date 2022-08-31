@@ -1,8 +1,8 @@
 ---
 title: 帧锁定同步(frame lock sync)按帧同步（frame sync）状态同步(state sync)
 date: 2019-04-22 19:48:47
-tags:
-    - Server
+tags: Game
+categories: Game
 ---
 
 # 帧锁定同步(frame lock sync)lockstep
@@ -236,4 +236,14 @@ enet麻烦的地方是，enet的ipv6版本，是一个不成熟的pull request�
 
 指令buffer的方式，也不能满足我们的需求，或者说，我没有找到基于此方式，能优化到王者荣耀的效果的办法。我也测试过其他moba和act，arpg类游戏的联机，在高延迟，网络波动情况下，没有比王者表现更好的了。
 
-最后，在仔细研究了我们的需求后，找到一篇指导性的文章，非常适合我们。
+# OS帧同步
+
+`FrameCommandService`，帧命令服务，与`RelayServer`通信，并且在`ServerFrameNtf`中接受帧命令，目前是只要拿到帧就去消费了。
+`ServeFrameNtf`中处理帧命令，如果在Recover中，则缓存。
+`FrameChaseUp`处理追帧主要是OB和短线重连，`ProcessRelayReceiveFrame`这里一直在消费帧
+`GameCore`内部区分了锁帧不锁帧两种情况
+
+## 追帧
+`ProcessRelayReceiveFrame`两个个地方消费帧`FrameCommandService:ConsumeFrame`
+1. `SCLockStepGameRecover`断线重连或者OB接受到此通知，消费。
+2. `FrameChaseUp:UpdateFrame`在恢复期间受到S端数据，要消费
