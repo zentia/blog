@@ -72,7 +72,7 @@ pagination_dir: landscape
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: oranges
+theme: miho 
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -80,11 +80,6 @@ deploy:
   type: git
   repo: https://github.com/zentia/zentia.github.io.git
   branch: master
-search:
-  path: search.xml
-  field: post
-  format: html
-  limit: 10000
 flowchart:
   # raphael:   # optional, the source url of raphael.js
   # flowchart: # optional, the source url of flowchart.js
