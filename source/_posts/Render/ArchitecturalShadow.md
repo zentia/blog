@@ -4,7 +4,8 @@ mathjax: true
 date: 2019-09-06 10:46:24
 tags:
 	- Unity
-categories: Unity
+categories: 
+	- Render
 ---
 首先看一下我们的效果需求，我们是一款SLG游戏，主程中的建筑都是3D的建筑，玩家到后期主城内有上百个建筑，而且建筑都是可以让玩家随意摆放的。我们的建筑要实现自身的阴影和在地面上的投影。如下图：
 {% asset_img v2-6477cf3cf37a266372d7e8e09c763991_r.jpg %}

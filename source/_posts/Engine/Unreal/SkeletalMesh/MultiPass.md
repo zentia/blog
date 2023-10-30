@@ -1,8 +1,12 @@
 ---
 title: 基于插件的SkeletalMesh多Pass绘制方案
 date: 2022-01-02 11:30:00
+categories:
+- Engine
+- Unreal
+- Animation
 tags:
-    - Unreal
+    - Unreal-Animation
 ---
 
 # 基于插件的SkeletalMesh多Pass绘制方案

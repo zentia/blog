@@ -5,6 +5,8 @@ categories:
 - Engine
 - Unreal
 - Shader
+tags:
+   Unreal
 ---
 # `ConsoleVariables.ini`
 `r.ShaderDevelopmentMode = 1`，当缺省material编译失败后，Unreal提示你重新编译shader。如果不设置为1，Unreal会直接崩溃掉，如果它不能编译缺省material。

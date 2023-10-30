@@ -4,7 +4,8 @@ mathjax: true
 date: 2019-05-09 23:33:46
 tags:
     - Shader
-categories: "Unity Shader"
+categories: 
+    - Render
 ---
 边缘检测是描边效果的一种实现方法，在本节结束后，我们可以得到类似下图中的效果。
 {%asset_img 1.jpg%}

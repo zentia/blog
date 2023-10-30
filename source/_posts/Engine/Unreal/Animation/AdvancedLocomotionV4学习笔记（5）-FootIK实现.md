@@ -1,9 +1,8 @@
 ---
 title: AdvancedLocomotionV4学习笔记（5）-FootIK实现
 date: 2022-01-02 14:21:00
-categoires:
-- Engine
-- Unreal
+tags:
+    Unreal-Animation
 ---
 
 # AdvancedLocomotionV4学习笔记（5）-FootIK实现

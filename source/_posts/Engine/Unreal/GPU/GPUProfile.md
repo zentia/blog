@@ -3,7 +3,6 @@ title: iOS GPU Profile
 date: 2022-01-01 09:48:00
 tags:
     - Unreal
-    - GPU
 ---
 iOS GPU不管怎么降画质，耗时一直在十几毫秒。
 `r.DefaultFeature.AntiAliasing 0` 关闭抗锯齿，但是会造成白屏

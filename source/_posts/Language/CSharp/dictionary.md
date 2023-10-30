@@ -32,7 +32,7 @@ private ValueCollection values; // 存放Value的集合
 ```
 # Add操作
 首先我们用图的形式来描述一个Dictionary的数据结构，其中只画出了关键的地方。桶大小为4以及Entry大小也为4的一个数据结构。
-{% asset_img 1.png %}
+!()[1.png]
 假设需要执行一个Add操作，dictionary.Add("a","b")，其中key="a"，value="b"。
 1. 根据key的值，计算出它的hashCode。我们假设"a"的hash值为6(GetHashCode("a")=6)。
 2. 通过对hashCode取余运算，计算出该hashCode落在哪一个buckets桶中。现在桶的长度(buckets.Length)为4，那么就是6%4最后落在index为2的桶中，也就是buckets[2]。

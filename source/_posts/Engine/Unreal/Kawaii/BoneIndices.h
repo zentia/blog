@@ -1,1 +1,0 @@
-typedef uint16 FBoneIndexType;

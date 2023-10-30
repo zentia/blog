@@ -1,3 +1,5 @@
-# Actor Replication Config
+---
+title: Actor Replication Config
+---
 
 https://ue5wiki.com/wiki/33631/

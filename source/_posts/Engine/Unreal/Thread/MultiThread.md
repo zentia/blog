@@ -5,8 +5,10 @@ categories:
 - Engine
 - Unreal
 - Thread
+tags:
+	Unreal
 ---
-在UE4里面，我们可以自己继承`FRunnable`接口创建单个线程，也可以直接创建`AsyncTask`来调用线程池里面空闲的线程，还可以通过`TaskGraph`系统来异步完成一些自定义任务。
+在UE里面，我们可以自己继承`FRunnable`接口创建单个线程，也可以直接创建`AsyncTask`来调用线程池里面空闲的线程，还可以通过`TaskGraph`系统来异步完成一些自定义任务。
 # FRunnable
 我们先从最基本的创建方式谈起，我们创建一个继承自`FRunable`的类，把这个类要执行的任务分发给其它线程去执行。`FRunable`就是一个很简单的类，里面只有5，6个函数接口，为了与真正的线程区分，我这里称`FRunable`为“线程执行体“。
 ```C++

@@ -1,5 +1,9 @@
 ---
 title: GameplayAbility深入解析之WaitNetSync节点原理
+categories:
+- Engine
+- Unreal
+- Ability
 tags:
     - Unreal
 ---

@@ -1,6 +1,9 @@
 ---
 title: GetTransientPackage
 date: 2021-12-30 22:20:00
+categories:
+- Engine
+- Unreal
 tags:
     - Unreal
 ---

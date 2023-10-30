@@ -1,8 +1,10 @@
 ---
 title: C# Jobs System
 date: 2019-03-05 08:16:08
-tags:
-  - Unity
+tags: Unity
+categories: 
+  - Language
+  - CSharp
 ---
 Unity C＃ Job System允许用户编写与Unity其余部分良好交互的多线程代码，并使编写正确的代码变得更加容易。
 编写多线程代码可以提供高性能的好处。其中包括显着提高帧速率和延长移动设备的电池寿命。

@@ -1,6 +1,9 @@
 ---
 title: Unreal Build
 date: 2022-01-02 11:28:00
+categories:
+- Engine
+- Unreal
 tags:
     - Unreal
 ---
