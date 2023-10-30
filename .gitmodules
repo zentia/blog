@@ -2,3 +2,6 @@
 	path = themes/miho
 	url = https://github.com/WongMinHo/hexo-theme-miho.git
 	branch = master
+[submodule "themes/oranges"]
+	path = themes/oranges
+	url = https://github.com/zentia/hexo-theme-oranges.git
