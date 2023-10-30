@@ -4,7 +4,9 @@ mathjax: true
 date: 2019-04-09 01:43:10
 tags:
     - Unity
-categories: Unity
+categories:
+- Engine
+- Unity
 ---
 # 概述
 AssetBundle系统提供了将一个或多个文件存储到Unity能够进行索引和序列化的档案格式的方法，它是Unity用来在应用程序安装之后进行分发和更新非代码内容的首选工具。通过AssetBundle，开发者可以提交更小的程序安装包、最小化运行时内存压力以及根据终端用户设备选择性地加载优化内容。

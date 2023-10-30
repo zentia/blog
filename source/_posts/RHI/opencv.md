@@ -3,8 +3,9 @@ title: Opencv
 mathjax: true
 date: 2019-03-25 14:58:16
 tags:
-    Opencv
-categories: Opencv
+    RHI
+categories: 
+    - RHI
 ---
 # 平滑处理
 “平滑处理”（smoothing）也称“模糊处理”（bluring），是一项简单且使用频率很高的图像处理方法。

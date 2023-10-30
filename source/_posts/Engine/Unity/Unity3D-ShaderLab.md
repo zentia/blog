@@ -3,7 +3,9 @@ title: Unity ShaderLab
 date: 2018-05-19 10:56:45
 tags:
   - Unity
-categories: "Unity Shader"
+categories:
+- Engine
+- Unity
 ---
 # CG类型
 

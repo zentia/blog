@@ -4,7 +4,9 @@ date: 2018-10-20 17:48:36
 tags:
   - Unity
 mathjax: true
-categories: "Unity Shader"
+categories:
+- Engine
+- Unity
 ---
 
 ## 像素光 Pixel Light

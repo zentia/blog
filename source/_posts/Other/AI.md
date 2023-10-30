@@ -1,8 +1,8 @@
 ---
 title: AI
 date: 2017-09-29 19:44:39
-tags:
-    - Unity
+categories: Other
+tags: Other
 ---
 #ML（机器学习）与AI(人工智能）
 首先来介绍下Machine Learning(机器学习，下文简称ML）和游戏Artificial Intelligence(人工智能，下文简称AI）间的关系。现存的大部分游戏AI都是手工源码，由大量决策树组成，有时会包含多达数千条规则。而且必须由手工维护和测试。而ML所依赖的算法可以自动从原始数据寻找规律，无需专家预先定义数据的解读方式。

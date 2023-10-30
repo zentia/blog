@@ -5,7 +5,7 @@ date: 2019-05-29 14:23:37
 tags:
     - 计算机图形学
     - 后处理
-categories: 计算机图形学
+categories: RHI
 ---
 
 SMAAD技术的全称为"Enhanced Subpixel Morphological Antialiasing"，与FXAA一样同为后期处理抗锯齿技术，可以提供基于过滤算法的通用图像抗锯齿解决方案。SMAA技术使用了更好的几何形体和对角形体检测处理机制，通过图形边缘局部特征对比来识别图像的锯齿特征，并通过重建子像素的方式实现抗锯齿功能，效果与传统的4x MSAA相近而且可以根据游戏的需要进行定制。

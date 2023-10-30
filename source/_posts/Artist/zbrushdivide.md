@@ -4,7 +4,7 @@ mathjax: true
 date: 2019-06-11 16:08:48
 tags:
     - ZBrush
-categories: ZBrush
+categories: Artist
 ---
 在ZBrush中对模型进行雕刻时，随着细节越来越丰富，原有的面数已经不能满足我们对细节的要求，为了得到更多的细节，我们就必须增加模型的面数，让更多的面来支持我们进行雕刻，如下图（左）和下图（右）所示，设置不同细分级别时模型的雕刻结果。
 {% asset_img 1.png %}

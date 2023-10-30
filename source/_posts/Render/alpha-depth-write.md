@@ -3,8 +3,8 @@ title: 透明物体的深度写入问题
 mathjax: true
 date: 2019-04-09 15:01:40
 tags:
-    - Shader
-categories: Unity
+    - Render
+categories: Render
 ---
 通常来说，透明物体是不需要写深度的，例如：
 - 透明物体与非透明物体间的渲染不会有问题，因为所有透明物体会在所有非透明物体之后渲染。

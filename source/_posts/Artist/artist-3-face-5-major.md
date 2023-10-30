@@ -8,8 +8,7 @@ categories: Artist
 ---
 
 物体调子的规律可归纳为“三大面、五大调子”
-{%asset_img 1.jpg%}
-
+![](1.jpg)
 # 三大面
 黑白灰。
 {%asset_img 2.jpg%}

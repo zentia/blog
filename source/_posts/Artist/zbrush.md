@@ -4,7 +4,7 @@ mathjax: true
 date: 2019-05-11 10:14:20
 tags:
     - ZBrush
-categories: ZBrush
+categories: Artist
 ---
 # 常用快捷键
 空格键 激活鼠标指针下的菜单（按住不放再拖拉鼠标指针可定位文档） 

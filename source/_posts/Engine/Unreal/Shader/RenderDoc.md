@@ -29,7 +29,7 @@ r.Shaders.KeepDebugInfo=1
 开启后重启
 开始抓帧
 当我们看到事件列表的时候，我们选择我们要调试的一个事件
-![1](/images/Unreal/Shader/RenderDoc/1.png)
+![1](1.png)
 在Mesh Viewer面板中选中一个点，然后右键，选择debug this vertex
 ![2](/images/Unreal/Shader/RenderDoc/2.png)
 就会打开调试面板

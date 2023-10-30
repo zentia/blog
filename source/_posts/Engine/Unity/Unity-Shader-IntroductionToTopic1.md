@@ -4,7 +4,9 @@ mathjax: true
 date: 2018-10-21 15:10:53
 tags:
     - Unity
-categories: "Unity Shader"
+categories:
+- Engine
+- Unity
 ---
 ### 光源
 

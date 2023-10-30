@@ -99,3 +99,5 @@ public enum CameraClearFlags
 Assets/AssetBundles:这是AssetBundles输出的目录。您可以将其更改为您想要的任何输出目录，只需确保在尝试构建之前文件夹实际存在。
 ## BuildAssetBundleOptions
 BuildAssetBundleOptions您可以指定几种具有各种效果的不同。
+
+![](Unity-UI.svg)

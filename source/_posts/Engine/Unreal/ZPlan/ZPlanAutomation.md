@@ -43,8 +43,8 @@ https://blog.uwa4d.com/archives/TechSharing_268.html
 1. 通过自动跑游戏逻辑的方式去检测游戏性能，对Game Draw RHI线程跑出高于10ms或内存高于指定大小的地方，发出性能告警，并收集统计和上报日志。 
 
 # Automation Framework
-![1](/images/Unreal/Automation/1.png)
-![1](/images/Unreal/Automation/2.png)
+![1](1.png)
+![1](2.png)
 ![1](/images/Unreal/Automation/3.png)
 ![1](/images/Unreal/Automation/4.png)
 ![1](/images/Unreal/Automation/5.png)

@@ -1,7 +1,8 @@
 ---
 title: Shader模板缓冲和模板测试
 date: 2018-04-26 17:33:58
-categoires:
+categories:
+- Engine
 - Unity
 ---
 

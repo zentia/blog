@@ -19,7 +19,7 @@ categories:
 ## 动画
 1. 除了头发和飘带可以用物理骨骼，其它地方不能使用。
 2. LevelSequencer Blend Animation会很耗，非必要的情况，不能使用。
-![Blend](/images/Unreal/ZPlan/TechnicalData/1.png)
+![Blend](1.png)
 3. /Game/ArtContent/LevelSequence/Songs 这个目录下，禁止有相机相关操作。
 
 
@@ -45,7 +45,7 @@ https://answers.unrealengine.com/questions/892103/view.html
 4. SSR也很耗，目前只在Android中开启，每个需要用到的场景需要程序或者自动化测试工具测试该场景在不开启SSR的时候的GPU的耗时低于6ms才可以使用。
 
 `Alt+8`预览材质复杂度，只有绿色才是达标的。其他颜色均不达标，需要找程序或者TA去优化材质。
-![Blend](/images/Unreal/ZPlan/TechnicalData/2.png)
+![Blend](2.png)
 ## StaticMeshGroup
 切换到Shader复杂度视图，对于红色以上的材质，必须在StaticMeshGroup中关掉。
 ## 面数

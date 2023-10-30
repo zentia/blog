@@ -6,9 +6,9 @@ tags: Artist
 categories: 
     - Artist
 ---
-![1](/images/DDC/human-body-view/1.jpg)
-![1](/images/DDC/human-body-view/2.jpg)
-![1](/images/DDC/human-body-view/3.jpg)
+![1](1.jpg)
+![1](2.jpg)
+![1](3.jpg)
 ![1](/images/DDC/human-body-view/4.jpg)
 ![1](/images/DDC/human-body-view/5.jpg)
 ![1](/images/DDC/human-body-view/6.jpg)

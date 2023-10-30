@@ -2,8 +2,8 @@
 title: love&place
 date: 2022-08-22 10:51:00
 password: lss
-categories: 生活
-tags: 生活
+categories: Other
+tags: Other
 ---
 # 日常爱好
 1. 每天要有应季水果：葡萄、油桃、李子

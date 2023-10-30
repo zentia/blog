@@ -1,7 +1,7 @@
 ---
 title: Work
-tags:
-    Work
+categories: Other
+tags: Other
 ---
 # 程序计划（文档输出）
 ## Niagra

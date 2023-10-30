@@ -1,5 +1,9 @@
 ---
-title: 奇怪的RenderTexture
+title: RenderTexture
+tags:
+- Engine
+- Unity
+- SourceCode
 categories:
 - Engine
 - Unity

@@ -1,12 +1,16 @@
 ---
 title: UE4 Bounds详解
 date: 2022-01-20 14:14:00
+tags:
+- Engine
+- Unreal
+- Other
 categories:
 - Engine
 - Unreal
+- Other
 ---
 https://blog.csdn.net/Bob__yuan/article/details/119813418
-![1](1.png)
 任何的游戏引擎，最终呈现出在屏幕上的效果，都是经过很多变换和计算的，然后才转换成屏幕像素空间才能被用户看到，这个过程中，相机位置，FOV，物体位置，透明度，深度值等等信息，都会影响物体在最终屏幕上的位置和大小，如果每个物体的每个点都要计算，就很耗，所以每个物体先进行可见性剔除，对于完全不可见的物体，就可以在流程中很早的舍弃掉，减少很多计算。
 Bounds就是用于进行可见性剔除的，对于Bounds都不在摄像机的视锥体范围内的物体，直接就不画了。
 UE中的 Bounds都是AABB（Axis-Aligned Bounding Box）的，即轴平行包围盒，类型是`FBoxSphereBounds`。不管是实时计算的，还是固定（Fixed）的，都会因为旋转而变化，使得始终与世界的XYZ轴平行。

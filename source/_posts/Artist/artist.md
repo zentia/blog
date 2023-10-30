@@ -5,6 +5,7 @@ date: 2019-05-13 15:52:16
 tags:
     - Artist
 categories:
+    - Artist
 ---
 https://www.artstation.com/ 非常不错的美术作品网站。
 1. 头发制作中有没有什么特别的工具或者是插件？还有毛发的排序是怎么解决的？

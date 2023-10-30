@@ -3,8 +3,11 @@ title: CSharp Thread
 mathjax: true
 date: 2019-05-10 11:22:20
 tags:
+    - Language
     - CSharp
-categories: CSharp
+categories: 
+    - Language
+    - CSharp
 ---
 
 # IsBackground

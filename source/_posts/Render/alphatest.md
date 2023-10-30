@@ -3,8 +3,8 @@ title: 移动平台的AlphaTest效率问题
 mathjax: true
 date: 2019-04-25 23:58:38
 tags:
-    - Shader
-categories: Shader
+    - Render
+categories: Render
 ---
 {% asset_img 1.jpg %}
 # 为什么AlphaTest应该比AlphaBlend更慢？

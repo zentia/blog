@@ -1,6 +1,9 @@
 ---
 title: Unity加载和内存管理
 date: 2018-04-11 17:16:57
+categories:
+- Engine
+- Unity
 tags:
   - Unity3D
 ---

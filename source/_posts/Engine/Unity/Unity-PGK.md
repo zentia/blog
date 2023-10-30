@@ -1,6 +1,9 @@
 ---
 title: Unity打包详细流程
 date: 2018-03-13 18:00:36
+categories:
+- Engine
+- Unity
 tags:
 	Unity
 ---

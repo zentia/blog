@@ -4,8 +4,9 @@ date: 2022-01-01 15:22
 categories:
 - Engine
 - Unreal
+- Other
 tags:
-    Unreal
+    Engine-Unreal-Other
 ---
 
 导出的模块名比如`XXX_API`，XXX一定是大写的。
@@ -53,3 +54,4 @@ https://answers.unrealengine.com/questions/741711/how-to-get-fstring-size.html
 # STATSLOW
 STAT SLOW 用来找到性能波动问题
 它可以通过报告运行一帧中特定时间段（默认10毫秒）来逐步定位帧停顿的位置。
+{% pdf Unreal.pdf %}

@@ -2,7 +2,9 @@
 title: Unreal Hot Update
 date: 2022-01-03 12:13:00
 tags:
+  - Engine
   - Unreal
+  - hotupdate
 categories:
 - Engine
 - Unreal
@@ -28,10 +30,10 @@ UE中热更新的是基于Pak的更新
 - Pak可以设定优先级
 
 UE热更新的核心点
-- UFS(UE文件系统)读取文件具有优先级（PakOrder)，比如说有一个a.txt文件，他会根据Pak Order从上往下查找，当在某个Pak文件中找到的时候就不会在继续往下面查找了
+- UFS(UE文件系统)读取文件具有优先级(PakOrder)，比如说有一个a.txt文件，他会根据Pak Order从上往下查找，当在某个Pak文件中找到的时候就不会在继续往下面查找了
 - 默认读取Order最大的Pak中的文件
 
-![1](/images/Unreal/HotUpdate/1.PNG)
+![1](1.PNG)
 
 #  Part Two UE4热更新：资源管理
 哪些内容可以被热更新
@@ -50,7 +52,7 @@ UE热更新的核心点
 - 添加的Non-Asset文件 数据类文件对应这我们的RawAsset下面的
 
 Engine\Config\BaseGame.ini
-![1](/images/Unreal/HotUpdate/2.png)
+![1](2.png)
 
 这个文件其实是个规则，UAT根据这个文件把符合规则的文件打入到pak里面去。
 ## 热更新需要重点关注的内容

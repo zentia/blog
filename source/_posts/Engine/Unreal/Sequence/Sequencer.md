@@ -40,7 +40,6 @@ https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/HowTo/FrameM
 ## 切换Sequencer中Actor的材质
 https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/HowTo/MaterialAnimation/
 
-没啥好说的，跟着做就好。
 ## 混合动画属性
 https://docs.unrealengine.com/4.26/zh-CN/AnimatingObjects/Sequencer/HowTo/CharacterAnimation/
 
@@ -175,3 +174,5 @@ void FMovieSceneObjectCache::UpdateBindings(const FGuid& InGuid, IMovieScenePlay
 # [使用动态变形创建关卡序列](https://docs.unrealengine.com/4.27/zh-CN/AnimatingObjects/Sequencer/HowTo/DynamicTransforms/)
 
 必须保证初始值设置为0，Sequencer的设置为增量设置。
+
+# 参考

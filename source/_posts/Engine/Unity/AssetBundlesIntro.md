@@ -1,6 +1,9 @@
 ---
 title: AssetBundles
 date: 2019-03-24 10:01:00
+categories:
+- Engine
+- Unity
 tags:
   - AssetBundle
   - Unity

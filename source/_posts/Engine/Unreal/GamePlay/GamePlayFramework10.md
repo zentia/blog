@@ -1,15 +1,16 @@
 ---
-title: GamePlayFramework10
+title: GamePlay架构（十）总结
 date: 2021-12-30 21:02:00
-comments: true
 categories:
 - Engine
 - Unreal
 - GamePlay
+tags:
+    Unreal-GamePlay
 ---
 
 # [GamePlay架构（十）总结](https://zhuanlan.zhihu.com/p/24170697)
 
-![MVC](/images/Unreal/GamePlay/MVC.jpg)
+![MVC](MVC.jpg)
 
-![GamePlay](/images/Unreal/GamePlay/GamePlay.jpg)
+![GamePlay](GamePlay.jpg)

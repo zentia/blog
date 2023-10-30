@@ -5,7 +5,7 @@ date: 2019-07-01 08:58:51
 tags:
     - Maya
     - Artist
-categories: Maya
+categories: Artist
 ---
 |快捷键|说明|
 |--|--|

@@ -3,9 +3,8 @@ title: DrawLine
 mathjax: true
 date: 2019-05-27 14:27:34
 tags:
-    - 光栅
-    - 计算机图形学
-categories: 计算机图形学
+    - Render
+categories: Render
 ---
 # 画线
 

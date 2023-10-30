@@ -1,6 +1,7 @@
 ---
 title: PS
 date: 2017-10-30 09:26:50
+categories: Artist
 tags:
   - PS
 ---

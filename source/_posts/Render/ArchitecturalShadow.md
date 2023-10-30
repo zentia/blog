@@ -3,7 +3,7 @@ title: 建筑场景的阴影实现
 mathjax: true
 date: 2019-09-06 10:46:24
 tags:
-	- Unity
+	- Render
 categories: 
 	- Render
 ---
