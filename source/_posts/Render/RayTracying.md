@@ -5,7 +5,7 @@ date: 2019-05-27 13:41:45
 tags:
     - 光栅
     - 计算机图形学
-categories: 计算机图形学
+categories: Render
 ---
 # RayTracying
 

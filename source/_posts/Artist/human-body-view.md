@@ -2,9 +2,9 @@
 title: 男女人体、肌肉、血管、骨骼、三视图
 mathjax: true
 date: 2019-06-19 16:13:15
-tags:
+tags: Artist
+categories: 
     - Artist
-categories: Artist
 ---
 ![1](/images/DDC/human-body-view/1.jpg)
 ![1](/images/DDC/human-body-view/2.jpg)

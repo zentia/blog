@@ -3,6 +3,8 @@ title: CSM
 date: 2022-01-07 20:53:00
 tags:
     - Unreal
+categories:
+    - Renderer
 ---
 本篇主要是给大家介绍关于Unreal CSM实时阴影的技术实现。
 # CSM简介

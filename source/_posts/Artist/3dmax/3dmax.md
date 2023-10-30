@@ -2,9 +2,10 @@
 title: 3DMAX Manual
 mathjax: true
 date: 2019-05-11 10:10:32
-tags:
+tags: 3DMax
+categories:
+    - Artist
     - 3DMax
-categories: 3DMax
 ---
 
 # 工具栏
@@ -529,9 +530,9 @@ Orbit Subobject:旋转视图。
 
 # 烘培法线
 首先创建一个正方体
-![1](/images/DDC/3DMax/1.jpg)
+![1](1.jpg)
 复制一个出来，改成其他颜色，接下来白色模型卡线，加涡轮平滑或者网格平滑命令。
-![2](/images/DDC/3DMax/2.jpg)
+![2](2.jpg)
 选中线少的正方体，打开UVW展开编辑器
 ![3](/images/DDC/3DMax/3.jpg)
 接下来开始烘培法线，先选中底模，先按大键盘的0键打开烘培面板，然后选取高模。
