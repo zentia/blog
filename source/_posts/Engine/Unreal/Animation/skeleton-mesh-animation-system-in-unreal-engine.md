@@ -6,8 +6,16 @@ categories:
 - Unreal
 - Animation
 tags:
-    - Unreal-Animation
+- Engine
+- Unreal
+- Animation
 ---
+{% pdf skinned-mesh-and-character-animation-with-directx9.pdf %}
+
+# OS【舞蹈模式角色骨架框架方案】
+
+{% pdf OS【舞蹈模式角色骨架框架方案】.pdf %}
+
 # USkeleton
 
 # 参考

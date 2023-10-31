@@ -73,3 +73,7 @@ bool ACLCompressor::BuildBones(AnimationClip& clip,)
 
 `void ACLCompressor::Decompress(AnimationClip& clip, int trackIndex, float time, Vector3f& pos, Vector3f& scale, Quaternionf& quat)`
 解压缩接口
+
+# 参考
+
+{% pdf simple_and_powerful_animation_compression_gdc2017.pdf %}

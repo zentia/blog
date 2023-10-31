@@ -5,6 +5,10 @@ categories:
 - RHI
 - DirectX
 - Direct12
+tags:
+- RHI
+- DirectX
+- Direct12
 ---
 
 https://zhuanlan.zhihu.com/p/57061190
@@ -296,3 +300,6 @@ int Run() {
 相关代码请参考：
 [Panda](https://gitee.com/zentia/panda)
 [USD](https://github.com/PixarAnimationStudios/USD.git)
+
+# 参考
+{% pdf dx12-whitepaper-v2.pdf %}

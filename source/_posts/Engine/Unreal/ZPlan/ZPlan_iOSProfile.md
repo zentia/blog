@@ -6,6 +6,10 @@ categories:
 - Engine
 - Unreal
 - ZPlan
+tags:
+- Engine
+- Unreal
+- private
 ---
 本篇文章是私密文章，不会开放到外网。
 以下测试均已iPhone8测试标准
@@ -17,12 +21,12 @@ categories:
 ![ShadowDepth](ShadowDepth3.png)
 此时开启天光的阴影整体耗时为402.12us
 ### 角色场景
-![ActorScene](/images/Unreal/ZPlan/ActorScene.png)
+![ActorScene](ActorScene.png)
 角色和场景绘制耗时4.15ms(此时是LOD2的)
 PostAO占了1.98ms
 总共6.6ms
 ### 后处理
-![LUT](/images/Unreal/ZPlan/SkyLightLUTS.png)
+![LUT](SkyLightLUTS.png)
 耗时319.65us
 ![Tonemap](/images/Unreal/ZPlan/Tonemap.png)
 Tonemap 674.33us

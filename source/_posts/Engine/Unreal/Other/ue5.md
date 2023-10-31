@@ -5,12 +5,12 @@ date: 2021-07-02 14:33:03
 categories: 
 - Engine
 - Unreal
+- Other
 tags:
-  Unreal
+- Engine
+- Unreal
+- Other
 ---
-中国区技术总监的演讲，这里做一下笔记、
-<!--more-->
-
 # 次世代渲染技术：Nanite + Lumen
 ## Nanite
 - PC,PS5,XBox Series X/S
@@ -207,10 +207,13 @@ Chaos物理
 Metasounds
 - 所有功能都达到Production ready状态
 - 实现资源实例化和metasound组合
-- 提供全新工具日哦
+- 提供全新工具
 
 # 更新全新的模板和示例项目
 
 - 全新的mannequins（男性女性各有一个）
 - 更新或全新的Start日哦
 4.27主要是为了非游戏用户。主要改善是path tracing。
+
+# 参考
+{% pdf workflow-on-fortnite-whitepaper-final-181633758-zhcn-305996167.pdf %}

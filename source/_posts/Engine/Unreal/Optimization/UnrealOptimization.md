@@ -6,14 +6,12 @@ categories:
 - Unreal
 - Optimization
 tags:
-  - Engine-Unreal-Optimization
+- Engine
+- Unreal
+- Optimization
 ---
 
 https://ue5wiki.com/wiki/19135/
 https://gameinstitute.qq.com/community/detail/128642
 
-- 减少Draw Call
-- 减少三角面
-- 减少Vertex和Pixel Shader的开销
-- 减少Memory开销
-- 保证视觉效果
+{% pdf Unreal+Engine_EGC_Resources_堡垒之夜为多平台的内容优化.pdf %}

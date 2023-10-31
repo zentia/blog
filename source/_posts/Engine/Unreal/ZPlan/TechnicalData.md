@@ -1,10 +1,15 @@
 ---
 title: ZPlan 制作规范
 date: 2022-01-05 10:39:00
+password: zplan
 categories:
 - Engine
 - Unreal
 - ZPlan
+tags:
+- Engine
+- Unreal
+- private
 ---
 # 模型
 ## LOD
@@ -76,3 +81,11 @@ https://answers.unrealengine.com/questions/892103/view.html
 2. 自动对StaticMesh进行LOD化
 3. 自动扫描光照图大小
 4. 自动扫描角色模型，贴图大小，LOD规范。
+
+# Zplan&手Q蒙皮规范
+
+{% pdf Zplan&手Q蒙皮规范.pdf %}
+
+# zplan制作文档-角色
+
+{% pdf zplan制作文档-角色.pdf %}
