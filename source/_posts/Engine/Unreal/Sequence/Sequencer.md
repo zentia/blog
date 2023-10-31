@@ -1,5 +1,5 @@
 ﻿---
-title: Sequencer
+title: LevelSequencer基础操作
 mathjax: true
 date: 2021-06-29 20:55:59
 categories:
@@ -7,7 +7,9 @@ categories:
 - Unreal
 - Sequencer
 tags:
-   Unreal-Sequencer
+- Engine
+- Unreal
+- Sequencer
 ---
 https://www.bilibili.com/video/BV16y4y1S7yk?spm_id_from=333.999.0.0
 https://www.bilibili.com/video/BV1YV411a7SV/?p=2&spm_id_from=pageDriver
@@ -22,7 +24,7 @@ https://www.bilibili.com/video/BV1YV411a7SV/?p=2&spm_id_from=pageDriver
 
 
 # LevelSequence（关卡序列）使用说明
-以下文档都来自官方文档，但是我这边还是单独拿出来分析以下，足以证明，这块还是很有意思的。
+以下文档都来自官方文档
 ## 基础操作
 https://docs.unrealengine.com/5.3/zh-CN/sequencer-cinematic-editor-unreal-engine/
 
@@ -174,5 +176,3 @@ void FMovieSceneObjectCache::UpdateBindings(const FGuid& InGuid, IMovieScenePlay
 # [使用动态变形创建关卡序列](https://docs.unrealengine.com/4.27/zh-CN/AnimatingObjects/Sequencer/HowTo/DynamicTransforms/)
 
 必须保证初始值设置为0，Sequencer的设置为增量设置。
-
-# 参考

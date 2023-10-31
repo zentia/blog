@@ -5,12 +5,19 @@ categories:
 - Unreal
 - Niagara
 tags:
-   Unreal-Niagara
+- Engine
+- Unreal
+- Niagara
 ---
 # 渲染器
-- `Mesh`
-- `Ribbon`
-- `Sprite`
+- `FNiagaraRendererComponents` 组件渲染器 无法使用GPU模拟
+- `FNiagaraRendererLights` 光线渲染器 无法使用GPU模拟
+- `FNiagaraRendererDecals` 贴花渲染器 无法使用GPU模拟
+- `FNiagaraRendererMeshes` 网格体渲染器
+- `FNiagaraRendererRibbons` 条带渲染器
+- `FNiagaraRendererSprites` Sprite渲染器
+- `UNiagaraRendererProperties` 几何体缓存渲染器 无法使用GPU模拟
+- `FNiagaraRendererVolumes` 体积渲染器
 # `FNiagaraDataSet`
 数据传输
 全局有两块buffer
@@ -24,7 +31,9 @@ Niagara分为CPU和GPU两个执行方式，Niagara中的System Spawn、System Up
 ![](Niagara.svg)
 # 虚拟机
 编译器节点
+# Module
 # 参考
 - [1][UE4 Niagara源码解析](https://zhuanlan.zhihu.com/p/362638250)
 - [2][Niagara源码解析(编译部分)](https://km.woa.com/articles/show/507631?kmref=search&from_page=1&no=4)
 - [3][UE5 Niagara虚拟机 VectorVM源码探析](https://km.woa.com/articles/show/568081)
+- [4][创建视觉效果](https://docs.unrealengine.com/5.3/zh-CN/creating-visual-effects-in-niagara-for-unreal-engine/)
