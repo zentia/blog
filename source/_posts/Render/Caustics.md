@@ -16,7 +16,7 @@ categories:
 # 效果刨析：
 波光焦散的一个非常明显的特点是他们的移动方式。真是模拟焦散的光学原理是很费的。
 所以我们通过纹理来创建可信的效果。
-![3](/images/Render/Caustics/3.png)
+![3](3.png)
 通过这样一张四方连续的焦散图案。
 ## Unity
 在Unity中我们首先创建一个surface表面着色器。创建这样的两个属性：
@@ -66,7 +66,7 @@ void surf(Input IN, inout SurfaceOutputStandard o)
 }
 ```
 效果如下：
-![3](/images/Render/Caustics/3.jpg)
+![3](3.jpg)
 动画焦散：
 使用_time属性使其移动：
 ```
@@ -102,7 +102,7 @@ fixed3 caustics2 = ...
 // Blend
 o.Albedo.rgb += min(caustics1, caustics2);
 ```
-![4](/images/Render/Caustics/4.jpg)
+![4](4.jpg)
 最后模仿光线的彩虹色，将每个焦散样本分为三个颜色通道。通过对红色 绿色 蓝色 通道的轻微偏移采样。来达到颜色错位的效果。
 添加一个_splitRGB属性。表示拆分的效果的强度：
 ```
@@ -114,5 +114,5 @@ fixed b = tex2D(tex, uv + fixed2(-s, -s)).b;
 
 fixed3 caustics = fixed3(r,g,b);
 ```
-![5](/images/Render/Caustics/5.jpg)
+![5](5.jpg)
 ## Unreal

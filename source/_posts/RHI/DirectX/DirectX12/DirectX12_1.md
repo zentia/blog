@@ -4,11 +4,11 @@ date: 2022-01-15 20:41:00
 categories:
 - RHI
 - DirectX
-- Direct12
+- DirectX12
 tags:
 - RHI
 - DirectX
-- Direct12
+- DirectX12
 ---
 
 https://zhuanlan.zhihu.com/p/57061190

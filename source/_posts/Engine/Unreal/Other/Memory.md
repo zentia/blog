@@ -5,18 +5,15 @@ date: 2021-07-02 10:00:23
 categories: 
 - Engine
 - Unreal
+- Other
 tags:
-    Unrael
+- Engine
+- Unreal
+- Other
 ---
-
-起因，看spine，看到了string，想起了stringID，然后看里面直接裸memory，在想FMemory和memory有什么区别，以及适用情况。
 
 FMemory内部是区分平台的，但是我没看到GameCore内部区分平台。
 UE4的window平台直接用的是`GenericPlatformMemory`，IOS中间有一层包装，但是最后也是走的是`GenericPlatformMemory`，Android也是，所以其实也还好？
-
-好吧，我们还是从头开始看吧。
-
-<!--more-->
 
 # FMemory
 
@@ -70,8 +67,3 @@ FMemory::Malloc(SIZE_T Count, uint32 Alignment)
 
 
 好了，现在我们回到我们的问题，两个有什么区分，GameCore由于时间问题和一些其它原因，我就不便介绍了，基本可以按照自研项目那一套方式，底层采用操作系统接口，加一下统计分析逻辑，代码的兼容性和健全性肯定是没法和UE4的比了。
-
-
-好吧，就这样了。时间原因我没法做太多的分析。
-
-水一篇文章吧。

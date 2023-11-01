@@ -3,9 +3,13 @@ title: Introduction-to-Vertex-Shaders
 mathjax: true
 date: 2019-04-11 15:28:59
 tags:
+- RHI
+- DirectX
 categories:
+- RHI
+- DirectX
 ---
-第十七章 顶点着色器入门(Introduction to Vertex Shaders)
+# 顶点着色器入门(Introduction to Vertex Shaders)
 概览
    顶点着色器（vertex shader）是一个在图形卡的GPU上执行的程序，它替换了固定功能管线（fixed function pipeline）中的变换（transformation）和光照（lighting）阶段。（这不是百分之百的正确，因为顶点着色器可以被Direct3D运行时（Direct3D runtime）以软件模拟，如果硬件不支持顶点着色器的话）。图16.1说明了管线中顶点着色器替换的部件。
    
@@ -35,6 +39,7 @@ if( caps.VertexShaderVersion < D3DVS VERSION(2, 0) )
 
 17.1.1 描述顶点声明
    我们将一个顶点声明描述为一个D3DVERTEXELEMENT9结构的数组。D3DVERTEXELEMENT9数组中的每个成员描述了一个顶点的分量。所以，如果你的顶点结构有三个分量（例如：位置、法线、颜色），那么其相应的顶点声明将描述3个D3DVERTEXELEMENT9结构的数组。这个D3DVERTEXELEMENT9结构定义如下：
+```C++
 typedef struct _D3DVERTEXELEMENT9 {
      BYTE Stream;
      BYTE Offset;
@@ -43,7 +48,7 @@ typedef struct _D3DVERTEXELEMENT9 {
      BYTE Usage;
      BYTE UsageIndex;
 } D3DVERTEXELEMENT9;
-
+```
 
 * Stream——指定关联到顶点分量的流
 * Offset——偏移，按字节，相对于顶点结构成员的顶点分量的开始。例如，如果顶点结构是：

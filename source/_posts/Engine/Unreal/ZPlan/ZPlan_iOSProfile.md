@@ -1,7 +1,6 @@
 ---
 title: ZPlan_iOSProfile
 date: 2022-01-02 15:38:00
-password: zplan
 categories:
 - Engine
 - Unreal
@@ -11,7 +10,6 @@ tags:
 - Unreal
 - private
 ---
-本篇文章是私密文章，不会开放到外网。
 以下测试均已iPhone8测试标准
 通过我们大量测试，Game线程 Draw线程 RHI(GPU)三者只要有一个高于10ms，过一段时间必然发烫降频。所以，目标是在所有机型，这三个线程的耗时需要控制到10ms以内。
 # SkyLight

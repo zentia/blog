@@ -3,8 +3,8 @@ title: 图形学-噪声
 mathjax: true
 date: 2019-04-01 08:27:42
 tags:
-	- 图形学
-categories: 图形学
+	- Render
+categories: Render
 ---
 
 由程序产生噪声的方法大致可以分为两类

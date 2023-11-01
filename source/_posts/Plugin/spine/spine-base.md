@@ -3,8 +3,11 @@ title: 【spine】快速入门
 mathjax: true
 date: 2019-04-30 09:35:00
 tags:
-    - Spine
-categories: Spine
+- Plugin
+- Spine
+categories: 
+- Plugin
+- Spine
 ---
 Spine 不限于角色动画，但角色动画是最常见也是最好的例子。在 Spine 中角色使用 的不是一张完整的图片，而是将各个部分切片成一系列的小图。比如：头、躯干、胳膊和腿。 这些小图片被附加到骨骼上，然后用骨骼自由的设置角色动作。这些切片会随着骨骼运动而 产生流畅的动画。
 # 装配模式 Setup Mode

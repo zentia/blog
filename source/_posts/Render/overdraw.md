@@ -3,8 +3,8 @@ title: Overdraw
 mathjax: true
 date: 2019-04-02 16:05:25
 tags:
-    - 优化
-categories: 优化
+    - Render
+categories: Render
 ---
 # Overdraw
 在某个背景上有个按钮，要将按钮绘制在背景上，这个就是Overdraw，Overdraw无法避免，只能优化降低

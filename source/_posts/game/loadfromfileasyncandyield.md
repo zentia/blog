@@ -469,6 +469,3 @@ Coroutine* MonoBehaviour::CreateCoroutine(ScriptingObjectPtr userCoroutine, Scri
 ```
 好了，入口我们找到了，那么它是运行的呢？我们跟踪run的时候会发现有一个CallDelaye函数，而这个函数是一个定时器函数，内部最终在Update上执行，那么我们的目标转而它的Update在哪里执行的呢？我们继续看。
 我们发现它最终是在场景的中Tick执行的，但是我目前并未发现Tick是多线程执行的，而且在个人的理解中，Tick也不太会或者不敢用多线程。
-# 结论
-通过Unity2018上测试发现LoadFromFileAsync是使用多线程，协程在主线程上跑，这看上去符合我们的实验结果。
-而从Unity4.7源码发现协程是在主线程中运行。

@@ -3,6 +3,11 @@ title: 色彩(Color)
 mathjax: true
 date: 2019-04-11 15:00:51
 categories:
+- RHI
+- DirectX
+tags:
+- RHI
+- DirectX
 ---
 # 颜色表示法
 　　在Direct3D中，颜色是使用RGB三部分来描述的。也就是说，我们要分别指定红、绿和蓝三种颜色的值。混合这三个颜色决定最终的颜色。利用这三种颜色我们能够表现数万种颜色。

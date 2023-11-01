@@ -1,8 +1,10 @@
 ---
-title: pixel-and-voxel
+title: 体素
 date: 2017-10-05 22:55:00
 tags:
-    - 渲染
+    - Render
+categories:
+- Render
 ---
 原文地址: https://medium.com/retronator-magazine/pixels-and-voxels-the-long-answer-5889ecc18190#.8gf6zy8mc
 

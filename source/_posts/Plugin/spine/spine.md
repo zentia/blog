@@ -683,8 +683,8 @@ public virtual void LateUpdate () {
     currentSmartMesh.instructionUsed.Set(currentInstructions);
 }
 ```
-![初始状态](/images/Spine/2.jpg)
-![某一帧的状态](/images/Spine/1.jpg)
+![初始状态](2.jpg)
+![某一帧的状态](1.jpg)
 左图是默认的mesh，右图是设置关键帧的状态，三角形数量和顶点数量没有改变，只是改变的顶点位置。类似蒙皮的原理
 ```CSharp
 public static void DrawBoundingBoxes (Transform transform, Skeleton skeleton) {
@@ -694,6 +694,3 @@ public static void DrawBoundingBoxes (Transform transform, Skeleton skeleton) {
     }
 }
 ```
-
-# 为什么写这个东西
-为了支持SkeletonAnimation在编辑状态下预览，最后查到的问题是，渲染没有刷新，然后在每帧做强制刷新EditorUtility.SetDirty(action.gameObject);

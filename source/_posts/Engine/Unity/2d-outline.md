@@ -2,7 +2,11 @@
 title: Unity 2D Outline
 date: 2017-10-05 23:25:51
 tags:
-    - Unity
+- Engine
+- Unity
+categories:
+- Engine
+- Unity
 ---
 
 # 像素着色器描边：
@@ -79,7 +83,7 @@ Shader "Hidden/NewImageEffectShader"
     }
 }
 ```
-```
+```c
 Shader "Hidden/NewImageEffectShader"
 {
     Properties
@@ -158,6 +162,7 @@ Shader "Hidden/NewImageEffectShader"
 　　另一个是：角色的不同行动状态需要用不同的描边颜色来区分，上述方式只支持一种描边颜色。
 
 # RenderTarget + 像素着色器描边：
+
 　　现在我们着重来解决上述两个问题：
 第一个遮挡UI的问题：
 　　描边效果需要在默认相机中进行z轴排序，让其渲染在UI之后，所以，我们需要让描边效果作为一个默认相机渲染的常规游戏对象放到游戏中。于是，我想到的是给它创建一个和屏幕尺寸同大小的Mesh，再将描边渲染的图片放到Mesh上，所以，做法是给专用相机分配一个屏幕尺寸同大小的RenderTarget，然后将RenderTarget渲染到创建的Mesh上。如下图所示，该Mesh在骨骼动画和相机之间创建。

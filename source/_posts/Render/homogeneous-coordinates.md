@@ -1,10 +1,10 @@
 ---
-title: homogeneous coordinates
+title: 齐次坐标
 mathjax: true
 date: 2019-08-28 09:39:32
 tags:
-    - Math
-categories: Math
+    - Render
+categories: Render
 ---
 齐次坐标就是将一个原本n维的向量用一个n+1维向量来表示，是指一个用于投影几何里的坐标系统。
 优点：合并矩阵运算中的乘法和加法。

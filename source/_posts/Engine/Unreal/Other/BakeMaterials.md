@@ -1,8 +1,14 @@
 ---
 title: BakeMaterials
 date: 2022-01-20 17:21:00
-categories:
+tags:
+- Engine
 - Unreal
+- Other
+categories:
+- Engine
+- Unreal
+- Other
 ---
 `MeshMergeUtilities.cpp`
 `MaterialBakingModule.cpp`

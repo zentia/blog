@@ -3,8 +3,9 @@ title: 图形学习步骤
 mathjax: true
 date: 2019-04-11 08:27:42
 tags:
-  - 图形学
-categories: 图形学
+  - Render
+categories: 
+- Render
 ---
 1. 3D图形学分3大块的学习内容:
   a.空间几何数学:   空间几何变换, 加速算法, 多边形技术, 曲线和曲面, 相交测试, 碰撞测试。

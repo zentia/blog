@@ -3,12 +3,13 @@ title: Spine UE4
 mathjax: true
 date: 2021-07-02 09:26:08
 tags:
-    - Spine
-categories: Spine
+- Plugin
+- Spine
+categories: 
+- Plugin
+- Spine
 ---
-之前看的Spine都是Unity相关的，最近由于项目要转UE4，所以研究一下UE4下的Spine，然后分析一下手游中的Spine的规格是如何的。
-
-explicit 指定构造函数或转换函数（C++11起）为显式，即踏板不能用于隐式转换和复制初始化。（老是忘）
+explicit 指定构造函数或转换函数（C++11起）为显式，即踏板不能用于隐式转换和复制初始化。
 
 # 开篇
 

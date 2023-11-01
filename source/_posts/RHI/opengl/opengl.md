@@ -1,9 +1,12 @@
 ---
 title: OpenGL
 date: 2018-04-01 11:24:55
+tags:
+- RHI
+- opengl
 categories:
 - RHI
-- OpenGL
+- opengl
 ---
 https://learnopengl-cn.github.io/
 # 基本概念

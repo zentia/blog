@@ -3,8 +3,8 @@ title: 图形学
 mathjax: true
 date: 2019-03-13 14:33:27
 tags:
-    - 图形学
-categories: 图形学
+    - Render
+categories: Render
 ---
 
 # 向量积

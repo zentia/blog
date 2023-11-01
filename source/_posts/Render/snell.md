@@ -3,8 +3,9 @@ title: 斯涅尔定律
 mathjax: true
 date: 2019-05-12 09:40:14
 tags:
-    - 光学
-categories: 光学
+    - Render
+categories: 
+- Render
 ---
 # 描述
 当光波从一种介质传播到另一种具有不同折射率的介质时，会发生折射现象，其入射角与折射角之间的关系，可以用斯涅尔定律（Snell's Law）来描述。

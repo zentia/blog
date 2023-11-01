@@ -63,7 +63,7 @@ Engine\Config\BaseGame.ini
 - Shadercache
 - 外部文件
 
-![1](/images/Unreal/HotUpdate/3.png)
+![1](3.png)
 
 ## Pak打包流程：
 - 收集要打包的资源以及外部文件
@@ -72,7 +72,7 @@ Engine\Config\BaseGame.ini
 - 使用UnrealPak执行打包
 
 ResponseFile格式：文件的绝对路径+Mount之后的路径+打包参数
-![1](/images/Unreal/HotUpdate/4.png)
+![1](4.png)
 
 UnrealPak的打包命令：
 
@@ -86,7 +86,7 @@ UnrealPak的打包命令：
 5. 执行UnrealPak命令
 6. 每个平台都要执行一遍上述流程
 
-![1](/images/Unreal/HotUpdate/5.png)
+![1](5.png)
 
 ## 自动化Pak打包工具 HotPatcher
 优势：
@@ -103,9 +103,9 @@ UnrealPak的打包命令：
 
 ## HotPatcher的工作流程
 
-![1](/images/Unreal/HotUpdate/6.png)
-![1](/images/Unreal/HotUpdate/7.png)
-![1](/images/Unreal/HotUpdate/8.png)
+![1](6.png)
+![1](7.png)
+![1](8.png)
 
 ## HotPatcher功能简介
 1. 支持uasset的资源选择包含
@@ -124,7 +124,7 @@ UnrealPak的打包命令：
 2. 根据地图为Patch打包
 3. 根据资源分类Patch打包
 
-![1](/images/Unreal/HotUpdate/9.png)
+![1](9.png)
 
 思考：基础包更新后，先前热更的Pak如何处理？
 
@@ -133,11 +133,11 @@ UnrealPak的打包命令：
 2. 开发中能够精确地定位变动的资源
 3. 能够在变动的基础上更新完整游戏的资源信息
 
-![1](/images/Unreal/HotUpdate/10.png)
+![1](10.png)
 
 并且需要支持迭代的方式更新
 
-![1](/images/Unreal/HotUpdate/11.png)
+![1](11.png)
 
 记录游戏包资源信息的思路：
 1. 分析UE打包时通过UAT生成的PakList*.txt文件
@@ -146,7 +146,7 @@ UnrealPak的打包命令：
 需要注意的问题：
 1. 每个平台包含的资源并不一定完全相同
 2. 不同平台具有不同的文件（如Wwise的bnk)
-![1](/images/Unreal/HotUpdate/12.png)
+![1](12.png)
 
 解决多个平台基础包内资源不统一的方案
 1. 对每个平台的paklist*.txt都进行分析
@@ -155,17 +155,17 @@ UnrealPak的打包命令：
 
 # 资源管理
 ## 热更Pak包的使用
-1. Pak需要挂载（mount)到游戏中才可以使用
+1. Pak需要挂载(mount)到游戏中才可以使用
 2. Mount时可以给Pak设置优先级(PakOrder)
 
-![1](/images/Unreal/HotUpdate/13.png)
+![1](13.png)
 
 ## UE4 Pak自动挂载目录
 1. Engine/Content/Paks
 2. GAME_DIR/Content/Paks
 3. GAME_DIR/Saved/Paks
 
-![1](/images/Unreal/HotUpdate/14.png)
+![1](14.png)
 
 注：GAME_DIR/Content/Pak/GAME_NAME-*pak是基础包内Pak的命名规则。
 
@@ -173,10 +173,10 @@ UnrealPak的打包命令：
 Pak中的文件需要以UFS方式读取
 
 FFileHelper
-![1](/images/Unreal/HotUpdate/15.png)
+![1](15.png)
 
 UFS文件读取
-![1](/images/Unreal/HotUpdate/16.png)
+![1](16.png)
 
 # Part Three UE4热更新：脚本语言
 UE蓝图 集成TypeScript/JavaScript
@@ -202,8 +202,8 @@ TypeScript/JavaScript
 4. 分析出需要下载的文件
 5. 按照版本顺序挂在pak
 
-![1](/images/Unreal/HotUpdate/17.png)
-![1](/images/Unreal/HotUpdate/18.png)
+![1](17.png)
+![1](18.png)
 
 ## 热更新包的下载
 需要的服务：
@@ -236,15 +236,15 @@ ue4-downloadtoolkit: https://github.com/hxhb/ue4-downloadtookit
 1. 下载时计算文件MD5进行验证
 2. 打包pak时启用signing
 
-![1](/images/Unreal/HotUpdate/19.png)
+![1](19.png)
 
 # Part Five
 UE4热更新：需要注意的问题
 
-![1](/images/Unreal/HotUpdate/20.png)
+![1](20.png)
 解决方案：
 1. Mount之后加载一遍最新的Shaderbytecode
-   1. ![1](/images/Unreal/HotUpdate/21.png)
+   1. ![1](21.png)
 2. Cook资源时不要开启Share Material Shader code
 
 UE4.25+加载Pak资源丢失材质 UMG子控件变动父控件不生效
@@ -257,7 +257,7 @@ UE4.25+加载Pak资源丢失材质 UMG子控件变动父控件不生效
 5. 在初始包基础上挂载Pak
 6. 游戏中UIMain不生效
 
-![1](/images/Unreal/HotUpdate/22.png)
+![1](22.png)
 
 问题分析：
 - UMG的子控件是以Instanced方式创建的
@@ -269,4 +269,4 @@ HotPatcher的解决方案
 - 遍历引用被变动UMG的父级UMG资源
 - 把这些资源一起打包到当前patch的pak中
 
-![1](/images/Unreal/HotUpdate/23.png)
+![1](23.png)

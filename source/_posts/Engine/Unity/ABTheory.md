@@ -2,8 +2,11 @@
 title: AssetBundle管理机制
 date: 2017-10-02 15:04:40
 tags:
-  - Unity
-categories: Unity
+- Engine
+- Unity
+categories: 
+- Engine
+- Unity
 ---
 
 # 什么是AssetBundle
@@ -49,7 +52,7 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 - iOS系统有256个开启文件的上限，因此，内存中通过CreateFromFile加载的AssetBundle对象也会低于该值。
 - CreateFromFile的调用会增加ResistenManager.Remapper的大小，而PersistentManager负责维护资源的持久化存储，Remapper保存的是加载到内存的资源HeapID与源数据FileID的映射关系，它是一个MemoryPool,其行为类似Mono堆内存，只增不减，因此需要对两个接口的使用做合理的规划。
 - 对于存在依赖关系的Bundle包，在加载时主要注意顺序，举例来说，假设CanvasA在BundleA中，所依赖的AtlasB在BundleB中，为了确保资源正确引用，那么最晚创建BundleB的AssetBundle对象的时间点是在实例化CanvasA之前，即，创建BundleA的AssetBundle对象时，Load("CanvasA")时，BundleB的AssetBundle对象都可以不在内存中。
-<img src="/2017/10/02/ABTheory/dependbundle.png">
+<img src="dependbundle.png">
 - 根据经验，建议AssetBundle文件的大小不超过1MB，因为在普遍情况下Bundle的加载时间与其大小并非呈线性关系，过大的Bundle可能引起较大的加载开销。
 - 由于WWW对象的加载是异步的，因此逐个加载容易出现下图中CPU空间的情况（选中帧处Vsync占了大部分）此时建议适当的同时加载多个对象，以增加CPU的使用率，同时加快加载的完成。
 <img src="/2017/10/02/ABTheory/dependbundle.png">
@@ -57,7 +60,7 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 # AssetBundle卸载
 前文提到了通过AssetBundle加载资源时的内存分配情况，下面，我们结合常用的API介绍如何将已分配的内存进行卸载，最终达到清空所有相关内存的目的。
 ## 一·内存分析
-<img src="/2017/10/02/ABTheory/dependbundle.png">
+<img src="dependbundle.png">
 
 在上图中的右侧，我们列出了各种内存物件的卸载方式：
 
@@ -71,9 +74,11 @@ AssetBundle对于大家来说会是一个黑盒子，其实在Unity的安装目�
 - WebStream:在卸载WWW对象以及对应的AssetBundle对象后，这部分内存即会被引擎自动卸载；
 - SerializedFile:卸载AssetBundle后，这部分内存会被引擎自动卸载;
 - AssetBundle对象：AssetBundle的卸载方式有两种：
-1）通过AssetBundle.Unload(false),卸载AssetBundle对象时保留内存中已加载的资源；
-2)通过AssetBundle.Unload(true),卸载AssetBundle对象时卸载内存中已加载的资源，由于该方法容易引起资源引用丢失，因此并不建议经常使用；
-##二·注意点
+1. 通过AssetBundle.Unload(false),卸载AssetBundle对象时保留内存中已加载的资源；
+2. 通过AssetBundle.Unload(true),卸载AssetBundle对象时卸载内存中已加载的资源，由于该方法容易引起资源引用丢失，因此并不建议经常使用；
+
+## 二·注意点
+
 在通过AssetBundle.Unload(false)卸载AssetBundle对象后，如果重新创建该对象并加载之前加载过的资源的时候，会出现冗余，即两份相同的资源。
 
 被脚本静态变量引用的资源，在调用Resources.UnloadUnusedAssets时，并不会被卸载，在Profiler中能够看到其引用情况。

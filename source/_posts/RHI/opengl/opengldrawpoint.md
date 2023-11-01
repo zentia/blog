@@ -3,10 +3,11 @@ title: 500行代码学懂OpenGL之一画点
 mathjax: true
 date: 2019-05-26 20:40:18
 tags:
-    - 光栅
-    - 计算机图形学
-    - OpenGL
-categories: OpenGL
+- RHI
+- opengl
+categories: 
+- RHI
+- opengl
 ---
 项目来自https://github.com/ssloy/tinyrenderer，作者尝试用500行代码来写一个tiny render，让我们明白OpenGL是怎样工作的。
 # 从画点开始

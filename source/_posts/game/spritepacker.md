@@ -3,8 +3,8 @@ title: SpritePacker
 mathjax: true
 date: 2019-05-22 15:56:42
 tags:
-    - UGUI
-categories: UGUI
+    - Game
+categories: Game
 ---
 Version:2018.3
 # 启用

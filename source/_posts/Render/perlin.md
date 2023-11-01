@@ -3,8 +3,8 @@ title: Perlin噪声
 mathjax: true
 date: 2019-04-01 20:29:28
 tags:
-    - 图形学
-categories: 图形学
+    - Render
+categories: Render
 ---
 # Perlin噪声
 Ken Perlin在1993年提出了一种渐变噪声，Perlin在1985年的SIGGRAPH有该算法的描述，称之为经典Perlin噪声（Classical Perlin Noise）。为了简化计算，方便使用硬件实现，并解决经典Perlin噪声中存在的错误，到2001年，Ken Perlin再次对原始的噪声算法进行了改进，称之为Simplex噪声（Simplex Noise），这两种算法都可以成为Perlin噪声。但是，我们有时候也把分形噪声成为Perlin噪声，甚至在严肃的学术论文中都有这种叫法。为了避免歧义，本文指的Perlin噪声特指经典的Perlin噪声和Simplex噪声。

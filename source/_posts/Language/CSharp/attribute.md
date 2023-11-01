@@ -1,8 +1,12 @@
 ---
 title: 特性（Attribute）
 date: 2019-04-17 09:56:09
+categories:
+- Lanuage
+- CSharp
 tags:
-    - CSharp
+- Language
+- CSharp
 ---
 特性（Attribute）是用于在运行时传递程序中各种元素（比如类、方法、结构、枚举、组件等）的行为信息的声明性标签。可以通过使用特性向程序添加声明性信息。一个声明性标签是通过放置在它所应用的元素前面的方括号（[ ]）来描述的。
 

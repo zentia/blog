@@ -3,8 +3,9 @@ title: GameEngine
 mathjax: true
 date: 2019-05-29 11:23:52
 tags:
-    - GameEngine
-categories: GameEngine
+    - Game
+categories: 
+- Game
 ---
 python2.7
 GnuWin32 Tools https://sourceforge.net/projects/getgnuwin32/ 执行download.bat和install.bat完成安装。添加环境变量

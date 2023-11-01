@@ -31,9 +31,9 @@ r.Shaders.KeepDebugInfo=1
 当我们看到事件列表的时候，我们选择我们要调试的一个事件
 ![1](1.png)
 在Mesh Viewer面板中选中一个点，然后右键，选择debug this vertex
-![2](/images/Unreal/Shader/RenderDoc/2.png)
+![2](2.png)
 就会打开调试面板
-![3](/images/Unreal/Shader/RenderDoc/3.png)
+![3](3.png)
 
 # Slate性能跟踪
 ## 查看UI绘制批次
@@ -45,5 +45,5 @@ r.Shaders.KeepDebugInfo=1
    2. 输入`renderdoc.CaptureAllActivity 1`
    3. 输入`renderdoc.CaptureFrame` 
 
-
-https://zhuanlan.zhihu.com/p/31499684
+# 参考
+- [1][Slate 性能跟踪](https://zhuanlan.zhihu.com/p/31499684)

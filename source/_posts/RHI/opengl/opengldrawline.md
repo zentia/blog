@@ -3,10 +3,11 @@ title: 500行代码学懂OpenGL之二画线
 mathjax: true
 date: 2019-05-27 13:11:47
 tags:
-    - 光栅
-    - 计算机图形学
-    - OpenGL
-categories: OpenGL
+- RHI
+- opengl
+categories: 
+- RHI
+- opengl
 ---
 # 画线
 

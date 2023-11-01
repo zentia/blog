@@ -3,8 +3,8 @@ title: 半透明渲染
 mathjax: true
 date: 2019-04-03 09:14:04
 tags:
-    - Shader
-categories: Shader
+    - Render
+categories: Render
 ---
 半透明物体的特征是什么？
 半透明物体需要显示被它遮挡的物体。

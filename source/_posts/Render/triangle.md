@@ -3,10 +3,9 @@ title: 三角形中心坐标
 mathjax: true
 date: 2019-05-13 21:25:25
 tags:
-    - 光栅
-    - 计算机图形学
-    - 三角形
-categories: 图形学笔记
+- Render
+categories: 
+- Render
 ---
 P用A,B,C来表示
 对于三角形内任意一点P

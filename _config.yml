@@ -52,7 +52,7 @@ highlight:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 20
+  per_page: 30
   order_by: -date
   
 # Category & Tag
@@ -69,7 +69,7 @@ time_format: HH:mm:ss
 
 # Pagination
 ## Set per_page to 0 to disable pagination
-per_page: 20
+per_page: 30
 pagination_dir: landscape
 
 # Extensions
@@ -100,7 +100,7 @@ baidusitemap:
 
 # enable: 开启/关闭 推送
 # cron: 执行时间周期
-# count: 每次提交最新的10篇文章
+# count: 每次提交最新的30篇文章
 # date: 更新时间(updated)|创建日期(created)
 # https://github.com/lete114/hexo-seo-autopush.git
 hexo_seo_autopush:
@@ -108,15 +108,15 @@ hexo_seo_autopush:
   baidu:
     enable: true
     date: created 
-    count: 20
+    count: 30
   bing:
     enable: true
     date: created 
-    count: 20
+    count: 30
   google:
     enable: true
     date: created 
-    count: 20
+    count: 30
     google_file: google_service_account.json # 谷歌服务账户
   enable: true
   steamId: '*****' #steam 64位Id
@@ -135,7 +135,7 @@ hexo_seo_autopush:
 feed:
   type: atom
   path: atom.xml
-  limit: 20
+  limit: 30
   hub:
   content:
   content_limit: 140

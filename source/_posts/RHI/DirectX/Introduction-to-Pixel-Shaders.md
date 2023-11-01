@@ -2,10 +2,12 @@
 title: 第十八章 像素着色器入门(Introduction to Pixel Shaders)
 mathjax: true
 date: 2019-04-11 15:29:49
+tags:
+- RHI
+- DirectX
 categories: 
 - RHI
 - DirectX
-- HLSL
 ---
    像素着色器是一个执行在图形卡的GPU上的程序，它运行在对每个像素进行光栅化处理时。（不像顶点着色器，Direct3D不会以软件模拟像素着色器的功能。）它实际上替换了固定功能管线的多纹理化阶段（the multitexturing stage），并赋予我们直接操纵单独的像素和访问每个像素的纹理坐标的能力。这种对像素和纹理坐标的直接访问使我们可以达成各种特效，例如：多纹理化（multitexturing）、每像素光照（per pixel lighting）、景深（depth of field）、云状物模拟（cloud simulation）、焰火模拟（fire simulation）、高级阴影技术（sophisticated shadowing technique）。
 
@@ -40,6 +42,7 @@ if( caps.PixelShaderVersion < D3DPS_VERSION(2, 0) )
 
 18.1.1 允许多个纹理
    回忆一下，纹理是用IDirect3DDevice9::SetTexture方法设置，而采样器状态（sampler state）是用IDirect3DDevice9::SetSamplerState方法设置，原型如下：
+```C++
 HRESULT IDirect3DDevice9::SetTexture(
      DWORD Stage, // specifies the texture stage index
      IDirect3DBaseTexture9 *pTexture
@@ -50,10 +53,11 @@ HRESULT IDirect3DDevice9::SetSamplerState(
      D3DSAMPLERSTATETYPE Type,
      DWORD Value
 );
-
+```
 注意：一个特定的采样器阶段索引I联合第i个纹理阶段（texture stage）。即第i个采样器阶段指定采样器状态是第i集（set）纹理。
 
    纹理/采样器阶段索引标识了我们希望设置的纹理/采样器的纹理/采样器阶段。因此，我们可以允许多个纹理并通过使用不同的阶段索引设置其相应的采样器状态。在本书前面的部分中，我们总是指定0，来指示第一个阶段，因为我们一次仅使用一个纹理。所以例如，假设我们要允许三个纹理，我们像这样使用阶段0,1和2：
+```C++
 // Set first texture and corresponding sampler states.
 Device->SetTexture(0, Tex1);
 Device->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
@@ -71,12 +75,14 @@ Device->SetTexture(2, Tex3);
 Device->SetSamplerState(2, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 Device->SetSamplerState(2, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 Device->SetSamplerState(2, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
+```
 这段代码使用Tex1, Tex2和Tex3，并设置每个纹理的过滤模式。
 
 18.1.2 多纹理坐标
    回忆一下第六章，对于每个3D三角形，我们应该在纹理上定义一个三角形以映射该3D三角形。我们通过对每个顶点增加纹理坐标完成映射。因此，每三个顶点定义一个三角形，它对应于纹理上的三角形。
 
    因为我们现在使用多纹理，每三个顶点定义一个三角形，我们需要在每个被使用的纹理上定义一个相应的三角形。我们通过给每个顶点增加额外的一套纹理坐标——每个顶点一套，对应于每个使用的纹理。举个例子，如果我们混合三个纹理到一起，那么每个顶点必须有三套纹理坐标以索引到三个使用的纹理。因此，一个包含三个纹理的多纹理化顶点结构看起来可能像这样：
+```C++
 struct MultiTexVertex
 {
      MultiTexVertex(float x, float y, float z,
@@ -98,7 +104,7 @@ struct MultiTexVertex
      static const DWORD FVF;
 };
 const DWORD MultiTexVertex::FVF = D3DFVF_XYZ | D3DFVF_TEX3;
-
+```
 注意，指定自由顶点格式标记D3DFVF_TEX3表明顶点结构包含3套纹理坐标。固定功能管线支持最多8套纹理坐标。如果多于8套，你必须使用顶点声明和可编程顶点管线。
 
 注意：在新版本像素着色器中，我们可以使用一套纹理坐标集来索引多个纹理，并因此消除了对多个纹理坐标的需要。当然这得假设每个纹理阶段使用相同的纹理坐标。如果每个阶段的纹理坐标不同，则我们仍然需要多纹理坐标。
@@ -251,10 +257,12 @@ PS_OUTPUT Main(PS_INPUT input)
      return output;
 }
 ```
+
 首先像素着色器定义了3个sampler对象，要渲染的每个纹理，接下来定义是input和output结构。注意：我们没有将任何的颜色值输入到像素着色器中，这是因为我们使用纹理自己的颜色和光照；即BaseTex保存表面的颜色，SpotLightTex是光照图。像素着色器输出只一个简颜色值，指定了我们计算过的这个特定像素的颜色。
 Main函数使用tex2D函数采样3  个纹理，即它取得每个纹理的图素，计算映射到的像素，这通常依赖于指定的纹理坐标和采样器对象。然后我们混合图素的颜色用公式：c = b * s + t。接下来我们让全部的像素变亮一个bit，给每个部分增加0.1f。最后我们保存结果像素颜色并返回它。
 现在我们看到了的像素着色器的代码，现在我们改变并考虑应用程序的代码。应用程序有下列相应的全局变量：
-```c++
+
+```C++
 IDirect3DPixelShader9* MultiTexPS = 0;
 ID3DXConstantTable* MultiTexCT    = 0;
 
@@ -271,6 +279,7 @@ D3DXCONSTANT_DESC BaseTexDesc;
 D3DXCONSTANT_DESC SpotLightTexDesc;
 D3DXCONSTANT_DESC StringTexDesc;
 ```
+
 多纹理顶点结构的例子如下：
 ```c++
 struct MultiTexVertex

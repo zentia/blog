@@ -385,6 +385,7 @@ Effect->End();
 图19.1: 灯光和纹理例子的屏幕截图. 纹理、材质和灯光状态在效果文件中指定。
  
 以下是效果文件的实现：
+```C++
 // File: light tex.txt
 // Desc: 效果文件控制光的设备状态，和纹理一个3D模型
 ?
@@ -460,12 +461,13 @@ technique LightAndTexture
           Sampler[0] = (S0);
      }
 }
-
+```
     在这个效果文件中我们主要设置设备状态，就象在19.3节所述。例如，我们直接在效果文件中设置一个光源和一个材质。此外，我们指定转换距阵和纹理及采样器状态。这些状态被指定，然后用LightAndTexture方法和渲染传递P0渲染全部几何体，。
 
    注意：考虑到在一个效果文件中涉及到的的变量，你必须把它们装入圆括号中。举例来说，涉及到距阵变量，你必须这样写：(WorldMatrix), (ViewMatrix), and (ProjMatrix)。不使用圆括号是违法的。
 
    因为大部分必需的和繁琐的工作都在效果文件里做了，比如设置灯光、材质和纹理。应用程序代码就是做一些创建效果和开启效果等简单的事情。例子中有下面一些相关的全局变量：
+```C++
 ID3DXEffect* LightTexEffect   = 0;
 
 D3DXHANDLE WorldMatrixHandle  = 0;
@@ -474,10 +476,11 @@ D3DXHANDLE ProjMatrixHandle   = 0;
 D3DXHANDLE TexHandle          = 0;
 
 D3DXHANDLE LightTexTechHandle = 0;
-
-　　?这些东西很没劲 —--- 只是一个ID3DXEffect指针和一些句柄。LightTexTechHandle是一个技术的句柄，因此在它的名字中有子字符串“Tech”。
+```
+　　这些东西很没劲 —--- 只是一个ID3DXEffect指针和一些句柄。LightTexTechHandle是一个技术的句柄，因此在它的名字中有子字符串“Tech”。
      
    RestoreDeviceObjects函数执行三个主要步骤：创建效果，获得作为效果参数的我们要用的技术的句柄，并初始化一些效果参数。下面是删节的实现：
+```C++
 bool Setup()
 {
     HRESULT hr = 0;
@@ -576,13 +579,14 @@ bool Display(float timeDelta)
 　　
 　　return true;
 }
-
+```
 19.8例子程序: Fog Effect
     非常遗憾，我们没有用一整章篇幅来介绍Direct3D雾化效果。雾化效果（以下简称雾）提高了场景的真实性，可以用它来模拟逼真的天气状况。另外，雾可以大大减少长剪裁（far-clip）平面视觉效果。
     虽然我们不能给它应有的重视，这里我们还是挤出了一个简要的雾化例程。虽然我们不涉及详细的细节，我们还是展示并解释了Direct3D代码，这是很直接的。
     Direct3D雾化是固定功能管线的一部份，受渲染状态限制。下面的效果文件设置顶点雾，以达到必要的雾化状态。
 
    注意：Direct3D也支持像素雾（也叫表格雾table fog），比顶点雾要更精确。
+```C++
 // File: fog.txt
 // Desc: Effect file that handles device states for linear vertex fog.
 technique Fog
@@ -606,24 +610,25 @@ technique Fog
           FogEnable     = true;        // Enable vertex fog.
      }
 }
-
+```
    
 就象你看到的，线性顶点雾能够通过五个简单的渲染状态控制：
-*???????? FogVertexMode—使用指定的雾函数用于顶点雾。雾函数指定雾如何根据距离增长，自然界的雾在近视口的地方比较薄并且根据距离增长变得厚起来了。有效的任务类型为LINEAR、EXP、EXP2。这些函数被定义为：
+FogVertexMode—使用指定的雾函数用于顶点雾。雾函数指定雾如何根据距离增长，自然界的雾在近视口的地方比较薄并且根据距离增长变得厚起来了。有效的任务类型为LINEAR、EXP、EXP2。这些函数被定义为：
 
 d 是到视口的距离(viewpoint.)
 
    注意：如果你用EXP或EXP2雾化函数，你不用设置FogStart 和 FogEnd，因为它们在这些雾函数类型中没被用到。代替的你必须设置雾密度（fog density）渲染状态（如，FogDensity = someFloatType）
-*???????? FogStart—标记了物体将开始雾化的起始深度。
-*???????? FogEnd—标记了物体将结束雾化的结束深度。
+FogStart—标记了物体将开始雾化的起始深度。
+FogEnd—标记了物体将结束雾化的结束深度。
    注意：FogStart 与 FogEnd本质上定义了物体在其中被雾化的深度间隔（从视口）。
-*???????? FogColor—一个DWORD 或 D3DCOLOR值，以描述雾的颜色
-*???????? FogEnable—指定true以开启顶点雾或false以关闭顶点雾
+FogColor—一个DWORD 或 D3DCOLOR值，以描述雾的颜色
+FogEnable—指定true以开启顶点雾或false以关闭顶点雾
 
    任何我们用fog.txt效果渲染的几何体将被雾化。通过这种方式，我们可以控制哪一物体得到雾化，而哪些不用雾化。这对只雾化特定区域是很有用的。例如，通常屋外是有雾的，屋里不被雾化。同样的，一定地理部分可能有雾，而另外部分可能没有。图19.2展示了这一小节的调用雾效果的例程的屏幕截图。
 图19.2: 雾化效果例子程序的屏幕截图，在这个例子中我们使用线性雾函数，而且雾化渲染状态在效果文件中指定。 
 19.9例子程序: Cartoon Effect
    到目前为止的2个效果文件的例子，我们没有使用着色器（shader）。因为着色器在特效中的重要部分，我们想展示一个最精简的例子。例程CartoonEffect执行了在17章中讨论的卡通着色器，但是这次应用效果框架。下面是一个删节版的效果文件：
+```C++
 // File: tooneffect.txt
 // 在效果文件中的卡通着色器
 extern matrix WorldMatrix;
@@ -671,7 +676,7 @@ technique Toon
           Sampler[0] = (ShadeSampler);
      }
 }
-   
+```
    我们注意到卡通着色器函数被定义在效果文件中，并且我们指定着色器使用一个特定的传递，在传递部分使用语法：vertexShader = compile vs_1_1_Main();。在效果文件中的设备状态象通常一样设置。
    
 19.10 效果编辑（EffectEdit）
@@ -857,10 +862,11 @@ dot(X,Y)       点乘；
 这是一个简单的线性方程组，若有解则行列式［-Dir, V2-V1, V3-V1］不为0。
    根据T,U,V的含义当T>0, 0<U<1,0<V<1,0<U+V<1时该交点在三角形内部，解此方程组即可获得我们关心的值,具体解法不再赘述，克莱姆法则就够了（详细见线性代数）:射线原点到相交点的距离T,和交点的中心坐标(U,V)。
 下面给出Direct 9 SDK示例程序中的实现代码：
+```C++
 IntersectTriangle( const D3DXVECTOR3& orig,
-??????????????????      const D3DXVECTOR3& dir, D3DXVECTOR3& v0,
-?????? ????????????     D3DXVECTOR3& v1, D3DXVECTOR3& v2,
-?????? ????????????     FLOAT* t, FLOAT* u, FLOAT* v )
+      const D3DXVECTOR3& dir, D3DXVECTOR3& v0,
+     D3DXVECTOR3& v1, D3DXVECTOR3& v2,
+     FLOAT* t, FLOAT* u, FLOAT* v )
 {
 ??? // 算出两个边的向量
 ??? D3DXVECTOR3 edge1 = v1 - v0;
@@ -903,15 +909,14 @@ IntersectTriangle( const D3DXVECTOR3& orig,
 ?
 ??? /*计算t,并把t,u,v放缩为合法值（注意前面的t,v,u不同于算法描述中的相应量，乘了一个系数det）,注意：由于该步运算需要使用除法，所以放到最后来进行，避免不必要的运算，提高算法效率*/
 ??? *t = D3DXVec3Dot( &edge2, &qvec );
-??? FLOAT fInvDet = 1.0f / det;
-??? *t *= fInvDet;
-??? *u *= fInvDet;
-??? *v *= fInvDet;
-?
-??? return TRUE;
-}
+ FLOAT fInvDet = 1.0f / det;
+ *t *= fInvDet;
+ *u *= fInvDet;
+ *v *= fInvDet;
 
-?
+ return TRUE;
+}
+```
 2.2.3? 拾取完成根据获得的中心坐标计算我们关心的常见量
 根据重心坐标（U,V）,我们可以很容易的算出各种相关量比如纹理坐标和交点的差值颜色，假设以纹理坐标为例设V1,V2,V3的纹理坐标分别为T1(tu1,tv1),T2(tu2,tv2),T3(tu3,tv3)则交点的坐标为
 ?
@@ -943,7 +948,7 @@ IntersectPointTexture = T1 + U(T2-T1) + V(T3-T1)
 二、克莱姆法则
 
 　　定理1（克莱姆法则）如果线性方程组
-　　　　　 ???????????（2）
+　　　　　 （2）
 的系数行列式：
 　　　　
 那么这个方程组有解，并且解是唯一的，这个解可表示成：

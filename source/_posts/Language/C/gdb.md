@@ -2,7 +2,11 @@
 title: gdb
 date: 2017-10-15 13:50:12
 tags:
-  - linux
+- Language
+- C
+categories:
+- Language
+- C
 ---
 
 # 断点

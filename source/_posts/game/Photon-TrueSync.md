@@ -2,7 +2,9 @@
 title: Photon-TrueSync
 date: 2019-04-24 15:15:17
 tags:
-    - Network
+    - Game
+categories:
+- Game
 ---
 git仓库：https://github.com/zentia/TrueSync
 优点：

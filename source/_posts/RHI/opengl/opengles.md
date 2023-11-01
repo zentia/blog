@@ -3,8 +3,11 @@ title: OpenGL ES 3.0
 mathjax: true
 date: 2019-05-12 17:18:55
 tags:
-    - "OpenGL ES 3.0"
-categories: "OpenGL ES 3.0"
+    - RHI
+    - opengl
+categories: 
+- RHI
+- opengl
 ---
 
 # Windows配置OpenGLES3开发环境

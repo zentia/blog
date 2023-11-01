@@ -3,22 +3,28 @@ title: Real Time Rendering 3rd
 date: 2017-09-29 15:13:03
 tags:
    - Render
+categories:
+- Render
 ---
 # Overview
-<img src="/2017/09/29/Real-Time-Rendering-3rd/overview.png" alt="overview">
+<img src="overview.png" alt="overview">
 url: www.realtimerendering.com
+
 # The Graphics Rendering Pipeline
-<img src="/2017/09/29/Real-Time-Rendering-3rd/tgrp.png">
+
+<img src="tgrp.png">
+
 ## 核心内容分节提炼
 
 ### 图像渲染管线架构概述 Architecture
 
 渲染管线的主要功能就是决定在给虚拟相机，三维物体，光源，照明模式，以及纹理等诸多条件的情况下，生成或绘制一幅二维图像的过程。对于实时渲染来说，渲染管线就是基础。因此，我们可以说，渲染管线是实时渲染的底层工具。
 
-<img src="/2017/09/29/Real-Time-Rendering-3rd/viewport.png">
+<img src="viewport.png">
+
 上图，相机放在棱锥的顶端（四条线段的交汇点），只有可视体内部的图元会被渲染。
 在概念上可以将图形渲染管线分为三个阶段：
-- 应用程序阶段（The Application Stage)
+- 应用程序阶段(The Application Stage)
 - 几何阶段(The Geometry Stage)
 - 光栅化阶段(The Rasterizer Stage)
 
@@ -27,6 +33,7 @@ url: www.realtimerendering.com
 几个要点：
 - 每个阶段本身也可能是一条管线，如图中的几何阶段所示。此外，还可以对有的阶段进行全部或者部分的并行化处理，如图中的光栅化阶段。应用程序阶段虽然是一个单独的过程，但是依然可以对之进行管线化或者并行化处理。
 - 最慢的管线阶段决定绘制速度，即图像的更新速度，这种速度一般用FPS表示，也就是帧率。
+
 ### 应用程序阶段（The Application Stage）
 
 - 应用程序阶段一般是图形渲染管线概念上的第一个阶段。应用程序阶段是通过软件方式来实现的阶段，开发者能够对该阶段发生的情况进行完全控制，可以通过改变实现方法来改变实际性能。其他阶段，他们全部或者部分建立在硬件的基础上，因此要改变实现过程会非常困难。
@@ -41,6 +48,7 @@ url: www.realtimerendering.com
 # GPU渲染管线和可编程着色器
 
 ## GPU渲染管线流程图
+
 {% asset_img 1.png %} {% asset_img 2.jpg %} 
 
 其中：

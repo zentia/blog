@@ -1,7 +1,13 @@
 ---
 title: iOS内存管理机制
 date: 2022-01-13 14:57:00
+tags:
+- Engine
+- Unreal
+- IOS
 categories:
+- Engine
+- Unreal
 - IOS
 ---
 https://www.cnblogs.com/kekec/p/14611999.html

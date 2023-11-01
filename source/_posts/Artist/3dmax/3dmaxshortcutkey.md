@@ -3,10 +3,14 @@ title: 3DMax快捷键
 mathjax: true
 date: 2019-06-10 11:10:30
 tags:
-    - 3DMax
-categories: 3DMax
+- Artist
+- 3dmax
+categories: 
+- Artist
+- 3dmax
 ---
 # 快捷键
+
 |快捷键     |说明|
 |--         |--|
 |`F1`       |帮助|
