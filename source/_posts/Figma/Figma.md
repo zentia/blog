@@ -5,6 +5,7 @@ tags:
 categories:
     - Figma
 ---
+Page是由Frame构成的
 # Plugin APIs
 ## Global Objects
 ### [figma](https://www.figma.com/plugin-docs/api/figma/)

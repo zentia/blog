@@ -54,6 +54,7 @@ index_generator:
   path: ''
   per_page: 30
   order_by: -date
+  pagination_dir: page
   
 # Category & Tag
 default_category: uncategorized
