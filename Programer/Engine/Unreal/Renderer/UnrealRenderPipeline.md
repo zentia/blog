@@ -1,15 +1,3 @@
----
-title: UnrealRenderPipeline
-categories: 
-- Engine
-- Unreal
-- Renderer
-tags:
-- Engine
-- Unreal
-- Renderer
-date: 2017-09-24 10:56:00
----
 # 渲染管线
 图形渲染管线（Graphics Pipeline）：将三维模型渲染到二维屏幕上的过程。为了满足实时性，管线在GPU硬件上进行实现，其与CPU流水线一样，各个步骤都会以并行的形式运行。
 固定管线（Fixed-Function Pipeline）：通常是指在较旧的GPU上实现的渲染流水线，通过DX、OpenGL等图形接口函数，开发者来对渲染流水线进行配置，控制权十分有限。
@@ -46,37 +34,5 @@ Render Target（RT，渲染目标）：对应显卡中一个内存块，D3D中�
 注2：成功绑定RT后：对于不支持MRT的显卡，在Pixel Shader中通过标识COLOR0来写入内容索引为0的RT中；对于支持MRT(N个)的显卡，在Pixel Shader中通过标识COLOR0，COLOR1，...COLOR(N-1)来写入内容到对应的RT中
 注3：可以调用`Device->StretchRect`来讲RT的Surface拷贝到后备缓冲区
 
-# MobileSceneRender
-## InitViews
-## ShadowDepths
-## ClearRenderTargetView
-## ClearDepthStencilView
-## MobileBasePass
-## MobileBasePass_PostAO
-## TranslucencyPreDepthPass
-## ShadowProjectionOnOpaque
-## Translucency
-## PostProcessing
-## RenderFinish
-
-# 参考
-
-- [1][UE4 性能 - (四) 性能分析：Render Passes(1)](https://zhuanlan.zhihu.com/p/449850501)
-- [2][UE4 性能 - (五) 性能分析：Render Passes(2)](https://zhuanlan.zhihu.com/p/455253476)
-
-1.2 Scene Draw Order
-
-- Z-PrePass: 场景中的opaque和mask材质写一遍深度。
-- Compute light grid: 场景中的灯光按照屏幕空间分成相应的grid，仅限点光源聚光灯。
-- Build HZB: 生成场景的Hierarchical Z。
-- Shadow Depth Pass: 根据不同灯光类型渲染出2DShadowmap或cubemapshadowmap，供后面lightingmass使用。
-- BasePass: 渲染出GBuffer, customdepth/stencil，还有velocity buffer用于后面的motion blur和TAA。
-- PreLightingPass: 计算DeferredDecal和SSAO。
-- LightingPass: 计算直接光照阴影和间接光照阴影。
-- Reflections: 计算SSR（屏幕空间反射）或光追反射。
-- Additional: 各种无效，半透明。
-- Post Process: Temproal AA、EyeAdaption、Motion Blur、Bloom、Tone Mapping、PP Material等。
-
-https://interplayoflight.wordpress.com/2017/10/25/how-unreal-renders-a-frame/
-
-{% pdf 2016-vr-summit-ue4.pdf %}
+# UpdateAllPrimitiveSceneInfos
+更新场景中所有的图元信息，包括处理已删除的场景图元信息、已添加的场景图元信息、更新的实例和变换、自定义原始场景参数的更新、距离场景数据的更新以及遮挡边界的更新，来确保场景中的图元信息保持最新和正确。为之后的渲染做准备。
