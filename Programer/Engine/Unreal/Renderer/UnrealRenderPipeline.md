@@ -10,7 +10,6 @@ tags:
 - Renderer
 date: 2017-09-24 10:56:00
 ---
-https://www.cnblogs.com/kekec/p/8463292.html
 # 渲染管线
 图形渲染管线（Graphics Pipeline）：将三维模型渲染到二维屏幕上的过程。为了满足实时性，管线在GPU硬件上进行实现，其与CPU流水线一样，各个步骤都会以并行的形式运行。
 固定管线（Fixed-Function Pipeline）：通常是指在较旧的GPU上实现的渲染流水线，通过DX、OpenGL等图形接口函数，开发者来对渲染流水线进行配置，控制权十分有限。
@@ -25,7 +24,7 @@ https://www.cnblogs.com/kekec/p/8463292.html
 Shader在早期是用汇编来写的，后面出现更高级的着色语言，如DirectX的HLSL（High Level Shading Language）、OpenGL的GLSL（OpenGL Shading Language）以及Nvidia的CG(C for Graphic)。
 ![2](2.png)
 GLSL具有跨平台性，其在被OpenGL使用前不需要进行额外编译，而是由显卡驱动直接编译成GPU使用的机器指令。
-HLSL仅能在windows平台上使用，需预先编译成与硬件无关的DX中间字节码（DXBC/DXIL)才能被D3D使用。
+HLSL仅能在windows平台上使用，需预先编译成与硬件无关的DX中间字节码(DXBC/DXIL)才能被D3D使用。
 CG语法上与HLSL高度相似，具有真正意义上的跨平台：在不同的平台上实现了shader的编译器，并通过CG OpenGL Runtime和CG D3D Runtime来讲CG转换成GLSL和DX中间字节码。
 纹理（Texture）：可以理解为运行时的贴图，可以通过UV坐标映射到模型的表面。另外，其拥有一些渲染相关的属性，如：纹理地址模型（ADDRESSU、ADDRESSV），纹理过滤方法（MAGFILTER、MINFILTER、MIPFILTER）等
 
