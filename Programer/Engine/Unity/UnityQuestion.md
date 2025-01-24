@@ -1,11 +1,3 @@
----
-title: UnityQuestion
-date: 2017-10-23 12:07:11
-categories:
-- Engine
-- Unity
----
-
 # AssetBundle lockpersistentmanager开销
 观察性能曲线，发现某一帧AssetBundle加载中，lockpersistentmanager耗时比较大。请问这块是否能够优化？
 这说明当前帧或前几帧中存在较大量的资源在通过LoadAsync来进行加载，其本质是所加载的资源过大所致，对自身资源进行合理优化可降低Loading.LockPersistentManager的开销。另外，将异步加载换成同步加载，LockPersistentManager就不会出现了，但其总加载耗时是没有变化的，因为总加载量没变。
