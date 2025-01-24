@@ -1,13 +1,3 @@
----
-title: AssetBundles
-date: 2019-03-24 10:01:00
-categories:
-- Engine
-- Unity
-tags:
-  - AssetBundle
-  - Unity
----
 # AssetBundles
 
 AssetBundle是一个包含模型，纹理，预制，音频剪辑，甚至整个场景的可以在运行中加载的档案文件。AssetBundles可以表达彼此之间的依赖关系；例如，AssetBundle A中的Matrial可以引用AssetBundle B中的纹理。为了通过网络进行有效传递，可以根据用例需求使用内置算法选择压缩AssetBundle。

@@ -1,14 +1,3 @@
----
-title: 标准光照模型
-mathjax: true
-date: 2019-04-10 13:29:47
-tags:
-    - Engine
-    - Unity
-categories: 
-- Engine
-- Unity
----
 基本光照模型中漫反射部分的计算公式：
 $c_{diffuse}=(c_{light} \cdot m_{diffuse})max(0, \vec{n} \cdot I)$
 从公式可以看出，要计算漫反射需要知道4个参数：入射光线的颜色和强度$c_{light}$，表面发现$\vec{n}$以及光源方向$I$。

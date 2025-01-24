@@ -1,13 +1,3 @@
----
-title: Unity加载和内存管理
-date: 2018-04-11 17:16:57
-categories:
-- Engine
-- Unity
-tags:
-  - Unity3D
----
-
 Unity有两种动态加载机制：Resources.Load和AssetBundle，二者本质并无区别。Resources.Load就是从一个缺省打进程程序包的AssetBundle(Resourece)里加载资源，而一般AssetBundle文件需要你自己创建，运行时加载。
 
 # AssetBundle加载基础

@@ -1,13 +1,3 @@
----
-title: Game、Render、RHI多线程架构
-date: 2022-01-13 15:36:00
-categories:
-- Engine
-- Unreal
-- Thread
-tags:
-    Unreal
----
 # 游戏线程(GameThread)
 GameThread是引擎运行的心脏，承载游戏逻辑、运行流程的工作，也是其它线程的数据发起者。在`FEngineLoop::Tick`函数执行每帧逻辑的更新。
 在引擎启动时会把GameThread的线程id存储到全局变量`GGameThreadId`中，且稍后会设置到TaskGraph系统中。

@@ -1,10 +1,4 @@
----
-title: UnityTextureCheck
-date: 2022-01-24 16:06:00
-categories:
-- Engine
-- Unity
----
+
 # 逐像素判断法
 取贴图中的每一个像素，然后拿第一个像素点跟其他像素点的Color值去比较
 ```CSharp

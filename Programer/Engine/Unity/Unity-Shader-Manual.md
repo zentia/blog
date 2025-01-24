@@ -1,10 +1,3 @@
----
-title: Unity Shader Manual
-date: 2018-10-15 13:20:27
-categories: 
-- Engine
-- Unity
----
 # Properties
 ```Shader
 Shader "ShaderLab Tutorials/TestShader"

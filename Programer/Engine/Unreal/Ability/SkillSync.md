@@ -1,13 +1,3 @@
----
-title: GameplayAbility深入解析之技能同步基础
-date: 2022-01-03 23:59:00
-categories:
-- Engine
-- Unreal
-- Ability
-tags:
-  Engine-Unreal-Ability
----
 # [GameplayAbility深入解析]之技能同步基础
 
 https://zhuanlan.zhihu.com/p/159007942

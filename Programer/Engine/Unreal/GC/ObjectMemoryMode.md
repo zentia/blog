@@ -1,14 +1,3 @@
----
-title: Unreal 垃圾回收
-date: 2021-12-31 10:08:00
-categories:
-- Engine
-- Unreal
-- GamePlay
-tags:
-    - Engine-Unreal-GamePlay
----
-
 # Unreal GC 
 Unreal 为我们搭建了一套UObject对象系统，并且加入了垃圾回收机制，使我们使用C++进行游戏开发时更加方便，而且游戏本身也可以极大程度的避免了内存泄漏问题。
 

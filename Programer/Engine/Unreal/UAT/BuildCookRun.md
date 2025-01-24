@@ -1,12 +1,3 @@
----
-title: Unreal Build
-date: 2022-01-02 11:28:00
-categories:
-- Engine
-- Unreal
-tags:
-    - Unreal
----
 # BuildCookRun命令行参数
 常用常熟如下，详细参数见源文件，`Engine\Source\Programs\AutomationTool\AutomationUtils\ProjectParams.cs`，注意有些参数不能同时指定，具体见`ValidateAndLog`函数里的参数检查规则。
 `Engine\Source\Programs\AutomationTool\AutomationUtils\Automation.cs`有一些全局参数定义

@@ -1,9 +1,3 @@
----
-title: Jenkins
-date: 2017-10-16 00:39:14
-tags:
-  - Jenkins
----
 1. 添加Jenkins的源（repository）
 	sudo wget -O /etc/yum.repos.d/jenkins.repo http://jenkins-ci.org/redhat/jenkins.repo
 	sudo rpm --import http://pkg.jenkins-ci.org/redhat/jenkins-ci.org.key

@@ -1,14 +1,3 @@
----
-title: toggle
-tags:
-- Engine
-- Unity
-- UGUI
-categories:
-- Engine
-- Unity
-- UGUI
----
 # Transition
 过渡方式
 - Color Tint

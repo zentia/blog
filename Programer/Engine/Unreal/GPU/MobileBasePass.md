@@ -1,9 +1,3 @@
----
-title: MobileBasePassRendering
-date: 2022-01-04 15:49:00
-tags:
-    - Unreal
----
 `r.Mobile.PixelProjectedReflectionQuality`
 ```C++
 UENUM()

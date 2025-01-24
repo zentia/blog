@@ -1,11 +1,3 @@
----
-title: ExecuteInEditMode
-mathjax: true
-date: 2019-03-25 17:17:52
-tags:
-    Unity
-categories: Unity
----
 # 描述
 使脚本实例可以在编辑模式运行
 默认的情况下，MonoBehaviours只能在Play模式下工作。通过添加这个属性，任何MonoBehaviour实例的回调函数也会在Edit模式下执行。

@@ -1,11 +1,3 @@
----
-title: AutoResetEvent
-mathjax: true
-date: 2019-05-09 20:06:11
-tags:
-    - CSharp
-categories: CSharp
----
 ManualResetEvent和AutoResetEvent主要负责多线程编程中的线程同步；那在讲这个之前我们先说说线程同步：
 # 线程同步
 ## 共享数据

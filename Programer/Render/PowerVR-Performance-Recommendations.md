@@ -1,11 +1,3 @@
----
-title: PowerVR Performance Recommendations
-mathjax: true
-date: 2018-11-23 14:43:57
-tags:
-categories: Graphics
-author: Imagination Technologies Limited
----
 # Introduction
 PowerVR SGX and PowerVR Rogue are Graphics Core architectures from Imagination Technologies designed specifically for shader-based APIs such as OpenGL ES 2.0,3.x,and Vulkan.Due to their scalable architectures,the PowerVR family spans a huge performance range.
 

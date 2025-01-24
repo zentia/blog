@@ -1,9 +1,4 @@
----
-title: Unity dynamic_array
-categories:
-- Engine
-- Unity
----
+
 ```C++
 // 添加一个元素
 void push_back(const T& t)

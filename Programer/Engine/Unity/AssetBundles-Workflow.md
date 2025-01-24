@@ -1,14 +1,3 @@
----
-title: AssetBundles 工作流程
-mathjax: true
-date: 2019-03-22 19:19:00
-categories:
-- Engine
-- Unity
-tags:
-    Unity
-    AssetBundles
----
 # AssetBundle工作流程
 要开始使用AssetBundles，请按照以下步骤操作。有关每个工作流程的更多详细信息，请参阅本文的其他页面。
 ## 将资产分配给AssetBundles

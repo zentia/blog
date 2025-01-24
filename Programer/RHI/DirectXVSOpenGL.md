@@ -1,8 +1,3 @@
----
-title: DirectX与OpenGL的一些概念对比
-
----
-
 # Shader
 
 # 绘图接口

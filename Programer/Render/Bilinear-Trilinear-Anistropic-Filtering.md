@@ -1,10 +1,3 @@
----
-title: 纹理过滤模式中的Bilinear、Trilinear以及Anistropic Filtering
-mathjax: true
-date: 2019-09-05 21:02:39
-tags:
-categories:
----
 # 为什么在纹理采样时需要texture filter（纹理过滤）
 我们的纹理是要贴到三维图形表面的，而三维图形上的pixel中心和纹理上的texel中心点并不一致（pixel不一定对应texture的采样中心texel），大小也不一定一致。当纹理大于三维图形表面时，导致一个像素被映射到许多纹理像素上；当纹理小于三维图形表面时，许多个像素都映射到同一个纹理。
 当这些情况发生时，贴图就会变得模糊或发生错位，马赛克。要解决此类问题，必须通过技术平滑texel和pixel之间的对应。这种技术就叫纹理滤波。

@@ -1,14 +1,3 @@
----
-title: Unity渲染管线
-mathjax: true
-date: 2019-04-09 01:32:27
-tags:
-- Engine
-- Unity
-categories:
-- Engine
-- Unity
----
 渲染类型有4种：
 1. `Unlit`无关的，UI使用
 2. `ForwardLite`轻量级前向，场景使用
