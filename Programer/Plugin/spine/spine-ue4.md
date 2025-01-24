@@ -1,14 +1,3 @@
----
-title: Spine UE4
-mathjax: true
-date: 2021-07-02 09:26:08
-tags:
-- Plugin
-- Spine
-categories: 
-- Plugin
-- Spine
----
 explicit 指定构造函数或转换函数（C++11起）为显式，即踏板不能用于隐式转换和复制初始化。
 
 # 开篇

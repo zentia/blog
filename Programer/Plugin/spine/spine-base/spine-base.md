@@ -1,18 +1,9 @@
----
-title: 【spine】快速入门
-mathjax: true
-date: 2019-04-30 09:35:00
-tags:
-- Plugin
-- Spine
-categories: 
-- Plugin
-- Spine
----
 Spine 不限于角色动画，但角色动画是最常见也是最好的例子。在 Spine 中角色使用 的不是一张完整的图片，而是将各个部分切片成一系列的小图。比如：头、躯干、胳膊和腿。 这些小图片被附加到骨骼上，然后用骨骼自由的设置角色动作。这些切片会随着骨骼运动而 产生流畅的动画。
 # 装配模式 Setup Mode
 使用 Spine 从装配模式开始，在此模式中创建骨骼，附加切片。在编辑区的左上角显 示着 Setup（装配）或 Animate（动画）来指示当前的模式，可以通过点击进行切换。
-{% asset_img quickstart-1-setup.png %}
+
+![](quickstart-1-setup.png)
+
 # 切片 Images
 层级树中的 Images 节点定义了 Spine 从哪里为你找到这副骨架要用的图片。图片的路 径 path 默认使用当前项目的相对路径。也支持绝对路径。设置完成后，路径下的图片会被加 载到图片 Images 节点中。
 Spine 实时监控图片所在路径，如果图片发生改变，立刻更新到项目中。

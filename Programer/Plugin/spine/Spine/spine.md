@@ -1,12 +1,3 @@
----
-title: Unity Spine 源码解析
-date: 2019-04-28 16:13:29
-tags:
-    - Spine
-categories: Spine
----
-# 概念
-先来介绍下 spine 中的一些术语和概念
 ## Bone 骨骼
 spine 是骨骼编辑器,所以骨骼是基础。每个骨骼都会有旋转，缩放，位移的属性。然后骨骼可以有子节点，最终形成了一个树型结构。可以对应2dx 里面的 node
 ## Slot 插槽
@@ -685,6 +676,7 @@ public virtual void LateUpdate () {
 ```
 ![初始状态](2.jpg)
 ![某一帧的状态](1.jpg)
+
 左图是默认的mesh，右图是设置关键帧的状态，三角形数量和顶点数量没有改变，只是改变的顶点位置。类似蒙皮的原理
 ```CSharp
 public static void DrawBoundingBoxes (Transform transform, Skeleton skeleton) {

@@ -1,9 +1,3 @@
----
-title: Unity Animation
-categories:
-- Engine
-- Unity
----
 # AnimationClip 序列化
 ```C++
 class AnimationClip
