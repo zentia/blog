@@ -10,7 +10,7 @@
 
 - 无法画出平行于 y 的竖线
 
-{% asset_img line_02.png %}
+![](line_02.png)
 
 
 针对这种状况，我们采用的画图方式是利用如下的代码：
@@ -66,6 +66,6 @@ DrawLine(P0, P1, color) {
 
 ## 画出来
 
-{% asset_img raster01.png %}
+![](raster01.png)
 
 [代码](https://github.com/zentia/computer-graphics-from-scratch-Notes/blob/master/raster01.py)

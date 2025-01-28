@@ -1,11 +1,3 @@
----
-title: 基于物理的渲染
-mathjax: true
-date: 2019-04-11 16:58:13
-tags:
-    - Render
-categories: Render
----
 
 ## 双向反射分布函数（BRDF）
 

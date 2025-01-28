@@ -1,0 +1,1 @@
+光线追踪接触阴影是高清渲染管线(High Definition Render Pipeline,HDRP)中的一种光线追踪功能。此功能可以取代HDRP的接触阴影技术

@@ -1,11 +1,3 @@
----
-title: 体素
-date: 2017-10-05 22:55:00
-tags:
-    - Render
-categories:
-- Render
----
 原文地址: https://medium.com/retronator-magazine/pixels-and-voxels-the-long-answer-5889ecc18190#.8gf6zy8mc
 
 伪3D等轴游戏 赛达尔, Sir Carma, 2016
