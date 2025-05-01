@@ -1,4 +1,4 @@
-[submodule "theme/hexo-theme-MiHoYo"]
-	path = themes/hexo-theme-MiHoYo
-	url = https://github.com/zentia/hexo-theme-MiHoYo.git
-	branch = main
+[submodule "themes/hexo-theme-aircloud"]
+	path = themes/hexo-theme-aircloud
+	url = https://github.com/zentia/hexo-theme-aircloud.git
+	branch = master

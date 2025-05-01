@@ -7,13 +7,13 @@ title: Hexo
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
+author: zentia
 language: en
 timezone: ''
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://zentia.github.io
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -96,7 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: hexo-theme-MiHoYo
+theme: hexo-theme-aircloud
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
@@ -129,3 +129,26 @@ marked:
     nofollow: false
   disableNunjucks: false
   descriptionLists: true
+
+search:
+  path: search.json
+  field: post
+
+comment:
+  type: giscus
+  script: |
+      <script src="https://giscus.app/client.js"
+        data-repo="zentia/blog"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMDQ2MTc5Nzc="
+        data-category="Q&A"
+        data-category-id="DIC_kwDOBjxX-c4CpqbR"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        crossorigin="anonymous"
+        async>
+      </script>
