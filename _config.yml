@@ -90,9 +90,6 @@ comment:
 
 # The following content is not recommended to modify
 # 搜索数据文件路径设置，不建议改动：
-search:
-  path: search.json
-  field: post
 
 # 文章样式(是否首行缩进)：
 post_style:
@@ -153,3 +150,18 @@ theme: butterfly
 #  type: git
 #  repo: your repo url
 #  branch: master
+algolia:
+  appId: "LAEJN7HTXI"
+  apiKey: "638203615cf8e2e6b77134f9df002a51"
+  adminApiKey: "8e6fc10d6bb1acc66eb57250cfd11187"
+  chunkSize: 5000
+  indexName: "hexo"
+  fields:
+    - content:strip:truncate,0,500
+    - excerpt:strip
+    - gallery
+    - permalink
+    - photos
+    - slug
+    - tags
+    - title
