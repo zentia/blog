@@ -1,4 +1,4 @@
 [submodule "theme/hexo-theme-MiHoYo"]
-	path = theme/hexo-theme-MiHoYo
+	path = themes/hexo-theme-MiHoYo
 	url = https://github.com/zentia/hexo-theme-MiHoYo.git
 	branch = main

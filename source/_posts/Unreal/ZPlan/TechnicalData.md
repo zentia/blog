@@ -24,7 +24,9 @@ tags:
 ## 动画
 1. 除了头发和飘带可以用物理骨骼，其它地方不能使用。
 2. LevelSequencer Blend Animation会很耗，非必要的情况，不能使用。
-![Blend](1.png)
+
+![](1.png)
+
 3. /Game/ArtContent/LevelSequence/Songs 这个目录下，禁止有相机相关操作。
 
 
