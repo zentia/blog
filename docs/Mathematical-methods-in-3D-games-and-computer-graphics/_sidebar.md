@@ -1,0 +1,3 @@
+- [返回首页](/)
+- [Mathematical-methods-in-3D-games-and-computer-graphics](Mathematical-methods-in-3D-games-and-computer-graphics/)
+  - [Mathematical-methods-in-3D-games-and-computer-graphics](Mathematical-methods-in-3D-games-and-computer-graphics/Mathematical-methods-in-3D-games-and-computer-graphics.md)

@@ -1,0 +1,3 @@
+- [返回上一级 [Artist]](Artist/)
+- [artist-3-face-5-major](Artist/artist-3-face-5-major/)
+  - [artist-3-face-5-major](Artist/artist-3-face-5-major/artist-3-face-5-major.md)

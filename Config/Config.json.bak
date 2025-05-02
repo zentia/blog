@@ -1,0 +1,13 @@
+{
+  "HomePath": "D:\\blog\\docs",
+  "DisableGenerateReadmeFile": false,
+  "IgnoreFile": [
+
+  ],
+  "IgnoreDir": [
+    ".git"
+  ],
+  "IgnoreDirNameContain": [
+    ".assets"
+  ]
+}
